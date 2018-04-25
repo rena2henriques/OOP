@@ -1,2 +1,4 @@
-*.vpp
+*.vpp   
 *.vpp.*
+/UML/*.vpp.*
+*.zip

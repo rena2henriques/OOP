@@ -1,0 +1,11 @@
+package general;
+
+public class Event implements EventI {
+
+	@Override
+	public void simulateEvent() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

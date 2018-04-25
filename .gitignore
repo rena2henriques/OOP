@@ -1,5 +1,5 @@
 *.vpp   
 *.vpp.*
-!UML/*.vpp
+UML/
 *.zip
 /bin/

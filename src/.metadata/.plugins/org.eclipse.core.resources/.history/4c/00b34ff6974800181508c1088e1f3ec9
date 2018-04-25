@@ -1,0 +1,11 @@
+import general.EventI;
+
+public abstract class Event implements EventI {
+
+	@Override
+	public void simulateEvent() {
+		// TODO Auto-generated method stub
+
+	}
+
+}

@@ -2,3 +2,4 @@
 *.vpp.*
 !UML/*.vpp
 *.zip
+/bin/

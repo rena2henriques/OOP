@@ -65,3 +65,23 @@ Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/rena2h
 	at org.eclipse.jgit.transport.TransportHttp.openFetch(TransportHttp.java:341)
 	at org.eclipse.jgit.api.LsRemoteCommand.execute(LsRemoteCommand.java:199)
 	... 4 more
+
+!ENTRY org.eclipse.egit.core 4 0 2018-04-25 15:59:05.315
+!MESSAGE An exception occurred during push on URI https://github.com/rena2henriques/OOP.git: https://github.com/rena2henriques/OOP.git: not authorized
+!STACK 0
+org.eclipse.jgit.api.errors.TransportException: https://github.com/rena2henriques/OOP.git: not authorized
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:180)
+	at org.eclipse.egit.core.op.PushOperation.run(PushOperation.java:215)
+	at org.eclipse.egit.ui.internal.push.PushJob.performJob(PushJob.java:84)
+	at org.eclipse.egit.ui.internal.jobs.RepositoryJob.run(RepositoryJob.java:57)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:56)
+Caused by: org.eclipse.jgit.errors.TransportException: https://github.com/rena2henriques/OOP.git: not authorized
+	at org.eclipse.jgit.transport.TransportHttp.connect(TransportHttp.java:531)
+	at org.eclipse.jgit.transport.TransportHttp.openPush(TransportHttp.java:435)
+	at org.eclipse.jgit.transport.PushProcess.execute(PushProcess.java:160)
+	at org.eclipse.jgit.transport.Transport.push(Transport.java:1310)
+	at org.eclipse.jgit.api.PushCommand.call(PushCommand.java:169)
+	... 4 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2018-04-25 15:59:05.331
+!MESSAGE Can't connect to any repository: https://github.com/rena2henriques/OOP.git (https://github.com/rena2henriques/OOP.git: not authorized)

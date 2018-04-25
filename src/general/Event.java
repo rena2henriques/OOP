@@ -11,6 +11,7 @@ public abstract class Event implements EventI {
 		time=_time;
 	}
 	
+	
 	public abstract void simulateEvent();
 
 }

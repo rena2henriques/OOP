@@ -12,7 +12,7 @@ public class PathSimulation extends SimulationA {
 	
 	private int maxInd, initPop;
 	private boolean final_point_hit;
-	private double sensivity;
+	private double sensitivity;
 	private Map map;
 	private Individual bestInd;
 	private ArrayList<Individual> individuals;
@@ -148,7 +148,7 @@ public class PathSimulation extends SimulationA {
 		individuals.clear();
 		currentEvent=null;
 		obsvNumber=0;
-		Individual.setSensivity(sensivity);
+		Individual.setSensitivity(sensitivity);
 	}
 	
 	void initialize() {

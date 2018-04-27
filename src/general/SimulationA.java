@@ -5,6 +5,7 @@ import java.util.LinkedList;
 
 public abstract class SimulationA implements SimulationI {
 	
+	//VER SE ESTES SÃO PROTECTED OU SE SAO PRIVATE E TEM SETTER E GETTERS!!!
 	protected double currentTime, finalTime;
 	protected int numEvents;
 	

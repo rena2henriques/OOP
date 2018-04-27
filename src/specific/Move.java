@@ -8,40 +8,48 @@ public class Move extends Event {
 					//Mas depois se um gajo tiver varias 
 					//simulaçoes a correr ao mesmo tempo com valores diferentes não da :(
 					//ya é melhor nao ser estatico
-	private Individual individual;
+	
+	private Individual individual; //aqui ou numa super?? 
 	
 	
 	//constructor
-	public Move(double time, Individual ind, Individual[] players/*, PEC pec*/) {
-		this.setTime(time);
-		this.individual = ind;
-		//individuals = players vai ser do tipo array?
-		//this.pec = pec -- Vem do super
+	public Move(double time, Individual ind) {
+		this.setTime(time); //super
+		this.individual = ind; //suepr tambem??
 	}
 	
 	//inherited implemetions
 	public void simulateEvent() {
 		//TODO
-		//choose direction
-		//adicionar nova poisção à pessoa
+		//choose direction -> retornar direção
+		//adicionar novo point à pessoa
 		//fazer o check cyle dentro da pessoa? dentro do add. porque o move nao tem nada a ver com os ciclos
-		//atualizar bue parametros do inviduo
-		//criar e adcioinar novo move à pec
+		//calcular media -->> Depois de atualizar o conforto
+		//criar novo move e adicionar ao array?
+		//criar um novo move mandar time
+		//retornar array :)
 	}
 	
 	//public methods
 	//getters e setters
 	
 	//private methods
-	private void chooseDirection () {
+	private void chooseDirection() {
+			//sacar no individuo o ultimo point do array
+			//ver o size o connections desse point --> dá o N
+			//pa ver o size, probably, mapPoint.getValidDirections, que vai ter um ciclo
+			//gerar numero random entre 0 e 1
+			//ver a que posição equivale o numero gerado
+	}
+
+	//fazer isto no ind??
+	private boolean checkCycle() {
 		
 	}
 	
-	private boolean checkCycle () {
-		
-	}
-	
-	private void breakCycle () {
+	private void breakCycle() {
 		
 	}
 }
+
+//floor(p*n) da me a poisção que preciso de tirar do array.

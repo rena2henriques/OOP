@@ -109,7 +109,7 @@ public class PathSimulation extends SimulationA {
 		
 		//run actual simulation
 		while(pec.getEvent()!=null && currentTime<finalTime) {
-			
+			//substituir pec.getEvent por current event?
 			//fazer try and catch com excepções: a cena da epidemia, excepção para ver se já acabou?, outra excepção?
 			
 			eventList=currentEvent.simulateEvent();
@@ -122,7 +122,10 @@ public class PathSimulation extends SimulationA {
 			if(checkBestFit(currentEvent.getIndividual()))
 				updateBestFit(currentEvent.getIndividual());
 				
-			currentEvent=pec.nextEvent();			
+			currentEvent=pec.nextEvent();	
+			
+			//TER CUIDADO PARA O CASO EM QUE O PEC RETORNA NULL!!! ATENCAO!
+			//MUDAR ISTO ou por tipo uma excepção
 			while(currentEvent.getTime()>currentTime+finalTime/20) {
 				currentTime+=finalTime/20;
 				printObservation();

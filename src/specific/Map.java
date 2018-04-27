@@ -91,7 +91,7 @@ public class Map {
 			
 			// converting index to x and y
 			column = i%width + 1;
-			row = i%width + 1;
+			row = i/width + 1;
 			
 			// creates the point
 			map[i] = new MapPoint(column, row);

@@ -3,6 +3,8 @@
  */
 package specific;
 
+import java.lang.Math;
+
 /**
  * @author renato
  *
@@ -16,8 +18,24 @@ public class Map {
 	// maximum cost of an edge of the map
 	private int max_cost = 1;
 	
+	private MapPoint finalpoint;
+
 	MapPoint[] map;
 	
+	/**
+	 * @return the finalpoint
+	 */
+	public MapPoint getFinalpoint() {
+		return finalpoint;
+	}
+
+	/**
+	 * @param finalpoint the finalpoint to set
+	 */
+	public void setFinalpoint(MapPoint finalpoint) {
+		this.finalpoint = finalpoint;
+	}
+
 	/**
 	 * @param origin
 	 * @param direction
@@ -70,6 +88,7 @@ public class Map {
 		this.n_obst = n_obst;
 		
 		map = new MapPoint[height*width];
+		generateGrid();
 	}
 	
 	
@@ -158,13 +177,13 @@ public class Map {
 	
 	
 	/**
-	 * @param point
-	 * @return
+	 * @brief returns the dist value (smallest nº of hops) between the param point and the final point
+	 * @param point we want to calculate the dist from
+	 * @return dist
 	 */
 	public int calculateDist(Point point) {
-		
-		
-		return 0;
+		// returns the distance (number of hops) between point and the final point
+		return Math.abs(point.getY() - finalpoint.getY()) + Math.abs(point.getX() - finalpoint.getY());
 	}
 	
 	
@@ -176,6 +195,9 @@ public class Map {
 	public void addObstacle(int x, int y) {
 		// set this point as an obstacle
 		map[(y-1)*width+(x-1)].setType(1);
+		
+		// eliminate connections with the adjacent points <------
+		
 	}
 	
 	/**
@@ -196,6 +218,8 @@ public class Map {
 	public void addFinalPoint(int x, int y) {
 		// set this point as an obstacle
 		map[(y-1)*width+(x-1)].setType(3);
+		
+		finalpoint = new MapPoint(x, y, 3);
 	}
 	
 	
@@ -213,6 +237,18 @@ public class Map {
 		// update max_cost
 		if (cost > max_cost)
 			max_cost = cost;
+		
+		// considering that the initial is the above and left of the final
+		
+		int pointA = CoordsToIndex(yinitial, xinitial, width);
+		int pointB = CoordsToIndex(yfinal, xfinal, width);
+		
+		for(int i = 0; i < yfinal - yinitial; i++) {
+			
+			
+			
+		}
+		
 		
 		
 		

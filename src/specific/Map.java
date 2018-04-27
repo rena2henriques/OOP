@@ -60,13 +60,6 @@ public class Map {
 	}
 	
 	/**
-	 * @param max_cost
-	 */
-	public void updateMaxCost(int max_cost) {
-		
-	}
-	
-	/**
 	 * @param current_point
 	 * @param direction
 	 * @return
@@ -167,12 +160,14 @@ public class Map {
 	
 	
 	/**
-	 * @param path
-	 * @return
+	 * @brief Calculate the total cost of a path
+	 * @param path -> an array of points
+	 * @return the total cost
 	 */
-	public double calculateCost(Point[] path) {
+	public int calculateCost(Point[] path) {
 		
-		return 0.0;
+		
+		return 0;
 	}
 	
 	
@@ -194,7 +189,10 @@ public class Map {
 	 */
 	public void addObstacle(int x, int y) {
 		// set this point as an obstacle
-		map[(y-1)*width+(x-1)].setType(1);
+		map[(y-1)*width+(x-1)].setType(MapPoint.OBSTACLE);
+		
+		// increments the number of obstacles
+		n_obst++;
 		
 		// eliminate connections with the adjacent points <------
 		
@@ -207,7 +205,7 @@ public class Map {
 	 */
 	public void addInitialPoint(int x, int y) {
 		// set this point as an obstacle
-		map[(y-1)*width+(x-1)].setType(2);
+		map[(y-1)*width+(x-1)].setType(MapPoint.INITIALPOINT);
 	}
 	
 	/**
@@ -217,9 +215,9 @@ public class Map {
 	 */
 	public void addFinalPoint(int x, int y) {
 		// set this point as an obstacle
-		map[(y-1)*width+(x-1)].setType(3);
+		map[(y-1)*width+(x-1)].setType(MapPoint.FINALPOINT);
 		
-		finalpoint = new MapPoint(x, y, 3);
+		finalpoint = new MapPoint(x, y, MapPoint.FINALPOINT);
 	}
 	
 	

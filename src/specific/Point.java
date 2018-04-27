@@ -79,4 +79,13 @@ public class Point {
 		this.y = y;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 *  
+	 */
+	@Override
+	public String toString() {
+		return "(" + this.x + "," + this.y + ")";
+	}
+	
 }

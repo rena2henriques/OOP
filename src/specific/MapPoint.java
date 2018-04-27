@@ -8,9 +8,16 @@ public class MapPoint extends Point {
 	// type of point: 0 - normal, 1 - obstacle, 2 - initialpoint, 3 - finalpoint
 	protected int type;
 	
+	static final int NORMAL = 0;
+	static final int OBSTACLE = 1;
+	static final int INITIALPOINT = 2;
+	static final int FINALPOINT = 3;
+	
+	// points connected to this point
 	List<Connection> connections;
 	
 	/**
+	 * @brief MapPoint Constructor two args
 	 * @param x
 	 * @param y
 	 * type is 0 by default - normal position
@@ -21,6 +28,7 @@ public class MapPoint extends Point {
 	}
 	
 	/**
+	 * @brief MapPoint Constructor three args
 	 * @param x height
 	 * @param y width
 	 * @param type - type of point in the map

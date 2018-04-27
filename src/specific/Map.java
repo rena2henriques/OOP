@@ -14,7 +14,7 @@ public class Map {
 	// nº of obstacles in the map
 	private int n_obst;
 	// maximum cost of an edge of the map
-	private int max_cost;
+	private int max_cost = 1;
 	
 	MapPoint[] map;
 	
@@ -33,6 +33,10 @@ public class Map {
 	 * @return
 	 */
 	public boolean isFinal(Point point) {
+		
+		if(map[(point.getY()-1)*width+(point.getX()-1)].getType() == 3) {
+			return true;
+		} 
 		
 		return false;
 	}
@@ -195,4 +199,22 @@ public class Map {
 	}
 	
 	
+	/**
+	 * @param xinitial
+	 * @param yinitial
+	 * @param xfinal
+	 * @param yfinal
+	 * @param cost
+	 */
+	public void addSpecialZone(int xinitial, int yinitial, int xfinal, int yfinal, int cost) {
+		
+		// PENSAR SE RECEBEMOS PONTOS OU COORDENADAS
+		
+		// update max_cost
+		if (cost > max_cost)
+			max_cost = cost;
+		
+		
+		
+	}
 }

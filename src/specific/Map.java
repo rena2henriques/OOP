@@ -3,12 +3,13 @@
  */
 package specific;
 
-import java.lang.Math;
+import java.util.ArrayList;
 
 /**
  * @author renato
  *
  */
+
 public class Map {
 
 	// dimensions of the map
@@ -164,7 +165,7 @@ public class Map {
 	 * @param path -> an array of points
 	 * @return the total cost
 	 */
-	public int calculateCost(Point[] path) {
+	public int calculateCost(ArrayList<Point> path) {
 		
 		
 		return 0;
@@ -250,5 +251,42 @@ public class Map {
 		
 		
 		
+	}
+	
+	
+	
+	
+	
+	//TODO
+	/**
+	 * Returns the cost of any edge between 2 connected points of the map
+	 * @param p1 first point (vertice) of the edge
+	 * @param p2 first point (vertice) of the edge
+	 * @return the cost of the specified edge
+	 */
+	public int getConnectionCost(Point p1, Point p2) {
+		return 1;
+	}
+	
+	
+	/**
+	 * @return the maximum cost of an edge
+	 */
+	public int getMaxCost() {
+		return max_cost;
+	}
+	
+	/**
+	 * @return the width (n) of the map
+	 */
+	public int getWidth() {
+		return width;
+	}
+	
+	/**
+	 * @return the height (m) of the map
+	 */
+	public int getHeight() {
+		return height;
 	}
 }

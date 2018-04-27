@@ -49,11 +49,11 @@ public class PathSimulation extends SimulationA {
 	}
 
 	public double getSensivity() {
-		return sensivity;
+		return sensitivity;
 	}
 
-	public void setSensivity(double sensivity) {
-		this.sensivity = sensivity;
+	public void setSensitivity(double sensivity) {
+		this.sensitivity = sensivity;
 	}
 /*
 	public double getDeath() {
@@ -118,6 +118,13 @@ public class PathSimulation extends SimulationA {
 			//adicionar nova lista de eventos - mudar
 			addNewEvents(eventList);
 			
+			//CHECKAR SE O INDIVIDUO CHEGOU AO FIM
+			Individual currentInd= currentEvent.getIndividual(); //ACRESCENTAR AO CURRENTEVENT
+			if(!final_point_hit && map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))
+				final_point_hit=true; 
+			//E NO CASO EM QUE É O PRIMEIRO INDIVIDUO A CHEGAR AO FIM?
+				
+			
 			//alterar o BESTINDIVIDUAL
 			if(checkBestFit(currentEvent.getIndividual()))
 				updateBestFit(currentEvent.getIndividual());
@@ -169,7 +176,7 @@ public class PathSimulation extends SimulationA {
 		if(!final_point_hit) {
 			//checkar comfort
 		} else{
-			//E NO CASO DO PRIMEIRO QUE CHEGA AO FINAL? COMO FAZER?
+			//E NO CASO DO PRIMEIRO QUE CHEGA AO FINAL? COMO FAZER? - SO COMPARAR SE O ULTIMO PONTO DO BEST IND E O ULTIMO PONTO DO IND QUE MANDAM FOREM O FINAL?
 			//checkar custo
 		}
 	}
@@ -186,7 +193,7 @@ public class PathSimulation extends SimulationA {
 		//METER AS CENAS NO FORMATO QUE ELA QUER
 	}
 
-	public void printResult() {
+	public String printResult() {
 		return "Path of the best fit individual="+bestInd.toString(); //ADICIONAR TOSTRING AO INDIVIDUAL PARA IMPRIMIR O PATH COMO NO ENUNCIADO	
 	}
 }

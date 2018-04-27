@@ -5,6 +5,7 @@ import general.SimulationA;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
+
 public class PathSimulation extends SimulationA {
 	
 	//MUDAR NOMES DOS PARAMETROS DE ACORDO COM O ENUNCIADO
@@ -86,6 +87,7 @@ public class PathSimulation extends SimulationA {
 		//params=XMLParser(file); 
 		//IMPORT FILE?
 		
+		super(finalinst);
 		map = new Map(height,width,nObst,maxCost); // VERIFICAR NOMES DAS VARIAVEIS
 		individuals = new ArrayList<Individual>(initPop);
 		
@@ -93,24 +95,6 @@ public class PathSimulation extends SimulationA {
 
 	@Override
 	public void simulate() {
-		
-		init();
-		
-		//DAR RESET AS VARIAVEIS NECESSARIAS
-		final_point_hit=false;
-		bestInd=null;
-		individuals.clear();
-		currentEvent=null;
-		obsvNumber=0;
-
-		//INICIALIZAR A POPULAÇÃO		
-		for(int i=0; i<initPop;i++) {
-			individuals.add(new Individual());//MANDAR PARAMETROS LÁ PARA DENTRO);
-			//3 EVENTOS PARA CADA INDIVIDUO - DEATH, MOVE, REPRODUCTION
-			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
-			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
-			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));
-		}
 		
 		currentEvent=pec.nextEvent();		
 		while(currentEvent.getTime()>currentTime+finalTime/20) {
@@ -132,8 +116,7 @@ public class PathSimulation extends SimulationA {
 			numEvents++;
 			
 			//adicionar nova lista de eventos - mudar
-			while(!eventList.isEmpty())
-				pec.add(eventList.remove());
+			addNewEvents(eventList);
 			
 			//alterar o BESTINDIVIDUAL
 			if(checkBestFit(currentEvent.getIndividual()))
@@ -152,6 +135,32 @@ public class PathSimulation extends SimulationA {
 	}
 	
 	//CHECKAR VISIBILIDADES DAS FUNÇOES?
+	void reset() {
+		
+		init();
+		
+		//DAR RESET AS VARIAVEIS NECESSARIAS - CRIAR FUNÇAO
+		final_point_hit=false;
+		bestInd=null;
+		individuals.clear();
+		currentEvent=null;
+		obsvNumber=0;
+		Individual.setSensivity(sensivity);
+	}
+	
+	void initialize() {
+		
+		//INICIALIZAR A POPULAÇÃO		
+		for(int i=0; i<initPop;i++) {
+			individuals.add(new Individual());//MANDAR PARAMETROS LÁ PARA DENTRO);
+			//3 EVENTOS PARA CADA INDIVIDUO - DEATH, MOVE, REPRODUCTION
+			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
+			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
+			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));
+		}
+		
+	}
+	
 	boolean checkBestFit(Individual ind) {
 		
 		if(!final_point_hit) {

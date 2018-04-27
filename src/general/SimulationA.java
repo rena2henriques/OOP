@@ -1,5 +1,8 @@
 package general;
 
+import java.util.LinkedList;
+
+
 public abstract class SimulationA implements SimulationI {
 	
 	protected double currentTime, finalTime;
@@ -14,26 +17,33 @@ public abstract class SimulationA implements SimulationI {
 		this.finalTime = final_time;
 	}
 	public int getNum_events() {
-		return numevents;
+		return numEvents;
 	}
 	public void setNum_events(int num_events) {
 		this.numEvents = num_events;
 	}
 	
 	public double getSimulationClock() {
-		return currentRime;
+		return currentTime;
 	}
 	
-	/*public SimulationA(double finalt) {
-		final_time=finalt;
-	}*/
+	public SimulationA(double finalt) {
+		finalTime=finalt;
+	}
 	
-	public abstract void simulate();
+	//public abstract void simulate();
 	
-	public void init() {
+	//PROTECTED???
+	
+	protected void init() {
 		currentTime=0;
 		numEvents=0;
 		pec= new PEC();
+	}
+	
+	protected void addNewEvents(LinkedList<Event> eventList) {
+		while(!eventList.isEmpty())
+			pec.add(eventList.remove());
 	}
 
 

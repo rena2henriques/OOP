@@ -70,7 +70,7 @@ public class Map {
 	
 	
 	/**
-	 * @brief creates the initial grid in the form of an adjacency list
+	 * @brief creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
 	 */
 	public void generateGrid() {
 		
@@ -97,16 +97,16 @@ public class Map {
 				// when the point is left border of the map
 				if (column == 1) {
 					// inserts the point to the right
-					map[i].connections.add(new MapPoint(column+1, row));
+					map[i].connections.add(new Connection(1,new MapPoint(column+1, row)));
 				// when the point is in the right border of the map				
 				} else if (column == width) {
 					// inserts the point to the left
-					map[i].connections.add(new MapPoint(column-1, row));
+					map[i].connections.add(new Connection(1,new MapPoint(column-1, row)));
 				// when not in the left or right border
 				} else {
 					// inserts the point left and right
-					map[i].connections.add(new MapPoint(column-1, row));
-					map[i].connections.add(new MapPoint(column+1, row));
+					map[i].connections.add(new Connection(1,new MapPoint(column-1, row)));
+					map[i].connections.add(new Connection(1,new MapPoint(column+1, row)));
 				}
 			}
 			
@@ -115,16 +115,16 @@ public class Map {
 				// when the point is in the lower border of the map
 				if (row == 1) {
 					// inserts the point above
-					map[i].connections.add(new MapPoint(column, row+1));
+					map[i].connections.add(new Connection(1,new MapPoint(column, row+1)));
 				// when the point is in the upper border of the map				
 				} else if (row == height) {
 					// inserts the point under
-					map[i].connections.add(new MapPoint(column, row-1));
+					map[i].connections.add(new Connection(1,new MapPoint(column, row-1)));
 				// when not in upper or lower border
 				} else {
 					// inserts the point above and under
-					map[i].connections.add(new MapPoint(column, row-1));
-					map[i].connections.add(new MapPoint(column, row+1));
+					map[i].connections.add(new Connection(1,new MapPoint(column, row-1)));
+					map[i].connections.add(new Connection(1,new MapPoint(column, row+1)));
 				}
 			}
 			
@@ -164,9 +164,35 @@ public class Map {
 	}
 	
 	
+	/**
+	 * @brief sets the point as an obstacle (type = 1)
+	 * @param x
+	 * @param y
+	 */
+	public void addObstacle(int x, int y) {
+		// set this point as an obstacle
+		map[(y-1)*width+(x-1)].setType(1);
+	}
 	
+	/**
+	 * @brief sets the point as an initial point (type = 2)
+	 * @param x
+	 * @param y
+	 */
+	public void addInitialPoint(int x, int y) {
+		// set this point as an obstacle
+		map[(y-1)*width+(x-1)].setType(2);
+	}
 	
-	
+	/**
+	 * @brief sets the point as an final point (type = 3)
+	 * @param x
+	 * @param y
+	 */
+	public void addFinalPoint(int x, int y) {
+		// set this point as an obstacle
+		map[(y-1)*width+(x-1)].setType(3);
+	}
 	
 	
 }

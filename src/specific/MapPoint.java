@@ -8,7 +8,7 @@ public class MapPoint extends Point {
 	// type of point: 0 - normal, 1 - obstacle, 2 - initialpoint, 3 - finalpoint
 	protected int type;
 	
-	List<MapPoint> connections;
+	List<Connection> connections;
 	
 	/**
 	 * @param x
@@ -17,7 +17,7 @@ public class MapPoint extends Point {
 	 */
 	public MapPoint(int x, int y) {
 		super(x, y);
-		connections = new ArrayList<MapPoint>();
+		connections = new ArrayList<Connection>();
 	}
 	
 	/**
@@ -28,7 +28,7 @@ public class MapPoint extends Point {
 	public MapPoint(int x, int y, int type) {
 		super(x, y);
 		this.type = type;
-		connections = new ArrayList<MapPoint>();
+		connections = new ArrayList<Connection>();
 	}
 
 	/**

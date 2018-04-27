@@ -24,7 +24,6 @@ public class Individual {
 		map=_map;
 		path.add(initial);
 		calculateComfort();
-		//comfort=calculateComfort(cost,0,sensitivity,map.getMaxCost(), map.calculateDist(initial), map.getWidth(), map.getHeight()); //ADICIONAR ESTAS FUNCOES DE GET AO MAP
 	}
 	
 	//when it's born from reproduction
@@ -33,8 +32,6 @@ public class Individual {
 		path=points;
 		cost=map.calculateCost(points);
 		calculateComfort();
-		//ATENCAO: LENGTH … O NR DE EDGES E POR ISSO O NR DE PONTOS -1
-		//comfort=calculateComfort(cost,path.size()-1,sensitivity,map.getMaxCost(), map.calculateDist(path.get(path.size()-1)), map.getWidth(), map.getHeight()); 
 	}
 	
 	/**
@@ -88,17 +85,17 @@ public class Individual {
 	}
 	
 	
-	public void addToPath(Connection new_point) { //VER SE FAZEMOS COM CONNECTION OU COM POINT
+	public void addToPath(Connection new_point) { //MUDAR PARA FAZER COM POINT
 		
-		//ADICIONAR AO PATH
-		path.add(new_point.connection);
-		
+		//MUDAR ISTO
 		//CHECKAR SE H¡ CYCLE
-		if(checkCycle()) {
+		if(checkCycle(new_point.connection)) {
 		//SE HOUVER REDEFINIR O PATH
-			breakCycle();
+			breakCycle(new_point.connection);
 		}
 		else {
+			//ADICIONAR AO PATH
+			path.add(new_point.connection);
 			//DAR UPDATE AO COST E AO COMFORT
 			cost+=new_point.getCost();
 			calculateComfort();			
@@ -107,29 +104,25 @@ public class Individual {
 		return;
 	}
 	
-	// TODO
-	public void updatePath(Point[] path) {
-		
-		return;
+	private boolean checkCycle(Point point) {
+		return 	path.contains(point);
 	}
 	
-	
-	/*public double calculateComfort(int cost, int length, double k, int cmax, int dist, int n, int m) {
+	private void breakCycle(Point newPoint) {
 		
-		// escrever express√£o
-		// testar excep√ß√µes
+		int lastIndex= path.indexOf(newPoint);
+		path.subList(lastIndex+1, path.size()).clear();
 		
-		return comfort;
-	}*/
+		cost=map.calculateCost(path);
+		calculateComfort();		
+		
+		//COMO CHECKAR QUE ELE CHEGOU AO FIM?
+	}
 	
 	private double calculateComfort() {
-		comfort=pow(,sensitivity)
-	}
-	
-	// TODO
-	public void updateCost(int new_cost) {
-		
-		return;
+		int length=path.size()-1;
+		int dist=map.calculateDist(path.get(path.size()-1));
+		comfort=pow(1-(cost-length+2)/(map.getMaxCost()*length+3),sensitivity)*pow(1-(dist)/(map.getWidth()+map.getHeight()+1),sensitivity);
 	}
 		
 }

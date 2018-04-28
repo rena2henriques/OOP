@@ -38,7 +38,7 @@ public class Individual {
 	 * Constructor. To use when the individual already has a path 
 	 * 
 	 * @param map map in which the individual lives
-	 * @param points path of the new individual
+	 * @param points initial path of the new individual
 	 */
 	public Individual(Map map, ArrayList<Point> points) {
 		this.map=map;

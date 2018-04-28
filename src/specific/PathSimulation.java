@@ -11,14 +11,35 @@ public class PathSimulation extends SimulationA {
 	//MUDAR NOMES DOS PARAMETROS DE ACORDO COM O ENUNCIADO
 	
 	private int maxInd, initPop;
-	private boolean final_point_hit;
+	private Point initialPoint;
+	private boolean finalPointHit;
 	private double sensitivity;
 	private Map map;
 	private Individual bestInd;
 	private ArrayList<Individual> individuals;
 	private Event currentEvent;
-	private int obsvNumber;
+	private int obsvNumber=1;
 	//private double death, reproduction, move;
+	
+	public PathSimulation(File file) {
+		
+		//apply XML PARSER
+		//params=XMLParser(file); 
+		//IMPORT FILE?
+		//CRIAR PARAMETROS!
+		
+		super.setFinalTime(finalinst);		
+		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
+		individuals = new ArrayList<Individual>(initPop);	
+	}
+	
+	public Point getInitialPoint() {
+		return initialPoint;
+	}
+	
+	public void setInitialPoint(Point p) {
+		initialPoint=p;
+	}
 	
 	public Map getMap() {
 		return map;
@@ -28,24 +49,24 @@ public class PathSimulation extends SimulationA {
 		map=m;
 	}
 	
-	public int getMax_ind() {
+	public int getMaxInd() {
 		return maxInd;
 	}
 
-	public void setMax_ind(int max_ind) {
+	public void setMaxInd(int max_ind) {
 		this.maxInd = max_ind;	
 	}
 
-	public int getInit_pop() {
+	public int getInitPop() {
 		return initPop;
 	}
 
-	public void setInit_pop(int init_pop) {
+	public void setInitPop(int init_pop) {
 		this.initPop = init_pop;
 	}
 
-	public boolean isFinal_point_hit() {
-		return final_point_hit;
+	public boolean isFinalPointHit() {
+		return finalPointHit;
 	}
 
 	public double getSensivity() {
@@ -80,42 +101,34 @@ public class PathSimulation extends SimulationA {
 		this.move = move;
 	}
 */
-	
-	public PathSimulation(File file) {
-		
-		//apply XML PARSER
-		//params=XMLParser(file); 
-		//IMPORT FILE?
-		
-		super(finalinst);
-		map = new Map(height,width,nObst,maxCost); // VERIFICAR NOMES DAS VARIAVEIS
-		individuals = new ArrayList<Individual>(initPop);
-		
-	}
 
-	@Override
 	public void simulate() {
 		
-		currentEvent=pec.nextEvent();		
+		//reseting the dynamic variables
+		reset();
+		//initializing the population of individuals
+		initialize();
+		//list of events returned in the simulateEvent
+		LinkedList<Event> eventList;
+
+		//initializing the simulation with the 1st event in pec
+		currentEvent=pec.nextEvent();			
 		while(currentEvent.getTime()>currentTime+finalTime/20) {
 			currentTime+=finalTime/20;
 			printObservation();
 			obsvNumber++;				
 		}
 		currentTime=currentEvent.getTime();
-
-		
-		LinkedList<Event> eventList;
 		
 		//run actual simulation
-		while(pec.getEvent()!=null && currentTime<finalTime) {
-			//substituir pec.getEvent por current event?
+		while(currentEvent!=null && currentTime< finalTime) {
+
 			//fazer try and catch com excepções: a cena da epidemia, excepção para ver se já acabou?, outra excepção?
 			
-			eventList=currentEvent.simulateEvent();
-			numEvents++;
-			
-			//adicionar nova lista de eventos - mudar
+			//simulate current event
+			eventList=(LinkedList<Event>) currentEvent.simulateEvent();
+			numEvents++;			
+			//add new list of events to pec
 			addNewEvents(eventList);
 			
 			//CHECKAR SE O INDIVIDUO CHEGOU AO FIM
@@ -147,23 +160,22 @@ public class PathSimulation extends SimulationA {
 	//CHECKAR VISIBILIDADES DAS FUNÇOES?
 	void reset() {
 		
-		init();
-		
-		//DAR RESET AS VARIAVEIS NECESSARIAS - CRIAR FUNÇAO
-		final_point_hit=false;
+		super.init();		
+		finalPointHit=false;
 		bestInd=null;
 		individuals.clear();
 		currentEvent=null;
-		obsvNumber=0;
+		obsvNumber=1;
 		Individual.setSensitivity(sensitivity);
+		//DAR SET AOS PARAMETROS DO MOVE, REPRODUCTION E DEATH
 	}
 	
 	void initialize() {
 		
-		//INICIALIZAR A POPULAÇÃO		
+		//initializing the population 
 		for(int i=0; i<initPop;i++) {
-			individuals.add(new Individual());//MANDAR PARAMETROS LÁ PARA DENTRO);
-			//3 EVENTOS PARA CADA INDIVIDUO - DEATH, MOVE, REPRODUCTION
+			individuals.add(new Individual(map, initialPoint));
+			//first 3 events for each individual - death, move, reproduction
 			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
 			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
 			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));

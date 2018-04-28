@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 //QUE VISIBILIDADE POR À CLASSE???
 //MUDAR VISIBILIDADE DOS METODOS, ESTÁ TUDO A PUBLICO :(
-public class Individual {
+public class Individual implements Cloneable {
 	
 	private int cost;
 	private double comfort;
@@ -38,7 +38,7 @@ public class Individual {
 	 * Constructor. To use when the individual already has a path 
 	 * 
 	 * @param map map in which the individual lives
-	 * @param points path of the new individual
+	 * @param points initial path of the new individual
 	 */
 	public Individual(Map map, ArrayList<Point> points) {
 		this.map=map;
@@ -47,11 +47,28 @@ public class Individual {
 		calculateComfort();
 	}
 	
+	//VER SE CLONE É PUBLIC OU PROTECTED
+	
+	 @Override
+	 protected Object clone() throws CloneNotSupportedException {
+		 Individual cloned = (Individual)super.clone();
+		 cloned.setPath(new ArrayList<Point>(cloned.getPath()));
+		 //cloned.setPath((ArrayList<Point>)cloned.getPath().clone());
+		 return cloned;
+	    }
+	
 	/**
 	 * @return the current path of the individual
 	 */
 	public ArrayList<Point> getPath() {
 		return path;
+	}
+	
+	/**
+	 * @param p path to set
+	 */
+	public void setPath(ArrayList<Point> p) {
+		path=p;
 	}
 
 	/**
@@ -163,4 +180,5 @@ public class Individual {
 		
 		return s.substring(0,s.length()-1)+"}";
 	}
+
 }

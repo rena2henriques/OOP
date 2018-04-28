@@ -1,7 +1,9 @@
 package general;
 
+import java.util.List;
+
 public interface EventI {
 	
-	void simulateEvent();
+	List<? extends EventI> simulateEvent();
 
 }

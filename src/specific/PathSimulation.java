@@ -11,14 +11,34 @@ public class PathSimulation extends SimulationA {
 	//MUDAR NOMES DOS PARAMETROS DE ACORDO COM O ENUNCIADO
 	
 	private int maxInd, initPop;
-	private boolean final_point_hit;
+	private Point initialPoint;
+	private boolean finalPointHit;
 	private double sensitivity;
 	private Map map;
 	private Individual bestInd;
 	private ArrayList<Individual> individuals;
-	private Event currentEvent;
-	private int obsvNumber;
+	private int obsvNumber=1;
 	//private double death, reproduction, move;
+	
+	public PathSimulation(File file) {
+		
+		//apply XML PARSER
+		//params=XMLParser(file); 
+		//IMPORT FILE?
+		//CRIAR PARAMETROS!
+		
+		super.setFinalTime(finalinst);		
+		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
+		individuals = new ArrayList<Individual>(initPop);	
+	}
+	
+	public Point getInitialPoint() {
+		return initialPoint;
+	}
+	
+	public void setInitialPoint(Point p) {
+		initialPoint=p;
+	}
 	
 	public Map getMap() {
 		return map;
@@ -28,24 +48,24 @@ public class PathSimulation extends SimulationA {
 		map=m;
 	}
 	
-	public int getMax_ind() {
+	public int getMaxInd() {
 		return maxInd;
 	}
 
-	public void setMax_ind(int max_ind) {
+	public void setMaxInd(int max_ind) {
 		this.maxInd = max_ind;	
 	}
 
-	public int getInit_pop() {
+	public int getInitPop() {
 		return initPop;
 	}
 
-	public void setInit_pop(int init_pop) {
+	public void setInitPop(int init_pop) {
 		this.initPop = init_pop;
 	}
 
-	public boolean isFinal_point_hit() {
-		return final_point_hit;
+	public boolean isFinalPointHit() {
+		return finalPointHit;
 	}
 
 	public double getSensivity() {
@@ -80,64 +100,63 @@ public class PathSimulation extends SimulationA {
 		this.move = move;
 	}
 */
-	
-	public PathSimulation(File file) {
-		
-		//apply XML PARSER
-		//params=XMLParser(file); 
-		//IMPORT FILE?
-		
-		super(finalinst);
-		map = new Map(height,width,nObst,maxCost); // VERIFICAR NOMES DAS VARIAVEIS
-		individuals = new ArrayList<Individual>(initPop);
-		
-	}
 
-	@Override
 	public void simulate() {
 		
-		currentEvent=pec.nextEvent();		
-		while(currentEvent.getTime()>currentTime+finalTime/20) {
-			currentTime+=finalTime/20;
-			printObservation();
-			obsvNumber++;				
-		}
-		currentTime=currentEvent.getTime();
+		//reseting the dynamic variables
+		reset();
+		//initializing the population of individuals
+		initialize();
+		
+		//local variables
+		LinkedList<Event> eventList; //list of events returned in the simulateEvent
+		Individual currentInd=null; // individual of the current event
+		Event currentEvent; // current event
+		double obsvTime=finalTime/20;
 
+
+		//initializing the simulation with the 1st event in pec
+		currentEvent=pec.nextEvent();			
+		//CHECKAR SE CURRENT EVENT É NULL ANTES DE ACEDER AO TEMPO?
+		currentTime=currentEvent.getTime();
 		
-		LinkedList<Event> eventList;
 		
-		//run actual simulation
-		while(pec.getEvent()!=null && currentTime<finalTime) {
-			//substituir pec.getEvent por current event?
+		while(currentEvent!=null && currentTime< finalTime) {
+			
+			while(currentTime>obsvTime) {				
+				printObservation();
+				obsvTime+=finalTime/20;
+			}
+
 			//fazer try and catch com excepções: a cena da epidemia, excepção para ver se já acabou?, outra excepção?
 			
-			eventList=currentEvent.simulateEvent();
-			numEvents++;
-			
-			//adicionar nova lista de eventos - mudar
+			//simulate current event
+			eventList=(LinkedList<Event>) currentEvent.simulateEvent();
+			numEvents++;			
+			//add new list of events to pec
 			addNewEvents(eventList);
 			
+			
 			//CHECKAR SE O INDIVIDUO CHEGOU AO FIM
-			Individual currentInd= currentEvent.getIndividual(); //ACRESCENTAR AO CURRENTEVENT
-			if(!final_point_hit && map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))
-				final_point_hit=true; 
-			//E NO CASO EM QUE É O PRIMEIRO INDIVIDUO A CHEGAR AO FIM?
-				
+			currentInd = currentEvent.getIndividual(); //ACRESCENTAR UM NOVO PATAMAR NOS EVENTOS COM INDIVIDUAL?? DISCUTIR	
 			
-			//alterar o BESTINDIVIDUAL
-			if(checkBestFit(currentEvent.getIndividual()))
-				updateBestFit(currentEvent.getIndividual());
-				
-			currentEvent=pec.nextEvent();	
+			//if none of the individuals has reached the final point before and the current individual
+			//reaches it, we change the flag and set the current individual as the best individual
+			if(!finalPointHit && map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1))) {
+				finalPointHit=true; 
+				updateBestFit(currentInd);			
+			}
 			
+			//we only check the best individual if the final point hasn't been reached 
+			//or if it has, we only check if our individual is also in the final point
+			else if(!finalPointHit || (finalPointHit &&  map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))) {
+				if(checkBestFit(currentInd))
+					updateBestFit(currentInd);			
+			}
+				
+			currentEvent=pec.nextEvent();			
 			//TER CUIDADO PARA O CASO EM QUE O PEC RETORNA NULL!!! ATENCAO!
 			//MUDAR ISTO ou por tipo uma excepção
-			while(currentEvent.getTime()>currentTime+finalTime/20) {
-				currentTime+=finalTime/20;
-				printObservation();
-				obsvNumber++;				
-			}
 			currentTime=currentEvent.getTime();					
 		}	
 		
@@ -147,23 +166,21 @@ public class PathSimulation extends SimulationA {
 	//CHECKAR VISIBILIDADES DAS FUNÇOES?
 	void reset() {
 		
-		init();
-		
-		//DAR RESET AS VARIAVEIS NECESSARIAS - CRIAR FUNÇAO
-		final_point_hit=false;
+		super.init();		
+		finalPointHit=false;
 		bestInd=null;
 		individuals.clear();
-		currentEvent=null;
-		obsvNumber=0;
+		obsvNumber=1;
 		Individual.setSensitivity(sensitivity);
+		//DAR SET AOS PARAMETROS DO MOVE, REPRODUCTION E DEATH
 	}
 	
 	void initialize() {
 		
-		//INICIALIZAR A POPULAÇÃO		
+		//initializing the population 
 		for(int i=0; i<initPop;i++) {
-			individuals.add(new Individual());//MANDAR PARAMETROS LÁ PARA DENTRO);
-			//3 EVENTOS PARA CADA INDIVIDUO - DEATH, MOVE, REPRODUCTION
+			individuals.add(new Individual(map, initialPoint));
+			//first 3 events for each individual - death, move, reproduction
 			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
 			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
 			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));
@@ -173,27 +190,38 @@ public class PathSimulation extends SimulationA {
 	
 	boolean checkBestFit(Individual ind) {
 		
-		if(!final_point_hit) {
-			//checkar comfort
-		} else{
-			//E NO CASO DO PRIMEIRO QUE CHEGA AO FINAL? COMO FAZER? - SO COMPARAR SE O ULTIMO PONTO DO BEST IND E O ULTIMO PONTO DO IND QUE MANDAM FOREM O FINAL?
-			//checkar custo
+		//if none of the individuals has reached the final point we check the comfort
+		if(!finalPointHit && ind.getComfort()>bestInd.getComfort()) {
+			return true;
+		} 
+		//if an individual has already reached the final point, we check the cost
+		else if(finalPointHit && ind.getCost() < bestInd.getCost()) {
+			return true;
 		}
+		return false;
 	}
 	
-	boolean updateBestFit(Individual ind) {
-		bestInd=ind.clone(); //ver como se faz clone
+	
+	void updateBestFit(Individual ind) throws CloneNotSupportedException {
+		bestInd=(Individual) ind.clone(); //CLONE OU COPY CONSTRUCTOR?
 	}
 	
-	Point[] getResult() {
+	
+	ArrayList<Point> getResult() {
 		return bestInd.getPath();
 	}
 	
+	
 	public void printObservation() {
-		//METER AS CENAS NO FORMATO QUE ELA QUER
+		
+		System.out.println("Observation "+obsvNumber+":");
+		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
+		
+		obsvNumber++;				
 	}
 
+	
 	public String printResult() {
-		return "Path of the best fit individual="+bestInd.toString(); //ADICIONAR TOSTRING AO INDIVIDUAL PARA IMPRIMIR O PATH COMO NO ENUNCIADO	
+		return "Path of the best fit individual = "+bestInd.toString(); 
 	}
 }

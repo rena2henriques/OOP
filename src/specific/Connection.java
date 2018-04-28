@@ -4,15 +4,15 @@ public class Connection {
 	
 	private int cost;
 	
-	MapPoint connection;
+	MapPoint point;
 
 	/**
 	 * @param cost of the link
 	 * @param connection - point which has a connection
 	 */
-	public Connection(int cost, MapPoint connection) {
+	public Connection(int cost, MapPoint point) {
 		this.cost = cost;
-		this.connection = connection;
+		this.point = point;
 	}
 
 	/**
@@ -29,18 +29,20 @@ public class Connection {
 		this.cost = cost;
 	}
 
-	/**
-	 * @return the connection
-	 */
-	public MapPoint getConnection() {
-		return connection;
-	}
 
 	/**
-	 * @param connection the connection to set
+	 * @return the point connected to
 	 */
-	public void setConnection(MapPoint connection) {
-		this.connection = connection;
+	public MapPoint getPoint() {
+		return point;
+	}
+
+
+	/**
+	 * @param point to be connected to
+	 */
+	public void setPoint(MapPoint point) {
+		this.point = point;
 	}
 	
 }

@@ -84,6 +84,15 @@ public class MapPoint extends Point {
 			return false;
 		return true;
 	}
+
+	/**
+	 * @return the connections
+	 */
+	public List<Connection> getConnections() {
+		return connections;
+	}
+	
+	
 	
 	
 }

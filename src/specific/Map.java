@@ -25,6 +25,7 @@ public class Map {
 	List<MapPoint> map;
 	
 	/**
+	 * Get the final point
 	 * @return the finalpoint
 	 */
 	public MapPoint getFinalpoint() {
@@ -32,6 +33,7 @@ public class Map {
 	}
 
 	/**
+	 * Set the final point
 	 * @param finalpoint the finalpoint to set
 	 */
 	public void setFinalpoint(MapPoint finalpoint) {
@@ -39,6 +41,7 @@ public class Map {
 	}
 
 	/**
+	 * TODO
 	 * @param origin
 	 * @param direction
 	 * @return
@@ -49,6 +52,7 @@ public class Map {
 	}
 	
 	/**
+	 * Checks if the received point corresponds to the finalpoint of the map
 	 * @param point
 	 * @return
 	 */
@@ -62,6 +66,7 @@ public class Map {
 	}
 	
 	/**
+	 * TODO
 	 * @param current_point
 	 * @param direction
 	 * @return
@@ -72,6 +77,7 @@ public class Map {
 	}
 
 	/**
+	 * Constructor
 	 * @param height
 	 * @param width
 	 * @param n_obst
@@ -85,7 +91,6 @@ public class Map {
 		map = new ArrayList<MapPoint>(height*width);
 		generateGrid();
 	}
-	
 	
 	/**
 	 * @brief creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
@@ -170,7 +175,6 @@ public class Map {
 		return (row-1)*width+(column-1);
 	}
 	
-	
 	/**
 	 * Calculate the total cost of a path
 	 * @param path -> an array of points
@@ -178,13 +182,20 @@ public class Map {
 	 */
 	public int calculateCost(ArrayList<Point> path) {
 		
+		int cost = 0;
 		
-		return 0;
+		// path is empty
+		if (path == null || path.size() == 0) {
+			return 0;
+		}
+		
+		// total cost is the sum of all the connections within the point path 
+		for (int i = 0; i < path.size() - 1; i++) {
+			cost += getConnectionCost(path.get(i), path.get(i+1));
+		}
+		
+		return cost;
 	}
-	
-	
-	
-	
 	
 	/**
 	 * returns the dist value (smallest nº of hops) between the param point and the final point
@@ -196,9 +207,8 @@ public class Map {
 		return Math.abs(point.getY() - finalpoint.getY()) + Math.abs(point.getX() - finalpoint.getY());
 	}
 	
-	
 	/**
-	 * @brief sets the point as an obstacle (type = 1)
+	 * sets the point as an obstacle (type = 1)
 	 * @param x
 	 * @param y
 	 */
@@ -245,7 +255,7 @@ public class Map {
 	}
 	
 	/**
-	 * @brief sets the point as an initial point (type = 2)
+	 * sets the point as an initial point (type = 2)
 	 * @param x
 	 * @param y
 	 */
@@ -261,7 +271,7 @@ public class Map {
 	}
 	
 	/**
-	 * @brief sets the point as an final point (type = 3)
+	 * sets the point as an final point (type = 3)
 	 * @param x
 	 * @param y
 	 */
@@ -311,7 +321,38 @@ public class Map {
 	}
 	
 	
-	//TODO
+	/**
+	 * inserts the cost in the connections
+	 * @param p1 point1
+	 * @param p2 point2 
+	 * @param cost value to be inserted
+	 */
+	public void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
+		
+		// checks every point1 connection
+		for(int i = 0; i < p1.connections.size(); i++) {
+			
+			// if the point 2 is the one that point 1 is connected in the connection 
+			if(p2.equals(p1.connections.get(i).point)) {
+				// sets the cost of the connection
+				p1.connections.get(i).setCost(cost);
+			}
+		}
+		
+		// checks every point2 connection
+		for(int i = 0; i < p2.connections.size(); i++) {
+			
+			// if the point 1 is the one that point 2 is connected in the connection 
+			if(p1.equals(p2.connections.get(i).point)) {
+				// sets the cost of the connection
+				p2.connections.get(i).setCost(cost);
+			}
+		}
+		
+		return;
+	}
+	
+
 	/**
 	 * Returns the cost of any edge between 2 connected points of the map
 	 * @param p1 first point (vertice) of the edge
@@ -332,7 +373,6 @@ public class Map {
 				// returns the cost of the connection
 				return pointA.connections.get(i).getCost();
 			}
-			
 		}
 		
 		return 0;

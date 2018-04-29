@@ -57,21 +57,70 @@ public class Map {
 	 * @return 
 	 * 
 	 */
-	public List<Point> getPossibleMoves(Point point){
+	public List<Point> getPossibleMoves(Point p1){
+		
+		List<Point> list = new ArrayList<Point>(4);
+		
+		try {
+			MapPoint point = map.get(CoordsToIndex(p1.getX(), p1.getY(), width));	
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+		
+		if()
+		
+		
 		
 		return new ArrayList<Point>();
 	}
 	
 	/**
-	 * TODO
-	 * 
-	 * @param origin
-	 * @param direction
-	 * @return
+	 * Checks if the individual going from point origin to point destiny is a permited move 
+	 * @param origin is the point we are
+	 * @param destiny is the point we want to go to
+	 * @return true if the move is possible, false if the destiny is an obstacle 
+	 * or if there is no connection between origin and destiny
 	 */
-	public boolean checkMove(MapPoint origin, Point destiny) {
+	public boolean checkMove(MapPoint origin, MapPoint destiny) {
 		
+		for(int i = 0; i < origin.connections.size(); i++) {
+			
+			// if the point the origin is connected to is the destiny
+			if(origin.connections.get(i).getPoint().equals(destiny)) {
+				int type = origin.connections.get(i).getPoint().getType();
+				// checks if it's an obstacle
+				if(type == MapPoint.OBSTACLE) {
+					// move not possible
+					return false;
+				} else {
+					// move possible
+					return true;
+				}
+			}
+			
+		}
+		
+		// there is no connection between origin and destiny
 		return false;
+	}
+	
+	/**
+	 * Converts a point of class Point to a point of class MapPoint
+	 * @param point of class Point
+	 * @return point of class MapPoint, returns null if point not available in the map
+	 */
+	public MapPoint PointToMapPoint(Point point) {
+		
+		MapPoint mappoint;
+		
+		try {
+			mappoint = map.get(CoordsToIndex(point.getX(), point.getY(), width));
+			
+		} catch (IndexOutOfBoundsException e) {
+			return null;
+		}
+		
+		return mappoint;
 	}
 	
 	/**

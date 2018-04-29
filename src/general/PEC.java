@@ -1,11 +1,13 @@
 package general;
 
 import java.util.PriorityQueue;
+import java.util.Queue;
+
 
 public class PEC implements PECI<Event>{
 	
 	//ver como implementar comparador
-	PriorityQueue<Event> events;
+	Queue<Event> events;
 	
 	public PEC() {
 		events= new PriorityQueue<Event>();

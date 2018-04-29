@@ -57,7 +57,7 @@ public class Map {
 	 * @return 
 	 * 
 	 */
-	public ArrayList<Point> getPossibleMoves(Point point){
+	public List<Point> getPossibleMoves(Point point){
 		
 		return new ArrayList<Point>();
 	}
@@ -187,7 +187,7 @@ public class Map {
 	 * @param path -> an array of points
 	 * @return the total cost
 	 */
-	public int calculateCost(ArrayList<Point> path) {
+	public int calculateCost(List<Point> path) {
 		
 		int cost = 0;
 		
@@ -542,7 +542,7 @@ public class Map {
 		lista.add(new Point(5,3));
 		lista.add(new Point(5,4));
 		
-		System.out.println("Cost of path is: " + mymap.calculateCost((ArrayList<Point>) lista));
+		System.out.println("Cost of path is: " + mymap.calculateCost(lista));
 		
 	}
 	

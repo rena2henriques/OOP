@@ -205,8 +205,10 @@ public class PathSimulation extends SimulationA {
 	
 	boolean checkBestFit(Individual ind) {
 		
+		if(bestInd==null)
+			return true;
 		//if none of the individuals has reached the final point we check the comfort
-		if(!finalPointHit && ind.getComfort()>bestInd.getComfort()) {
+		else if(!finalPointHit && ind.getComfort()>bestInd.getComfort()) {
 			return true;
 		} 
 		//if an individual has already reached the final point, we check the cost

@@ -52,8 +52,8 @@ public class Map {
 	/**
 	 * Returns the possible adjacent points of @param to move ordered clockwise and starting north 
 	 * 
-	 * @param point
-	 * @return 
+	 * @param point that we want to the possible moves
+	 * @return list of possible positions to move ordered clockwise starting with north
 	 * 
 	 */
 	public List<Point> getPossibleMoves(Point p1){
@@ -83,6 +83,7 @@ public class Map {
 		return list;
 	}
 	
+	
 	/**
 	 * Checks if the individual going from point origin to point destiny is a permited move 
 	 * @param origin is the point we are
@@ -98,7 +99,8 @@ public class Map {
 		for(int i = 0; i < origin.connections.size(); i++) {
 			// if the point the origin is connected to is the destiny
 			if(origin.connections.get(i).getPoint().equals(destiny)) {
-				int type = origin.connections.get(i).getPoint().getType();
+				int type = map.get(CoordsToIndex(origin.connections.get(i).getPoint().getX(),origin.connections.get(i).getPoint().getY(), width)).getType();
+				
 				// checks if it's an obstacle
 				if(type == MapPoint.OBSTACLE) {
 					// move not possible
@@ -275,7 +277,7 @@ public class Map {
 		// set this point as an obstacle
 		// get it from the array
 		MapPoint point = map.get((y-1)*width+(x-1));
-		
+
 		// change its type to obstacle
 		point.setType(MapPoint.OBSTACLE);
 		
@@ -283,33 +285,6 @@ public class Map {
 		n_obst++;
 		
 		
-		/*
-		// eliminate connections with the adjacent points
-		
-		// gets the list of connections
-		List<Connection> pointConnections= point.getConnections();
-		
-		for(int i = 0; i < pointConnections.size(); i++) {
-			
-			// gets the connection i of the argument point
-			Connection connection = pointConnections.get(i);
-			
-			// gets the index of the connected point
-			int index = CoordsToIndex(connection.getPoint().getY(), connection.getPoint().getX(), width);
-			
-			// get the point which is connected
-			MapPoint pointConnected = map.get(index);
-			
-			// removed the argument point from its list of connected points
-			pointConnected.connections.remove(point);
-			
-			point.connections.remove(pointConnected);
-			
-		}*/
-		
-		
-		// add the point again to the array
-		map.set((y-1)*width+(x-1), point);
 	}
 	
 	/**
@@ -328,6 +303,20 @@ public class Map {
 		map.set((y-1)*width+(x-1), point);
 	}
 	
+	/**
+	 * @return the n_obst
+	 */
+	public int getN_obst() {
+		return n_obst;
+	}
+
+	/**
+	 * @param n_obst the n_obst to set
+	 */
+	public void setN_obst(int n_obst) {
+		this.n_obst = n_obst;
+	}
+
 	/**
 	 * sets the point as an final point (type = 3)
 	 * @param x
@@ -594,6 +583,11 @@ public class Map {
 		lista.add(new Point(5,4));
 		
 		System.out.println("Cost of path is: " + mymap.calculateCost(lista));
+		
+		// test of getPossibleMoves function
+		List<Point> possmoves = mymap.getPossibleMoves(new Point(3,2));
+		
+		System.out.println("The possible moves are: " + possmoves);
 		
 	}
 	

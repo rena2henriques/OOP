@@ -4,11 +4,13 @@ import general.Event;
 import general.SimulationA;
 import java.util.ArrayList;
 import java.util.LinkedList;
+import java.Utils;
 
 
 public class PathSimulation extends SimulationA {
 	
 	//MUDAR NOMES DOS PARAMETROS DE ACORDO COM O ENUNCIADO
+	//checkar visibilidade dos metodos
 	
 	private int maxInd, initPop;
 	private Point initialPoint;
@@ -17,7 +19,6 @@ public class PathSimulation extends SimulationA {
 	private Map map;
 	private Individual bestInd;
 	private ArrayList<Individual> individuals;
-	private int obsvNumber=1;
 	//private double death, reproduction, move;
 	
 	public PathSimulation(File file) {
@@ -26,6 +27,7 @@ public class PathSimulation extends SimulationA {
 		//params=XMLParser(file); 
 		//IMPORT FILE?
 		//CRIAR PARAMETROS!
+		//TEMOS QUE CHECKAR SE OS PARAMETROS FAZEM SENTIDO?
 		
 		super.setFinalTime(finalinst);		
 		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
@@ -103,41 +105,40 @@ public class PathSimulation extends SimulationA {
 
 	public void simulate() {
 		
-		//reseting the dynamic variables
+		//reseting the dynamic variables and initializing the population of individuals
 		reset();
-		//initializing the population of individuals
-		initialize();
-		
+		initialize();	
 		//local variables
+		//INICIALIZAR TODAS AS LISTAS!!!
 		LinkedList<Event> eventList; //list of events returned in the simulateEvent
 		Individual currentInd=null; // individual of the current event
 		Event currentEvent; // current event
 		double obsvTime=finalTime/20;
-
+		int obsvNumber=1;
 
 		//initializing the simulation with the 1st event in pec
 		currentEvent=pec.nextEvent();			
-		//CHECKAR SE CURRENT EVENT É NULL ANTES DE ACEDER AO TEMPO?
-		currentTime=currentEvent.getTime();
-		
-		
+		if(currentEvent!=null)
+			currentTime=currentEvent.getTime();
+				
 		while(currentEvent!=null && currentTime< finalTime) {
 			
 			while(currentTime>obsvTime) {				
-				printObservation();
+				printObservation(obsvNumber,obsvTime);
 				obsvTime+=finalTime/20;
+				obsvNumber++;				
 			}
 
-			//fazer try and catch com excepções: a cena da epidemia, excepção para ver se já acabou?, outra excepção?
+			//fazer try and catch com excepções: a cena da epidemia,
+			//FAZER TRY AND CATCH COM EPIDEMIA,  	
+			//excepção para ver se já acabou?, outra excepção?
 			
-			//simulate current event
+			//simulate current event and add new list of events to pec
 			eventList=(LinkedList<Event>) currentEvent.simulateEvent();
 			numEvents++;			
-			//add new list of events to pec
 			addNewEvents(eventList);
-			
-			
-			//CHECKAR SE O INDIVIDUO CHEGOU AO FIM
+					
+			//checkar o best indiviual			
 			currentInd = currentEvent.getIndividual(); //ACRESCENTAR UM NOVO PATAMAR NOS EVENTOS COM INDIVIDUAL?? DISCUTIR	
 			
 			//if none of the individuals has reached the final point before and the current individual
@@ -154,14 +155,25 @@ public class PathSimulation extends SimulationA {
 					updateBestFit(currentInd);			
 			}
 				
+			//checking epidemics
+			if(checkEpidemic())
+				epidemic();
+						
 			currentEvent=pec.nextEvent();			
-			//TER CUIDADO PARA O CASO EM QUE O PEC RETORNA NULL!!! ATENCAO!
-			//MUDAR ISTO ou por tipo uma excepção
-			currentTime=currentEvent.getTime();					
+			if(currentEvent!=null)
+				currentTime=currentEvent.getTime();					
 		}	
-		
+			
+		//if there are more observations after the final event
+		if(obsvNumber<21) {
+			printObservation(obsvNumber,obsvTime);
+			obsvTime+=finalTime/20;
+			obsvNumber++;
+		}	
 		printResult();
 	}
+	
+	
 	
 	//CHECKAR VISIBILIDADES DAS FUNÇOES?
 	void reset() {
@@ -170,10 +182,10 @@ public class PathSimulation extends SimulationA {
 		finalPointHit=false;
 		bestInd=null;
 		individuals.clear();
-		obsvNumber=1;
 		Individual.setSensitivity(sensitivity);
 		//DAR SET AOS PARAMETROS DO MOVE, REPRODUCTION E DEATH
 	}
+	
 	
 	void initialize() {
 		
@@ -187,6 +199,7 @@ public class PathSimulation extends SimulationA {
 		}
 		
 	}
+	
 	
 	boolean checkBestFit(Individual ind) {
 		
@@ -207,18 +220,38 @@ public class PathSimulation extends SimulationA {
 	}
 	
 	
+	/*void checkEpidemic() throws ExceedsMaxPopException{
+		if(individuals.size()> maxInd) throw new ExceedsMaxPopException();			
+	}*/
+	
+	boolean checkEpidemic() {
+		return individuals.size()> maxInd;
+	}
+	
+	
+	void epidemic() {
+		
+		individuals.sort(new IndividualComfortComparator()); 		//escolher os melhores 5
+
+		//para os restantes fazer um for em que percorro e calculo se morrem ou não
+		for(int i=5; i<individuals.size(); i++) {
+			if(randomBetween0and1()>individuals.get(i).getComfort()) {
+				//MORRE 		//como fazer a morte?
+			}
+		}
+	}
+	
+	
 	ArrayList<Point> getResult() {
 		return bestInd.getPath();
 	}
 	
 	
-	public void printObservation() {
+	public void printObservation(int obsvNumber, double obsvTime) {
 		
 		System.out.println("Observation "+obsvNumber+":");
 		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
-		
-		obsvNumber++;				
-	}
+			}
 
 	
 	public String printResult() {

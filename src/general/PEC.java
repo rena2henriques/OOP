@@ -16,7 +16,7 @@ public class PEC implements PECI<Event>{
 	}
 	
 	public Event nextEvent() {
-		Event event= events.poll(); //POLL OU REMOVE???
+		Event event= events.poll(); //POLL OU REMOVE??? -- ADICIONAR EXCEPTION NO SIMULATOR
 		return event;
 	}
 	

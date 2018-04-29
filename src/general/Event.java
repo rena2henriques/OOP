@@ -14,6 +14,6 @@ public abstract class Event implements EventI {
 		time=_time;
 	}
 	
-	abstract public List<Event> simulateEvent();
+	abstract public List<Event> simulateEvent(); //returns list of events or an empty list if there are no next events
 	
 }

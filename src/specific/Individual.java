@@ -81,10 +81,10 @@ public class Individual implements Cloneable {
 	}
 
 	/**
-	 * @param sensitivity the sensitivity to set
+	 * @param _sensitivity the sensitivity to set
 	 */
-	public static void setSensitivity(double sensitivity) {
-		Individual.sensitivity = sensitivity;
+	public static void setSensitivity(double _sensitivity) {
+		sensitivity = _sensitivity;
 	}
  	
 	/**
@@ -194,7 +194,7 @@ public class Individual implements Cloneable {
 	private void calculateComfort() {
 		int length=path.size()-1;
 		int dist=map.calculateDist(path.get(path.size()-1));
-		comfort=Math.pow(1-(cost-length+2)/(map.getMaxCost()*length+3),sensitivity)*Math.pow(1-(dist)/(map.getWidth()+map.getHeight()+1),sensitivity);
+		comfort=Math.pow(1-(cost-length+2)*1.0/((map.getMaxCost()-1)*length+3),sensitivity)*Math.pow(1-(dist*1.0)/(map.getWidth()+map.getHeight()+1),sensitivity);
 	}
 		
 	/**
@@ -212,6 +212,59 @@ public class Individual implements Cloneable {
 			s+=pt.toString()+",";
 		
 		return s.substring(0,s.length()-1)+"}";
+	}
+	
+	public static void main(String[] args) throws CloneNotSupportedException {
+
+		Map mymap = new Map(5,4,4);		
+		mymap.addFinalPoint(5, 4);
+		mymap.addInitialPoint(1, 1);
+		mymap.addObstacle(2, 1);
+		mymap.addObstacle(2, 3);
+		mymap.addObstacle(2, 4);
+		mymap.addObstacle(4, 2);
+		
+		mymap.addSpecialZone(2, 2, 3, 3, 4);
+		/*Point initial = new Point(1,1);
+		Individual i1= new Individual(mymap, initial);
+		Individual.setSensitivity(1.0);
+		i1.addToPath(new Point(1,2));
+		i1.addToPath(new Point(2,2));
+		i1.addToPath(new Point(3,2));*/
+		List<Point> p= new ArrayList<Point>();
+		p.add(new Point(3,2));
+		p.add(new Point(3,3));
+		p.add(new Point(4,3));
+		p.add(new Point(4,4));
+		p.add(new Point(3,4));
+		Individual.setSensitivity(1.0);
+		Individual i1= new Individual(mymap,p);
+		System.out.println(i1);
+		System.out.println("cost:"+i1.getCost());
+		System.out.println("comfort:"+i1.getComfort());
+		Individual i4= (Individual) i1.clone();
+
+		//testar check cycle
+		i1.addToPath(new Point(3,3));
+		System.out.println(i1);
+		System.out.println("cost:"+i1.getCost());
+		System.out.println("comfort:"+i1.getComfort());
+		
+		//testar clone
+		Individual i2= (Individual) i1.clone();
+		System.out.println("i2:"+i2);
+		System.out.println("cost:"+i2.getCost());
+		System.out.println("comfort:"+i2.getComfort());
+		System.out.println("identity:"+(i2==i1));
+		
+		//testar sort
+		Individual i3= new Individual(mymap,p);
+		ArrayList<Individual> inds= new ArrayList<Individual>();
+		inds.add(i4);
+		inds.add(i3);
+		inds.sort(new IndividualComfortComparator());
+		for(int i=0; i<inds.size();i++)
+			System.out.println("comfort:"+inds.get(i).getComfort());
 	}
 
 }

@@ -36,7 +36,7 @@ public abstract class SimulationA implements SimulationI {
 		return currentTime;
 	}
 	
-	//public abstract void simulate();
+	public abstract void simulate(); // por isto ou não?
 	
 	//PROTECTED???
 	

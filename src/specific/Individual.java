@@ -3,6 +3,7 @@
  */
 package specific;
 
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -18,7 +19,7 @@ public class Individual implements Cloneable {
 	private int cost;
 	private double comfort;
 	private static double sensitivity; //comfort sensitivity to small variations//COMO ESTÁTICO OU A RECEBER NO CONSTRUTOR???
-	private ArrayList<Point> path; //array of points
+	private List<Point> path; //array of points
 	private Map map; //map in which the individual lives
 	
 	/**
@@ -29,7 +30,7 @@ public class Individual implements Cloneable {
 	 */
 	public Individual(Map map, Point initial){
 		this.map=map;
-		//DAR NEW AO PATH, VER SE DEVIA SER LIST OU ARRAYLIST
+		path = new ArrayList<Point>();
 		path.add(initial);
 		calculateComfort();
 	}
@@ -41,7 +42,7 @@ public class Individual implements Cloneable {
 	 * @param map map in which the individual lives
 	 * @param points initial path of the new individual
 	 */
-	public Individual(Map map, ArrayList<Point> points) {
+	public Individual(Map map, List<Point> points) {
 		this.map=map;
 		path=points;
 		cost=map.calculateCost(points);
@@ -61,15 +62,15 @@ public class Individual implements Cloneable {
 	/**
 	 * @return the current path of the individual
 	 */
-	public ArrayList<Point> getPath() {
+	public List<Point> getPath() {
 		return path;
 	}
 	
 	/**
-	 * @param p path to set
+	 * @param path path to set
 	 */
-	public void setPath(ArrayList<Point> p) {
-		path=p;
+	public void setPath(List<Point> path) {
+		this.path=path;
 	}
 
 	/**

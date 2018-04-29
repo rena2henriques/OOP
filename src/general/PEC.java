@@ -24,4 +24,8 @@ public class PEC implements PECI<Event>{
 		return events.peek(); 
 	}
 	
+	public void clear() {
+		events.clear();
+	}
+	
 }

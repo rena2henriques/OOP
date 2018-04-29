@@ -4,7 +4,8 @@ import general.Event;
 import general.SimulationA;
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.Utils;
+import java.util.List;
+import general.Utils;
 
 
 public class PathSimulation extends SimulationA {
@@ -18,7 +19,7 @@ public class PathSimulation extends SimulationA {
 	private double sensitivity;
 	private Map map;
 	private Individual bestInd;
-	private ArrayList<Individual> individuals;
+	private List<Individual> individuals;
 	//private double death, reproduction, move;
 	
 	public PathSimulation(File file) {
@@ -110,9 +111,9 @@ public class PathSimulation extends SimulationA {
 		initialize();	
 		//local variables
 		//INICIALIZAR TODAS AS LISTAS!!!
-		LinkedList<Event> eventList; //list of events returned in the simulateEvent
+		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
 		Individual currentInd=null; // individual of the current event
-		Event currentEvent; // current event
+		Event currentEvent= null; // current event
 		double obsvTime=finalTime/20;
 		int obsvNumber=1;
 
@@ -134,7 +135,7 @@ public class PathSimulation extends SimulationA {
 			//excepção para ver se já acabou?, outra excepção?
 			
 			//simulate current event and add new list of events to pec
-			eventList=(LinkedList<Event>) currentEvent.simulateEvent();
+			eventList=currentEvent.simulateEvent(); //cast to?(LinkedList<Event>) 
 			numEvents++;			
 			addNewEvents(eventList);
 					
@@ -231,18 +232,18 @@ public class PathSimulation extends SimulationA {
 	
 	void epidemic() {
 		
-		individuals.sort(new IndividualComfortComparator()); 		//escolher os melhores 5
+		individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 
 		//para os restantes fazer um for em que percorro e calculo se morrem ou não
 		for(int i=5; i<individuals.size(); i++) {
-			if(randomBetween0and1()>individuals.get(i).getComfort()) {
+			if(Utils.getRandom(1)>individuals.get(i).getComfort()) {
 				//MORRE 		//como fazer a morte?
 			}
 		}
 	}
 	
 	
-	ArrayList<Point> getResult() {
+	List<Point> getResult() {
 		return bestInd.getPath();
 	}
 	

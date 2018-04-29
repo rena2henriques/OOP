@@ -1,6 +1,6 @@
 package general;
 
-import java.util.LinkedList;
+import java.util.List;
 
 
 public abstract class SimulationA implements SimulationI {
@@ -43,13 +43,13 @@ public abstract class SimulationA implements SimulationI {
 	protected void init() {
 		currentTime=0;
 		numEvents=0;
-		pec= new PEC();
+		pec.clear();
 	}
 	
-	protected void addNewEvents(LinkedList<Event> eventList) {
+	protected void addNewEvents(List<Event> eventList) {
 		if(eventList!=null) {
 			while(!eventList.isEmpty())
-			pec.addEvent(eventList.remove());
+			pec.addEvent(eventList.remove(0));
 		}
 	}
 

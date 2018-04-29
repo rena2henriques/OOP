@@ -76,8 +76,6 @@ public class MapPoint extends Point {
 		if (!(obj instanceof MapPoint))
 			return false;
 		MapPoint other = (MapPoint) obj;
-		if (type != other.type)
-			return false;
 		if (this.getX() != other.getX())
 			return false;
 		if (this.getY() != other.getY())

@@ -300,6 +300,7 @@ public class Map {
 		point.setType(MapPoint.INITIALPOINT);
 		
 		// add the point again to the array
+		//TODO NAO E PRECISO SET
 		map.set((y-1)*width+(x-1), point);
 	}
 	
@@ -330,7 +331,7 @@ public class Map {
 		point.setType(MapPoint.FINALPOINT);
 		
 		finalpoint = new MapPoint(x, y, MapPoint.FINALPOINT);
-		
+		//TODO NAO E PRECISO SET
 		// add the point again to the array
 		map.set((y-1)*width+(x-1), point);
 	}

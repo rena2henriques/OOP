@@ -25,6 +25,23 @@ public class Map {
 	List<MapPoint> map;
 	
 	/**
+	 * Constructor
+	 * @param height
+	 * @param width
+	 * @param n_obst
+	 * @param max_cost
+	 */
+	public Map(int width, int height, int n_obst) {
+		this.height = height;
+		this.width = width;
+		this.n_obst = n_obst;
+		
+		map = new ArrayList<MapPoint>(height*width);
+		
+		generateGrid();
+	}
+	
+	/**
 	 * Get the final point
 	 * @return the finalpoint
 	 */
@@ -33,15 +50,21 @@ public class Map {
 	}
 
 	/**
-	 * Set the final point
-	 * @param finalpoint the finalpoint to set
+	 * TODO
+	 * Returns the possible adjacent points of @param to move ordered clockwise and starting north 
+	 * 
+	 * @param point
+	 * @return 
+	 * 
 	 */
-	public void setFinalpoint(MapPoint finalpoint) {
-		this.finalpoint = finalpoint;
+	public ArrayList<Point> getPossibleMoves(Point point){
+		
+		return new ArrayList<Point>();
 	}
-
+	
 	/**
 	 * TODO
+	 * 
 	 * @param origin
 	 * @param direction
 	 * @return
@@ -75,22 +98,6 @@ public class Map {
 		
 		return new MapPoint(0,0);
 	}
-
-	/**
-	 * Constructor
-	 * @param height
-	 * @param width
-	 * @param n_obst
-	 * @param max_cost
-	 */
-	public Map(int height, int width, int n_obst) {
-		this.height = height;
-		this.width = width;
-		this.n_obst = n_obst;
-		
-		map = new ArrayList<MapPoint>(height*width);
-		generateGrid();
-	}
 	
 	/**
 	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
@@ -100,13 +107,13 @@ public class Map {
 		int column = 0, row = 0;
 		
 		// map has only one point
-		if(map.size() == 1) {
+		if(width*height == 1) {
 			map.add(1, new MapPoint(1, 1));
 			return;
 		}
 		
 		// map has more than one point
-		for(int i = 0; i < map.size(); i++) {
+		for(int i = 0; i < width*height; i++) {
 			
 			// converting index to x and y
 			column = i%width + 1;
@@ -171,7 +178,7 @@ public class Map {
 	 * @param width or n of the map
 	 * @return the respective conversion to an array index
 	 */
-	public static int CoordsToIndex(int row, int column, int width) {
+	public static int CoordsToIndex(int column, int row, int width) {
 		return (row-1)*width+(column-1);
 	}
 	
@@ -204,7 +211,7 @@ public class Map {
 	 */
 	public int calculateDist(Point point) {
 		// returns the distance (number of hops) between point and the final point
-		return Math.abs(point.getY() - finalpoint.getY()) + Math.abs(point.getX() - finalpoint.getY());
+		return Math.abs(point.getY() - finalpoint.getY()) + Math.abs(point.getX() - finalpoint.getX());
 	}
 	
 	/**
@@ -328,8 +335,8 @@ public class Map {
 		MapPoint pfinal;
 		
 		try {
-			pinitial = map.get(CoordsToIndex(yinitial, xinitial, width));
-			pfinal = map.get(CoordsToIndex(yfinal, xfinal, width));
+			pinitial = map.get(CoordsToIndex(xinitial, yinitial, width));
+			pfinal = map.get(CoordsToIndex(xfinal,yfinal, width));
 		} catch(IndexOutOfBoundsException e) {
 			// coordinates not correct 
 			return;
@@ -338,12 +345,12 @@ public class Map {
 		// starts with the initial point
 		MapPoint pauxinit1 = pinitial;
 		// get the point right to the initial point
-		MapPoint pauxinit2 = map.get(CoordsToIndex(pinitial.getY(), pinitial.getX()+1, width));
+		MapPoint pauxinit2 = map.get(CoordsToIndex(pinitial.getX()+1, pinitial.getY(), width));
 		
 		// starts with the final point
 		MapPoint pauxfinal1 = pfinal;
 		// get the point left to the final point
-		MapPoint pauxfinal2 = map.get(CoordsToIndex(pfinal.getY(), pfinal.getX()-1, width));
+		MapPoint pauxfinal2 = map.get(CoordsToIndex(pfinal.getX()-1, pfinal.getY(), width));
 		
 		// connecting points from the rows
 		for(int i = 0; i < yfinal - yinitial; i++) {
@@ -365,22 +372,22 @@ public class Map {
 			
 			// moves to the next two points
 			pauxinit1 = pauxinit2;
-			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getY(), pauxinit2.getX()+1, width));
+			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX()+1,pauxinit2.getY(),  width));
 			
 			pauxfinal1 = pauxfinal2;
-			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getY(), pauxfinal2.getX()-1, width));
+			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX()-1, pauxfinal2.getY(), width));
 			
 		}
 		
 		// starts with the initial point
 		pauxinit1 = pinitial;
 		// get the point above to the initial point
-		pauxinit2 = map.get(CoordsToIndex(pinitial.getY()-1, pinitial.getX(), width));
+		pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()-1, width));
 		
 		// starts the final point
 		pauxfinal1 = pfinal;
 		// get the point under the final point
-		pauxfinal2 = map.get(CoordsToIndex(pfinal.getY()-1, pfinal.getX(), width));
+		pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
 		
 		// connecting points from the rows
 		for(int i = 0; i < xinitial - yfinal; i++) {
@@ -402,10 +409,10 @@ public class Map {
 			
 			// moves to the next two points
 			pauxinit1 = pauxinit2;
-			pauxinit2 = map.get(CoordsToIndex(pinitial.getY()+1, pinitial.getX(), width));
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()+1, width));
 			
 			pauxfinal1 = pauxfinal2;
-			pauxfinal2 = map.get(CoordsToIndex(pfinal.getY()-1, pfinal.getX(), width));
+			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
 		}
 		
 	}
@@ -441,6 +448,7 @@ public class Map {
 		return;
 	}
 
+	
 	/**
 	 * Returns the cost of any edge between 2 connected points of the map
 	 * @param p1 first point (vertice) of the edge
@@ -450,8 +458,8 @@ public class Map {
 	public int getConnectionCost(Point p1, Point p2) {
 		
 		// get the correspondent MapPoints of the argument Points
-		MapPoint pointA = map.get(CoordsToIndex(p1.getY(), p1.getX(), width));
-		MapPoint pointB = map.get(CoordsToIndex(p2.getY(), p2.getX(), width));
+		MapPoint pointA = map.get(CoordsToIndex(p1.getX(), p1.getY(), width));
+		MapPoint pointB = map.get(CoordsToIndex(p2.getX(), p2.getY(), width));
 		
 		// checks every pointA connection
 		for(int i = 0; i < pointA.connections.size(); i++) {
@@ -463,8 +471,10 @@ public class Map {
 			}
 		}
 		
-		return 0;
+		// no connection between the points
+		return -1;
 	}
+	
 	
 	/**
 	 * @return the maximum cost of an edge
@@ -473,12 +483,14 @@ public class Map {
 		return max_cost;
 	}
 	
-	/**
+	
+	/**	
 	 * @return the width (n) of the map
 	 */
 	public int getWidth() {
 		return width;
 	}
+	
 	
 	/**
 	 * @return the height (m) of the map
@@ -486,4 +498,52 @@ public class Map {
 	public int getHeight() {
 		return height;
 	}
+
+	/**
+	 * @param args
+	 */
+	public static void main(String[] args) {
+		
+		Map mymap = new Map(5,4,4);
+		
+		System.out.println("Area of the map is: " + mymap.map.size());
+		
+		mymap.addFinalPoint(5, 4);
+		mymap.addInitialPoint(1, 1);
+		mymap.addObstacle(2, 1);
+		mymap.addObstacle(2, 3);
+		mymap.addObstacle(2, 4);
+		mymap.addObstacle(4, 2);
+		
+		mymap.addSpecialZone(2, 2, 3, 3, 4);
+		mymap.addSpecialZone(2, 3, 3, 4, 5);
+		
+		System.out.println("Cost of connection is: " + mymap.getConnectionCost(new Point(2,3), new Point(3,3)));
+		System.out.println("Cost of connection is: " + mymap.getConnectionCost(new Point(2,2), new Point(3,2)));
+		
+		System.out.println("Max cost of the map is: " + mymap.getMaxCost());
+		 
+		System.out.println("Point " + mymap.getFinalpoint() + " is the final point? " + mymap.isFinal(new Point(5,4)));
+		
+		// test of CalculateDist
+		System.out.println("Dist from init to final is: " + mymap.calculateDist(new Point(1,1)));
+
+		List<Point> lista = new ArrayList<Point>();
+		
+		// best path
+		lista.add(new Point(1,1));
+		lista.add(new Point(1,2));
+		lista.add(new Point(2,2));
+		lista.add(new Point(3,2));
+		lista.add(new Point(3,1));
+		lista.add(new Point(4,1));
+		lista.add(new Point(5,1));
+		lista.add(new Point(5,2));
+		lista.add(new Point(5,3));
+		lista.add(new Point(5,4));
+		
+		System.out.println("Cost of path is: " + mymap.calculateCost((ArrayList<Point>) lista));
+		
+	}
+	
 }

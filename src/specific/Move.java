@@ -1,6 +1,7 @@
 package specific;
 
 import general.Event;
+import java.util.LinkedList;
 
 public class Move extends Event {
 	private double move; //podia ser estatico para nao se enviar 
@@ -19,7 +20,7 @@ public class Move extends Event {
 	}
 	
 	//inherited implemetions
-	public void simulateEvent() {
+	public LinkedList<Event> simulateEvent() {
 		//TODO
 		//choose direction -> retornar direção
 		//adicionar novo point à pessoa

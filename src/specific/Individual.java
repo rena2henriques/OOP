@@ -29,6 +29,7 @@ public class Individual implements Cloneable {
 	 */
 	public Individual(Map map, Point initial){
 		this.map=map;
+		//DAR NEW AO PATH, VER SE DEVIA SER LIST OU ARRAYLIST
 		path.add(initial);
 		calculateComfort();
 	}
@@ -50,7 +51,7 @@ public class Individual implements Cloneable {
 	//VER SE CLONE É PUBLIC OU PROTECTED
 	
 	 @Override
-	 protected Object clone() throws CloneNotSupportedException {
+	 public Object clone() throws CloneNotSupportedException {
 		 Individual cloned = (Individual)super.clone();
 		 cloned.setPath(new ArrayList<Point>(cloned.getPath()));
 		 //cloned.setPath((ArrayList<Point>)cloned.getPath().clone());
@@ -108,7 +109,7 @@ public class Individual implements Cloneable {
 	 * 
 	 * @param new_point new position of the individual
 	 */
-	public void addToPath(Point new_point) { 
+	/*public void addToPath(Point new_point) { 
 		
 		//checkar se há cicle
 		if(checkCycle(new_point)) {
@@ -124,6 +125,37 @@ public class Individual implements Cloneable {
 		}
 		
 		return;
+	}
+	
+	*/
+	//VER SE É MELHOR ASSIM OU COMO ESTAVA ANTES <-- NAO SEI SE VALE A PENA TER UMA EXCEPTION NESTE CASO
+	//NAO TENHO QUE CRIAR UMA CLASSE QUE DESCENDA DE EXCEPTION
+	public void addToPath(Point newPoint) {
+		
+		try {
+			addNewPoint(newPoint);
+		} catch (CycleException e){
+			 breakCycle(newPoint);		
+		}
+		finally {
+			calculateComfort();
+		}
+	}
+	
+	
+	
+	/**
+	 * Adds new point to path and throws exception when there is a cycle in the path
+	 * 
+	 * @param new_point point to add to path
+	 * @throws Exception if there is a cycle in the path with the new point
+	 */
+	private void addNewPoint(Point new_point) throws CycleException{
+		
+		if(checkCycle(new_point)) throw new CycleException();
+		
+		cost+=map.getConnectionCost(path.get(path.size()-1),new_point);
+		path.add(new_point);
 	}
 	
 	
@@ -151,7 +183,7 @@ public class Individual implements Cloneable {
 		path.subList(lastIndex+1, path.size()).clear();
 		
 		cost=map.calculateCost(path);
-		calculateComfort();				
+		//calculateComfort();				
 	}
 	
 	

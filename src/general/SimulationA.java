@@ -47,8 +47,10 @@ public abstract class SimulationA implements SimulationI {
 	}
 	
 	protected void addNewEvents(LinkedList<Event> eventList) {
-		while(!eventList.isEmpty())
+		if(eventList!=null) {
+			while(!eventList.isEmpty())
 			pec.addEvent(eventList.remove());
+		}
 	}
 
 

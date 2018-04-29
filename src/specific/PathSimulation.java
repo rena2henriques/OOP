@@ -171,7 +171,8 @@ public class PathSimulation extends SimulationA {
 			obsvTime+=finalTime/20;
 			obsvNumber++;
 		}	
-		printResult();
+		
+		printResult(); 
 	}
 	
 	

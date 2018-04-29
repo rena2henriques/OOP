@@ -50,7 +50,6 @@ public class Map {
 	}
 
 	/**
-	 * TODO
 	 * Returns the possible adjacent points of @param to move ordered clockwise and starting north 
 	 * 
 	 * @param point
@@ -61,17 +60,27 @@ public class Map {
 		
 		List<Point> list = new ArrayList<Point>(4);
 		
-		try {
-			MapPoint point = map.get(CoordsToIndex(p1.getX(), p1.getY(), width));	
-		} catch (IndexOutOfBoundsException e) {
-			return null;
+		// point above p1
+		if(checkMove(p1, new Point(p1.getX(),p1.getY()+1)) == true) {
+			list.add(new Point(p1.getX(),p1.getY()+1));
 		}
 		
-		if()
+		// point right to p1
+		if(checkMove(p1, new Point(p1.getX()+1,p1.getY())) == true) {
+			list.add(new Point(p1.getX()+1,p1.getY()));
+		}
 		
+		// point under p1
+		if(checkMove(p1, new Point(p1.getX(),p1.getY()-1)) == true) {
+			list.add(new Point(p1.getX(),p1.getY()-1));
+		}
 		
+		// point left to p1
+		if(checkMove(p1, new Point(p1.getX()-1,p1.getY())) == true) {
+			list.add(new Point(p1.getX()-1,p1.getY()));
+		}
 		
-		return new ArrayList<Point>();
+		return list;
 	}
 	
 	/**
@@ -81,10 +90,12 @@ public class Map {
 	 * @return true if the move is possible, false if the destiny is an obstacle 
 	 * or if there is no connection between origin and destiny
 	 */
-	public boolean checkMove(MapPoint origin, MapPoint destiny) {
+	public boolean checkMove(Point p1, Point p2) {
+		
+		MapPoint origin = PointToMapPoint(p1);
+		MapPoint destiny = PointToMapPoint(p2);
 		
 		for(int i = 0; i < origin.connections.size(); i++) {
-			
 			// if the point the origin is connected to is the destiny
 			if(origin.connections.get(i).getPoint().equals(destiny)) {
 				int type = origin.connections.get(i).getPoint().getType();
@@ -137,16 +148,7 @@ public class Map {
 		return false;
 	}
 	
-	/**
-	 * TODO
-	 * @param current_point
-	 * @param direction
-	 * @return
-	 */
-	public MapPoint newPosition(MapPoint current_point, int direction) {
-		
-		return new MapPoint(0,0);
-	}
+
 	
 	/**
 	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list

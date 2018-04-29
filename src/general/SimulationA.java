@@ -53,5 +53,5 @@ public abstract class SimulationA implements SimulationI {
 		}
 	}
 
-
+	//VALE A PENA TER GETRESULT QUE RETORNA OBJETO?
 }

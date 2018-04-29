@@ -93,7 +93,7 @@ public class Map {
 	}
 	
 	/**
-	 * @brief creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
+	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
 	 */
 	public void generateGrid() {
 		
@@ -288,8 +288,8 @@ public class Map {
 		map.set((y-1)*width+(x-1), point);
 	}
 	
-	
 	/**
+	 * Receives the coordinates of two points and adds an rectangular shape special cost zone of the 
 	 * @param xinitial
 	 * @param yinitial
 	 * @param xfinal
@@ -298,28 +298,117 @@ public class Map {
 	 */
 	public void addSpecialZone(int xinitial, int yinitial, int xfinal, int yfinal, int cost) {
 		
-		// PENSAR SE RECEBEMOS PONTOS OU COORDENADAS
+		// PENSAR SE RECEBEMOS PONTOS OU COORDENADAS!!! <--- não muda quase nada
 		
 		// update max_cost
 		if (cost > max_cost)
 			max_cost = cost;
 		
-		// considering that the initial is the above and left of the final
+		// Converting received points in the case of pinitial not being from the lower left and
+		// the final not the upper right of the rectangle
+		if(yinitial > yfinal) {
+			int temp = yinitial;
+			yinitial = yfinal;
+			yfinal = temp;
+			
+			if(xinitial > xfinal) {
+				temp = xinitial;
+				xinitial = xfinal;
+				xfinal = temp;
+			}		
+		} else {
+			if( xinitial > xfinal) {
+				int temp = xinitial;
+				xinitial = xfinal;
+				xfinal = temp;
+			}
+		}
+
+		MapPoint pinitial;
+		MapPoint pfinal;
 		
-		int pointA = CoordsToIndex(yinitial, xinitial, width);
-		int pointB = CoordsToIndex(yfinal, xfinal, width);
+		try {
+			pinitial = map.get(CoordsToIndex(yinitial, xinitial, width));
+			pfinal = map.get(CoordsToIndex(yfinal, xfinal, width));
+		} catch(IndexOutOfBoundsException e) {
+			// coordinates not correct 
+			return;
+		}
 		
+		// starts with the initial point
+		MapPoint pauxinit1 = pinitial;
+		// get the point right to the initial point
+		MapPoint pauxinit2 = map.get(CoordsToIndex(pinitial.getY(), pinitial.getX()+1, width));
+		
+		// starts with the final point
+		MapPoint pauxfinal1 = pfinal;
+		// get the point left to the final point
+		MapPoint pauxfinal2 = map.get(CoordsToIndex(pfinal.getY(), pfinal.getX()-1, width));
+		
+		// connecting points from the rows
 		for(int i = 0; i < yfinal - yinitial; i++) {
+		
+			if(getConnectionCost(pauxinit1, pauxinit2) < cost) {
+				// connects two points from the yinitial row
+				setConnectionCost(pauxinit1, pauxinit2, cost);
+			}
 			
+			if(getConnectionCost(pauxfinal1, pauxfinal2) < cost) {
+				// connects two points from the yfinal row
+				setConnectionCost(pauxfinal1, pauxfinal2, cost);
+			}
 			
+			// in the case Xs exceeds the boundaries of the specialzone
+			if (pauxinit2.getX()+1 > xfinal || pauxfinal2.getX()-1 < xinitial) {
+				break;
+			}
+			
+			// moves to the next two points
+			pauxinit1 = pauxinit2;
+			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getY(), pauxinit2.getX()+1, width));
+			
+			pauxfinal1 = pauxfinal2;
+			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getY(), pauxfinal2.getX()-1, width));
 			
 		}
 		
+		// starts with the initial point
+		pauxinit1 = pinitial;
+		// get the point above to the initial point
+		pauxinit2 = map.get(CoordsToIndex(pinitial.getY()-1, pinitial.getX(), width));
 		
+		// starts the final point
+		pauxfinal1 = pfinal;
+		// get the point under the final point
+		pauxfinal2 = map.get(CoordsToIndex(pfinal.getY()-1, pfinal.getX(), width));
 		
+		// connecting points from the rows
+		for(int i = 0; i < xinitial - yfinal; i++) {
+			
+			if(getConnectionCost(pauxinit1, pauxinit2) < cost) {
+				// connects two points from the xinitial column
+				setConnectionCost(pauxinit1, pauxinit2, cost);
+			}
+			
+			if(getConnectionCost(pauxfinal1, pauxfinal2) < cost) {
+				// connects two points from the xfinal column
+				setConnectionCost(pauxfinal1, pauxfinal2, cost);
+			}
+			
+			// in the case Y exceeds the boundaries of the specialzone
+			if (pauxinit2.getY()+1 > yfinal || pauxfinal2.getY()-1 < yinitial) {
+				break;
+			}
+			
+			// moves to the next two points
+			pauxinit1 = pauxinit2;
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getY()+1, pinitial.getX(), width));
+			
+			pauxfinal1 = pauxfinal2;
+			pauxfinal2 = map.get(CoordsToIndex(pfinal.getY()-1, pfinal.getX(), width));
+		}
 		
 	}
-	
 	
 	/**
 	 * inserts the cost in the connections
@@ -351,7 +440,6 @@ public class Map {
 		
 		return;
 	}
-	
 
 	/**
 	 * Returns the cost of any edge between 2 connected points of the map
@@ -377,7 +465,6 @@ public class Map {
 		
 		return 0;
 	}
-	
 	
 	/**
 	 * @return the maximum cost of an edge

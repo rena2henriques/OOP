@@ -78,9 +78,9 @@ public class MapPoint extends Point {
 		MapPoint other = (MapPoint) obj;
 		if (type != other.type)
 			return false;
-		if (x != other.x)
+		if (this.getX() != other.getX())
 			return false;
-		if (y != other.y)
+		if (this.getY() != other.getY())
 			return false;
 		return true;
 	}
@@ -91,8 +91,6 @@ public class MapPoint extends Point {
 	public List<Connection> getConnections() {
 		return connections;
 	}
-	
-	
 	
 	
 }

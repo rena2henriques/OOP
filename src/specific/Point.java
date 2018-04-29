@@ -9,7 +9,7 @@ package specific;
  */
 public class Point {
 	
-	protected int x, y;
+	private int x, y;
 
 	/**
 	 * @param x

@@ -114,7 +114,7 @@ public class PathSimulation extends SimulationA {
 		//INICIALIZAR TODAS AS LISTAS!!!
 		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
 		Individual currentInd=null; // individual of the current event
-		Event currentEvent= null; // current event
+		Event currentEvent= null; // current event //EVENT OU EVENTi?
 		double obsvTime=finalTime/20;
 		int obsvNumber=1;
 

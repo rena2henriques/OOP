@@ -4,7 +4,7 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 
-public class PEC implements PECI<Event>{
+public class PEC implements PECI<Event>{ //AQUI DEVIA SER ? EXTENDS EVENTI? PORQUE ASSIM ESTAMOS A OBRIGAR A SER EVENT
 	
 	//ver como implementar comparador
 	Queue<Event> events;

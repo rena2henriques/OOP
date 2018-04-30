@@ -22,7 +22,7 @@ public class PathSimulation extends SimulationA {
 	private List<Individual> individuals;
 	//private double death, reproduction, move;
 	
-	public PathSimulation(File file) {
+	public PathSimulation(File file, ) {
 		
 		//apply XML PARSER
 		//params=XMLParser(file); 
@@ -30,7 +30,7 @@ public class PathSimulation extends SimulationA {
 		//CRIAR PARAMETROS!
 		//TEMOS QUE CHECKAR SE OS PARAMETROS FAZEM SENTIDO?
 		
-		super.setFinalTime(finalinst);		
+		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML
 		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
 		individuals = new ArrayList<Individual>(initPop);	
 	}
@@ -103,7 +103,8 @@ public class PathSimulation extends SimulationA {
 		this.move = move;
 	}
 */
-
+	
+	
 	public void simulate() {
 		
 		//reseting the dynamic variables and initializing the population of individuals
@@ -140,7 +141,7 @@ public class PathSimulation extends SimulationA {
 			addNewEvents(eventList);
 					
 			//checkar o best indiviual			
-			currentInd = currentEvent.getIndividual(); //ACRESCENTAR UM NOVO PATAMAR NOS EVENTOS COM INDIVIDUAL?? DISCUTIR	
+			currentInd = (Individual) currentEvent.getEventObject(); //ACRESCENTAR UM NOVO PATAMAR NOS EVENTOS COM INDIVIDUAL?? DISCUTIR	
 			
 			//if none of the individuals has reached the final point before and the current individual
 			//reaches it, we change the flag and set the current individual as the best individual

@@ -14,7 +14,7 @@ public abstract class SimulationA implements SimulationI {
 		finalTime=finalt;
 		pec = new PEC();
 	}
-	
+	//mudar
 	public SimulationA() {
 		this(0);
 	}

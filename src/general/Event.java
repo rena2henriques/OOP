@@ -16,4 +16,5 @@ public abstract class Event implements EventI {
 	
 	abstract public List<Event> simulateEvent(); //returns list of events or an empty list(or null?) if there are no next events
 	
+	abstract public Object getEventObject();
 }

@@ -6,6 +6,7 @@ public final class Utils {
 
 	public static double getRandom(int n) {
 		Random rand= new Random();
-		return rand.nextDouble();
+		return rand.nextDouble(n);//VER ISTO
+
 	}
 }

@@ -10,8 +10,11 @@ public class Move extends Event {
 					//simulaçoes a correr ao mesmo tempo com valores diferentes não da :(
 					//ya é melhor nao ser estatico
 	
-	private Individual individual; //aqui ou numa super?? 
+	Individual individual; //aqui ou numa super?? 
 	
+	public Individual getEventObject() {
+		return individual;
+	}
 	
 	//constructor
 	public Move(double time, Individual ind) {

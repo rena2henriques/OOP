@@ -30,7 +30,7 @@ public class PathSimulation extends SimulationA {
 		//CRIAR PARAMETROS!
 		//TEMOS QUE CHECKAR SE OS PARAMETROS FAZEM SENTIDO?
 		
-		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML
+		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML // não é preciso fazer assim, posso aceder logo
 		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
 		individuals = new ArrayList<Individual>(initPop);	
 	}

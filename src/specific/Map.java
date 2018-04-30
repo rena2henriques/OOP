@@ -275,16 +275,10 @@ public class Map {
 	public void addObstacle(int x, int y) {
 		
 		// set this point as an obstacle
-		// get it from the array
-		MapPoint point = map.get((y-1)*width+(x-1));
+		map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
 
-		// change its type to obstacle
-		point.setType(MapPoint.OBSTACLE);
-		
 		// increments the number of obstacles
 		n_obst++;
-		
-		
 	}
 	
 	/**
@@ -294,14 +288,7 @@ public class Map {
 	 */
 	public void addInitialPoint(int x, int y) {
 		// set this point as an initial point
-		
-		MapPoint point = map.get((y-1)*width+(x-1));
-		
-		point.setType(MapPoint.INITIALPOINT);
-		
-		// add the point again to the array
-		//TODO NAO E PRECISO SET
-		map.set((y-1)*width+(x-1), point);
+		map.get((y-1)*width+(x-1)).setType(MapPoint.INITIALPOINT);;
 	}
 	
 	/**
@@ -325,15 +312,9 @@ public class Map {
 	 */
 	public void addFinalPoint(int x, int y) {
 		// set this point as an final point
-		
-		MapPoint point = map.get((y-1)*width+(x-1));
-		
-		point.setType(MapPoint.FINALPOINT);
+		map.get((y-1)*width+(x-1)).setType(MapPoint.FINALPOINT);
 		
 		finalpoint = new MapPoint(x, y, MapPoint.FINALPOINT);
-		//TODO NAO E PRECISO SET
-		// add the point again to the array
-		map.set((y-1)*width+(x-1), point);
 	}
 	
 	/**

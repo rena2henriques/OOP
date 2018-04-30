@@ -17,7 +17,7 @@ public class MapPoint extends Point {
 	List<Connection> connections;
 	
 	/**
-	 * @brief MapPoint Constructor two args
+	 * MapPoint Constructor two args
 	 * @param x
 	 * @param y
 	 * type is 0 by default - normal position
@@ -28,7 +28,7 @@ public class MapPoint extends Point {
 	}
 	
 	/**
-	 * @brief MapPoint Constructor three args
+	 * MapPoint Constructor three args
 	 * @param x height
 	 * @param y width
 	 * @param type - type of point in the map

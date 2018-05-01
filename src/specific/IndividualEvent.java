@@ -19,4 +19,13 @@ public abstract class IndividualEvent extends Event{
 		this.individual=individual;
 	}
 	
+	public boolean peekEvent(Object o) {
+		
+		if(individual==(Individual) o)
+			return true;
+		
+		return false;
+		//EXCEPÇAO caso nao recebamos um individuo???			
+	}
+	
 }

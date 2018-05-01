@@ -30,7 +30,8 @@ public class PathSimulation extends SimulationA {
 		//CRIAR PARAMETROS!
 		//TEMOS QUE CHECKAR SE OS PARAMETROS FAZEM SENTIDO?
 		
-		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML
+		
+		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML // não é preciso fazer assim, posso aceder logo
 		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
 		individuals = new ArrayList<Individual>(initPop);	
 	}
@@ -114,7 +115,7 @@ public class PathSimulation extends SimulationA {
 		//INICIALIZAR TODAS AS LISTAS!!!
 		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
 		Individual currentInd=null; // individual of the current event
-		Event currentEvent= null; // current event
+		Event currentEvent= null; // current event //EVENT OU EVENTi?
 		double obsvTime=finalTime/20;
 		int obsvNumber=1;
 

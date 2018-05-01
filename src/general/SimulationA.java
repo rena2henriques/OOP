@@ -17,13 +17,18 @@ public abstract class SimulationA implements SimulationI {
 	protected int numEvents;
 	protected PEC pec;
 	
+	public SimulationA (double finalt, int capacity) {
+		finalTime=finalt;
+		pec = new PEC(capacity);
+	}
+	
 	public SimulationA(double finalt) {
 		finalTime=finalt;
 		pec = new PEC();
 	}
-	//mudar
-	public SimulationA() {	
-		this(0);
+	
+	public SimulationA() {
+		pec = new PEC();
 	}
 	/*
 	public double getFinalTime() {
@@ -44,10 +49,8 @@ public abstract class SimulationA implements SimulationI {
 	}
 	*/
 	public abstract void simulate(); // por isto ou não?
-	
-	//PROTECTED???
-	
-	protected void init() {
+		
+	public void init() {
 		currentTime=0; 
 		numEvents=0;
 		pec.clear();
@@ -60,5 +63,4 @@ public abstract class SimulationA implements SimulationI {
 		}
 	}
 
-	//VALE A PENA TER GETRESULT QUE RETORNA OBJETO?
 }

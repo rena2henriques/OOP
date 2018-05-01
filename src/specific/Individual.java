@@ -18,9 +18,8 @@ public class Individual implements Cloneable {
 	
 	private int cost;
 	private double comfort;
-	private double sensitivity; //comfort sensitivity to small variations//COMO ESTÁTICO OU A RECEBER NO CONSTRUTOR???
 	private List<Point> path; //array of points
-	private Map map; //map in which the individual lives
+	private Population population; //population 
 	
 	/**
 	 * Constructor

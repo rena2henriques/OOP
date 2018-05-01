@@ -4,17 +4,16 @@ import java.util.List;
 
 public abstract class Event implements EventI {
 
-	private double time;
+	protected double time; 
 	
 	public double getTime() {
 		return time;		
 	}
 	
-	public void setTime(double _time) {
-		time=_time;
+	public void setTime(double time) {
+		this.time=time;
 	}
 	
-	abstract public List<Event> simulateEvent(); //returns list of events or an empty list(or null?) if there are no next events
+	abstract public List<Event> simulateEvent(); //returns null if there are no next events
 	
-	abstract public Object getEventObject();
 }

@@ -12,7 +12,6 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import general.SimulationA;
-import general.Utils;
 import general.Event;
 import general.PEC;
 

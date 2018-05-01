@@ -15,14 +15,8 @@ public class GridSimulation extends SimulationA{
 	private boolean finalPointHit;
 
 	public GridSimulation(XMLFile file) {
-		//read file
-		//call SAX Parser
-		//INITIALIZAÇÃO DO SIMULATIONA
-		//ALOCAR LOGO ESPAÇO NO PEC
-		Map map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
-		List<Individual> individuals = new LinkedList<Individual>();	//LINKEDLIST OU ARRAYLIST COM CAPAC
-		population = new Population(sensitivity,death, move,reproduction,map);	
-		this.finalTime=finaltime;
+	
+		//call XML Parser
 		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priorityqueue;
 	}
 	
@@ -34,7 +28,6 @@ public class GridSimulation extends SimulationA{
 		
 		//local variables
 		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
-		Individual currentInd=null; // individual of the current event
 		Event currentEvent= null; // current event 
 		
 		//initializing the simulation with the 1st event in pec
@@ -44,6 +37,16 @@ public class GridSimulation extends SimulationA{
 		
 		//simulation loop
 		while(currentEvent!=null && currentTime< finalTime) {
+			
+			//simulate current event and add new list of events to pec
+			eventList=currentEvent.simulateEvent(); //cast to?(LinkedList<Event>) 
+			numEvents++;			
+			addNewEvents(eventList);
+			
+			//checking best fit
+			checkCurrentIndividual(((IndividualEvent) currentEvent).getIndividual());
+			
+		}
 		
 	}
 	

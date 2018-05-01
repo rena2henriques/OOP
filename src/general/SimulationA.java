@@ -28,7 +28,7 @@ public abstract class SimulationA implements SimulationI {
 	}
 	
 	public SimulationA() {
-		pec = new PEC();
+		this(0);
 	}
 	/*
 	public double getFinalTime() {

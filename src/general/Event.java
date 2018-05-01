@@ -4,7 +4,7 @@ import java.util.List;
 
 public abstract class Event implements EventI, Comparable<Event>{
 
-	protected double time; 
+	private double time; 
 	
 	public Event(double time) {
 		this.time=time;

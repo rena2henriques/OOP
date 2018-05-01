@@ -8,7 +8,7 @@ import java.util.Queue;
 
 public class PEC implements PECI<Event>{  
 	
-	protected Queue<Event> events; //PROTECTED? , QUEUE OU LIST?
+	private Queue<Event> events; //PROTECTED? , QUEUE OU LIST?
 	
 	public PEC() {
 		events= new PriorityQueue<Event>();

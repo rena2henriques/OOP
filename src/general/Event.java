@@ -24,6 +24,8 @@ public abstract class Event implements EventI, Comparable<Event>{
 		 else return -1;
 		} 
 	
+	public abstract boolean peekEvent(Object o); 
+	
 	@Override
 	abstract public List<Event> simulateEvent(); //returns null if there are no next events
 	

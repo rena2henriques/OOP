@@ -16,7 +16,7 @@ public class ObservationEvent extends Event{
 	public List<Event> simulateEvent(){
 		List<Event> newEventsList = new LinkedList<Event>();
 		printObservation(); //acho que n e preciso mandar argumento nenhum
-		double nextObsTime = this.getTime() //+getFinalSimulationTime
+		double nextObsTime = this.getTime(); //+getFinalSimulationTime
 		newEventsList.add(new ObservationEvent(nextObsTime, this.grid));
 		return newEventsList;
 		
@@ -26,5 +26,9 @@ public class ObservationEvent extends Event{
 		//TODO
 		
 		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
+	}
+	
+	public boolean peekEvent(Object o) {
+		return false;
 	}
 }

@@ -12,6 +12,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import general.SimulationA;
+import general.Utils;
 import general.Event;
 import general.PEC;
 
@@ -69,10 +70,47 @@ public class GridSimulation extends SimulationA{
 			addNewEvents(eventList);
 			
 			//checking best fit
-			checkCurrentIndividual(((IndividualEvent) currentEvent).getIndividual());
+			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
+			
+			//checking epidemics
+			if(checkEpidemic())
+				epidemic();
+					 
+			//next event
+			currentEvent=pec.nextEvent();			
+			if(currentEvent!=null)
+				currentTime=currentEvent.getTime();	
 			
 		}
 		
+		//printing final results of the simulation
+		printResult(); 
+	}
+	
+	private boolean checkEpidemic() {
+		return population.individuals.size()> maxInd;
+	}
+	
+	
+	private void epidemic() {
+		
+		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
+		
+		Individual ind=null;
+		//para os restantes fazer um for em que percorro e calculo se morrem ou não
+		for(int i=5; i<population.individuals.size(); i++) {
+			ind=population.individuals.get(i); 
+			if(simCommands.getThreshold()>ind.getComfort()) {
+				//percorrer a pec e retirar todos os eventos do individual morto
+				for(Event event: pec.getEvents()) {
+					if(event.peekEvent(ind))
+						pec.removeEvent(event);
+				}
+				
+				//retirar individual da lista de individuals
+				population.individuals.remove(ind);
+			}
+		}
 	}
 	
 	public void reset() {	
@@ -105,11 +143,60 @@ public class GridSimulation extends SimulationA{
 		}
 		
 		//add first observation
-		pec.addEvent(new Observation(finalTime/20,this));
+		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
 	
+	private void checkBestFitIndividual(Individual currentInd) {
+		
+		//if none of the individuals has reached the final point before and the current individual
+		//reaches it, we change the flag and set the current individual as the best individual
+		if(!finalPointHit && population.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1))) {
+			finalPointHit=true; 
+			updateBestFit(currentInd);			
+		}
+		
+		//we only check if it is the best individual if the final point hasn't been reached 
+		//or if it has, we only check if our individual is also in the final point
+		else if(!finalPointHit || (finalPointHit &&  population.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))) {
+			if(checkIfIsBestFit(currentInd))
+				updateBestFit(currentInd);			
+		}
+	}
 	
+	private boolean checkIfIsBestFit(Individual currentInd) {
+		
+		if(bestInd==null)
+			return true;
+		
+		//if none of the individuals has reached the final point we check the comfort
+		else if(!finalPointHit && currentInd.getComfort()>bestInd.getComfort()) {
+			return true;
+		} 
+		//if an individual has already reached the final point, we check the cost
+		else if(finalPointHit && currentInd.getCost() < bestInd.getCost()) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	private void updateBestFit(Individual currentInd) {
+		try {
+		bestInd=(Individual) currentInd.clone(); 	
+		} catch(CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public List<Point> getResult() {
+		return bestInd.getPath();
+	}
+	
+	public void printResult() {
+		System.out.println("Path of the best fit individual = "+bestInd.toString()); 
+	}
+
 	public Point getInitialPoint() {
 		return initialPoint;
 	}

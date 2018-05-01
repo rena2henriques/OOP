@@ -16,17 +16,23 @@ public class Reproduction extends IndividualEvent{
 		//cria filho
 		Individual newDude = new Individual(this.individual.getPopulation(), childPath);
 		//adiciona novo filho à lista de individuos na simulação
-		individual.getPopulation().getIndividuals().add(newInd);
+		individual.getPopulation().getIndividuals().add(newDude);
 
 		//POR A UM IF\EXCEÇAO PARA NAO ADICIONAR EVENTOS AFTER DEATH
 		//criação de 3 novos eventos, death, move, reproduction
 		List<Event> newEventsList = new LinkedList<Event>();
 		double eventTime = this.getTime() + gera novo tempo;
-		newEventsList.add(new Death(eventTime, newDude));
+		Death death = new Death(eventTime, newDude);
+		newEventsList.add(death);
+		//sets new dude's death time
+		newDude.setIndDeath(death);
+		//adds next reproduciton and move
 		eventTime = this.getTime() + gera novo tempo;
-		newEventsList.add(new Move(eventTime, newDude));
+		if(checkDeathTime(eventTime, newDude))
+			newEventsList.add(new Move(eventTime, newDude));
 		eventTime = this.getTime() + gera novo tempo;
-		newEventsList.add(new Reproduction(eventTime, newDude));
+		if(checkDeathTime(eventTime, newDude))
+			newEventsList.add(new Reproduction(eventTime, newDude));
 		
 		return newEventsList;
 	}

@@ -32,7 +32,8 @@ public class Move extends IndividualEvent {
 		//creates next move
 		double eventTime = this.getTime() + gera novo tempo;
 		//POR A UM IF\EXCEÇAO PARA NAO ADICIONAR EVENTOS AFTER DEATH
-		newEventsList.add(new Move(eventTime))
+		if(checkDeathTime(eventTime, this.getIndividual()))
+			newEventsList.add(new Move(eventTime))
 		return newEventsList;
 	}
 	

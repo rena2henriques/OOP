@@ -19,4 +19,27 @@ public abstract class IndividualEvent extends Event{
 		this.individual=individual;
 	}
 	
+	public boolean peekEvent(Object o) {
+		
+		if(individual==(Individual) o)
+			return true;
+		
+		return false;
+		//EXCEPÇAO caso nao recebamos um individuo???			
+}
+
+	/**
+	 * Receives the next event generated time and checks if its after the indiviual death
+	 * 
+	 * @param time
+	 * @return boolean
+	 */
+	boolean checkDeathTime(double time, Individual ind) {
+		if (time > ind.getIndDeath().getTime()) {
+			System.out.println("event not added"); //NAO ESQUECER DE TIRAR
+			return false;
+		}
+		return true;
+	}
+	
 }

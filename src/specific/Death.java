@@ -1,5 +1,6 @@
 package specific;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import general.Event;
@@ -11,8 +12,9 @@ public class Death extends IndividualEvent{
 	}
 	
 	public List<Event> simulateEvent() {
+		List<Event> newEventsList = new LinkedList<Event>();
 		//removes the individual from the indiviuals list
 		this.individual.getPopulation().getIndividuals().remove(individual);
-		return null; //se isto der erro talvez tenha de retornar uma empty linked list??
+		return newEventsList; //deve ser melhor do que return null;
 	}
 }

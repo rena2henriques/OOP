@@ -1,15 +1,12 @@
 package specific;
 
 import general.Event;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
+import java.util.List;
 
 public class Move extends Event {
-	private double move; //podia ser estatico para nao se enviar 
-					//sempre que se cria um evento? 
-					//Mas depois se um gajo tiver varias 
-					//simulaçoes a correr ao mesmo tempo com valores diferentes não da :(
-					//ya é melhor nao ser estatico
-	
 	Individual individual; //aqui ou numa super?? 
 	
 	public Individual getEventObject() {
@@ -24,14 +21,17 @@ public class Move extends Event {
 	
 	//inherited implemetions
 	public LinkedList<Event> simulateEvent() {
+		
 		//TODO
-		//choose direction -> retornar direção
-		//adicionar novo point à pessoa
-		//fazer o check cyle dentro da pessoa? dentro do add. porque o move nao tem nada a ver com os ciclos
-		//calcular media -->> Depois de atualizar o conforto
-		//criar novo move e adicionar ao array?
-		//criar um novo move mandar time
-		//retornar array :)
+		List<Event> newEventsList = new ArrayList<Event>(1);
+		List<Point> pointsList = individual.getPossibleDirections();
+		//get random number between 0 and 1
+		Point choosenPoint = chooseDirection(pointsList, number between 0 and 1) 
+		this.individual.addToPath(newPoint);//adicionar novo point à pessoa	
+		//newEventsList.add(new Move(this.get time + gera novo tempo))
+	
+		return newEventsList;
+		
 	}
 	
 	//public methods
@@ -39,21 +39,9 @@ public class Move extends Event {
 	
 	//private methods
 	private void chooseDirection() {
-			//sacar no individuo o ultimo point do array
-			//ver o size o connections desse point --> dá o N
-			//pa ver o size, probably, mapPoint.getValidDirections, que vai ter um ciclo
-			//gerar numero random entre 0 e 1
-			//ver a que posição equivale o numero gerado
+			return List(floor(list_size*number between 0 and 1))
 	}
 
-	//fazer isto no ind??
-	private boolean checkCycle() {
-		
-	}
-	
-	private void breakCycle() {
-		
-	}
 }
 
 //floor(p*n) da me a poisção que preciso de tirar do array.

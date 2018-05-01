@@ -19,7 +19,7 @@ public class GridSimulation extends SimulationA{
 		//INITIALIZAÇÃO DO SIMULATIONA
 		//ALOCAR LOGO ESPAÇO NO PEC
 		Map map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
-		List<Individual> individuals = new ArrayList<Individual>(initPop);	
+		List<Individual> individuals = new ArrayList<Individual>(initPop);	//MUDARLIST
 		population = new Population(sensitivity,death, move,reproduction,map,individuals);	
 	}
 	
@@ -37,6 +37,20 @@ public class GridSimulation extends SimulationA{
 		bestInd=null;
 		population.clearIndividuals();
 	}
+	
+	void initialize() {
+		
+		//initializing the population 
+		for(int i=0; i<initPop;i++) {
+			population.individuals.add(new Individual(map, initialPoint));
+			//first 3 events for each individual - death, move, reproduction
+			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
+			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
+			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));
+		}
+		
+	}
+	
 	
 	public Point getInitialPoint() {
 		return initialPoint;

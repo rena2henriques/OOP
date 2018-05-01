@@ -26,7 +26,6 @@ public class Population {
 	 public Object clone() throws CloneNotSupportedException {
 		 
 		 Population cloned = (Population)super.clone();
-		 cloned.setMap((Map)cloned.getMap().clone());
 		 cloned.setIndividuals(new LinkedList<Individual>(cloned.getIndividuals()));
 		 return cloned;	
 	}

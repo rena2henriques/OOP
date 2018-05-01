@@ -60,11 +60,17 @@ public class Individual implements Cloneable {
 		
 	    }
 	 
-	 public Population getPopulation() {
+	 /**
+	 * @return population
+	 */
+	public Population getPopulation() {
 		 return population;
 	 }
 	 
-	 public void setPopulation(Population population) {
+	 /**
+	 * @param population
+	 */
+	public void setPopulation(Population population) {
 		 this.population=population;
 	 }
 	

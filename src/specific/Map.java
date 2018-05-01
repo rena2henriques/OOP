@@ -4,6 +4,7 @@
 package specific;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -522,7 +523,7 @@ public class Map {
 	public int getHeight() {
 		return height;
 	}
-
+	
 	/**
 	 * @param args
 	 */

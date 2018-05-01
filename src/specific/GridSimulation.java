@@ -43,7 +43,7 @@ public class GridSimulation extends SimulationA{
 		  }
 		
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priorityqueue;
+		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
 	}
 	
 	public void simulate() {
@@ -71,6 +71,8 @@ public class GridSimulation extends SimulationA{
 			
 			//checking best fit
 			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
+			
+			//TODO CHECKAR SE PEC SÓ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
 			//checking epidemics
 			if(checkEpidemic())
@@ -230,7 +232,7 @@ public class GridSimulation extends SimulationA{
 	}
 
 	public boolean isFinalPointHit() {
-		return finalPointHit;
+		return finalPointHit;	
 	}
 
 

@@ -38,10 +38,6 @@ public class PEC implements PECI<Event>{
 	public void removeEvent(Event event) {
 		events.remove(event);
 	}
-
-	public Queue<Event> getEvents() {
-		return events;
-	}
 	
 	
 	

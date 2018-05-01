@@ -4,7 +4,6 @@
 package specific;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -29,13 +28,11 @@ public class Map {
 	 * Constructor
 	 * @param height
 	 * @param width
-	 * @param n_obst
 	 * @param max_cost
 	 */
-	public Map(int width, int height, int n_obst) {
+	public Map(int width, int height) {
 		this.height = height;
 		this.width = width;
-		this.n_obst = n_obst;
 		
 		map = new ArrayList<MapPoint>(height*width);
 		
@@ -527,9 +524,11 @@ public class Map {
 	 */
 	public static void main(String[] args) {
 		
-		Map mymap = new Map(5,4,4);
+		Map mymap = new Map(5,4);
 		
 		System.out.println("Area of the map is: " + mymap.map.size());
+		
+		mymap.setN_obst(4);
 		
 		mymap.addFinalPoint(5, 4);
 		mymap.addInitialPoint(1, 1);

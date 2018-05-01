@@ -1,9 +1,17 @@
 package specific;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+
+import org.xml.sax.SAXException;
+
 import general.SimulationA;
-import general.Utils;
 import general.Event;
 import general.PEC;
 
@@ -14,11 +22,30 @@ public class GridSimulation extends SimulationA{
 	private Individual bestInd;
 	private int maxInd, initPop;
 	private boolean finalPointHit;
+	private SimulationNumberCommands simGenerator; //VER SE METEMOS AQUI OU NA ABSTRACTA
 
-	public GridSimulation(XMLFile file) {
-	
+	public GridSimulation(String filename, SimulationNumberCommands generator) {
+
+	      try {
+	    	  File file = new File(filename);
+	    	  SAXParserFactory factory = SAXParserFactory.newInstance();
+	    	  SAXParser saxParser = factory.newSAXParser();
+	    	  MyHandler handler = new MyHandler(this);
+	    	  saxParser.parse(file, handler);     
+		  } catch (IOException e) {
+			  System.err.println("IO error"); 
+			  return;
+		  } catch (SAXException e) {
+			  System.err.println("Parser error");
+			  return;
+		  } catch (ParserConfigurationException e) {
+			  System.err.println("Parser Configuration error");
+			  return;
+		  }
+		
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priorityqueue;
+		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
+		simGenerator= generator;
 	}
 	
 	public void simulate() {
@@ -47,6 +74,8 @@ public class GridSimulation extends SimulationA{
 			//checking best fit
 			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
 			
+			//TODO CHECKAR SE PEC SÓ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
+			
 			//checking epidemics
 			if(checkEpidemic())
 				epidemic();
@@ -72,11 +101,15 @@ public class GridSimulation extends SimulationA{
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
 		Individual ind=null;
-		//para os restantes fazer um for em que percorro e calculo se morrem ou não
+		//para os restantes fazer um for em que percorro e calculo se morrem ou nï¿½o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
-			if(simCommands.getThreshold()>ind.getComfort()) {
+			if(simGenerator.getThreshold(null)>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
+				for(Event event: pec.getEvents()) {
+					if(event.peekEvent(ind))
+						pec.removeEvent(event);
+				}
 				
 				//retirar individual da lista de individuals
 				population.individuals.remove(ind);
@@ -101,12 +134,12 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			Death death= new Death(RANDTIME,newInd);
+			Death death= new Death(simGenerator.getDeathTime(newInd),newInd);
 			newInd.setIndDeath(death);
 			pec.addEvent(death);			
-			//SÓ MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
-			pec.addEvent(new Move(RANDTIME,newInd));
-			pec.addEvent(new Reproduction(RANDTIME,newInd));
+			//Sï¿½ MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
+			pec.addEvent(new Move(simGenerator.getMoveTime(newInd),newInd));
+			pec.addEvent(new Reproduction(simGenerator.getReproductionTime(newInd),newInd));
 	
 			//adding individual to the population
 			population.individuals.add(newInd);			
@@ -114,7 +147,7 @@ public class GridSimulation extends SimulationA{
 		}
 		
 		//add first observation
-		pec.addEvent(new Observation(finalTime/20,this));
+		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
 	
@@ -201,8 +234,7 @@ public class GridSimulation extends SimulationA{
 	}
 
 	public boolean isFinalPointHit() {
-		return finalPointHit;
+		return finalPointHit;	
 	}
-
 
 }

@@ -19,6 +19,10 @@ public abstract class Event implements EventI, Comparable<Event>{
 	}
 		
 	public int compareTo(Event other) {
+		
+		//TODO ver se isto é mesmo assim e se deviamos redefinir o equals
+		if(other==null) throw new NullPointerException(); 
+		
 		 if (time > other.time) return 1;
 		 else if (time == other.time) return 0;
 		 else return -1;

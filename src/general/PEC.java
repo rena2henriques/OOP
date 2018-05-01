@@ -18,6 +18,10 @@ public class PEC implements PECI<Event>{
 		events= new PriorityQueue<Event>(initialCapacity);
 	}
 	
+	public Queue<Event> getEvents() {
+		return events;
+	}
+
 	public void addEvent(Event e) {
 		events.add(e);
 	}
@@ -34,5 +38,11 @@ public class PEC implements PECI<Event>{
 	public void clear() {
 		events.clear();
 	}
+	
+	public void removeEvent(Event event) {
+		events.remove(event);
+	}
+	
+	
 	
 }

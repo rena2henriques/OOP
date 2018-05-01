@@ -31,7 +31,6 @@ public class Move extends IndividualEvent {
 		this.individual.addToPath(choosenPoint);//adicionar novo point à pessoa	
 		//creates next move
 		double eventTime = this.getTime() + gera novo tempo;
-		//POR A UM IF\EXCEÇAO PARA NAO ADICIONAR EVENTOS AFTER DEATH
 		if(checkDeathTime(eventTime, this.getIndividual()))
 			newEventsList.add(new Move(eventTime))
 		return newEventsList;

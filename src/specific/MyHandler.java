@@ -1,14 +1,7 @@
 package specific;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -132,30 +125,23 @@ public class MyHandler extends DefaultHandler {
 		  // death param
 	      } else if (qName.equalsIgnoreCase("death")) {
 	    	  int param = Integer.parseInt(attributes.getValue("param"));
-		      System.out.println("Death param : " + param);
+		      //System.out.println("Death param : " + param);
 		      
 		      this.death = param;
 		      
 		  // reproduction param
 	      } else if (qName.equalsIgnoreCase("reproduction")) {
 	    	  int param = Integer.parseInt(attributes.getValue("param"));
-		      System.out.println("Reproduction param : " + param);
+		      //System.out.println("Reproduction param : " + param);
 		      
 		      this.reproduction = param;
 		      
 		  // move param
 	      } else if (qName.equalsIgnoreCase("mutacao")) {
 	    	  int param = Integer.parseInt(attributes.getValue("param"));
-		      System.out.println("Mutation param : " + param);
+		      //System.out.println("Mutation param : " + param);
 		      
 		      this.move = param;
-	      }
-	   }
-
-	   @Override
-	   public void endElement(String uri, String localName, String qName) throws SAXException {
-	      if (qName.equalsIgnoreCase("student")) {
-	         System.out.println("End Element :" + qName);
 	      }
 	   }
 
@@ -165,7 +151,7 @@ public class MyHandler extends DefaultHandler {
 	      if (bZone) {
 	    	  
 	    	 int cost = Integer.parseInt(new String(ch, start, length));
-	         System.out.println("Zone cost: " + cost);
+	         //System.out.println("Zone cost: " + cost);
 	         
 	         bZone = false;
 	         

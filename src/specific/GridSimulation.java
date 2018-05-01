@@ -24,9 +24,10 @@ public class GridSimulation extends SimulationA{
 	private int maxInd, initPop;
 	private boolean finalPointHit;
 
-	public GridSimulation(File file) {
+	public GridSimulation(String filename) {
 
 	      try {
+	    	  File file = new File(filename);
 	    	  SAXParserFactory factory = SAXParserFactory.newInstance();
 	    	  SAXParser saxParser = factory.newSAXParser();
 	    	  MyHandler handler = new MyHandler(this);
@@ -99,7 +100,7 @@ public class GridSimulation extends SimulationA{
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
 		Individual ind=null;
-		//para os restantes fazer um for em que percorro e calculo se morrem ou não
+		//para os restantes fazer um for em que percorro e calculo se morrem ou nï¿½o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
 			if(simCommands.getThreshold()>ind.getComfort()) {
@@ -234,6 +235,5 @@ public class GridSimulation extends SimulationA{
 	public boolean isFinalPointHit() {
 		return finalPointHit;	
 	}
-
 
 }

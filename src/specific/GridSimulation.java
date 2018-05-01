@@ -14,13 +14,7 @@ public class GridSimulation extends SimulationA{
 	private boolean finalPointHit;
 
 	public GridSimulation(XMLFile file) {
-		//read file
-		//call SAX Parser
-		//INITIALIZAÇÃO DO SIMULATIONA
-		//ALOCAR LOGO ESPAÇO NO PEC
-		Map map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
-		List<Individual> individuals = new ArrayList<Individual>(initPop);	
-		population = new Population(sensitivity,death, move,reproduction,map,individuals);	
+		
 	}
 	
 	public void simulate() {

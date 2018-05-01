@@ -14,6 +14,20 @@ import java.util.List;
 public abstract class SimulationA implements SimulationI {
 	
 	protected double currentTime, finalTime;
+	/**
+	 * @return the finalTime
+	 */
+	public double getFinalTime() {
+		return finalTime;
+	}
+
+	/**
+	 * @param finalTime the finalTime to set
+	 */
+	public void setFinalTime(double finalTime) {
+		this.finalTime = finalTime;
+	}
+
 	protected int numEvents;
 	protected PEC pec;
 	
@@ -48,7 +62,7 @@ public abstract class SimulationA implements SimulationI {
 		return currentTime;
 	}
 	*/
-	public abstract void simulate(); // por isto ou não?
+	public abstract void simulate(); // por isto ou nï¿½o?
 		
 	public void init() {
 		currentTime=0; 

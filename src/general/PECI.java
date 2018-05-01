@@ -13,5 +13,7 @@ public interface PECI<E extends EventI>{
 	//ACEITA QUALQUER TIPO DE EVENTOS QUE IMPLEMENTE A CLASSE EVENTI!!
 	void addEvent(E e);
 	E nextEvent(); 
-	
+	void removeEvent(E e);
+	E getEvent();
+	void clear();
 }

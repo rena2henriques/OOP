@@ -77,6 +77,10 @@ public class GridSimulation extends SimulationA{
 			ind=population.individuals.get(i); 
 			if(simCommands.getThreshold()>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
+				for(Event event: pec.getEvents()) {
+					if(event.peekEvent(ind))
+						pec.removeEvent(event);
+				}
 				
 				//retirar individual da lista de individuals
 				population.individuals.remove(ind);
@@ -114,7 +118,7 @@ public class GridSimulation extends SimulationA{
 		}
 		
 		//add first observation
-		pec.addEvent(new Observation(finalTime/20,this));
+		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
 	

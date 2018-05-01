@@ -412,7 +412,7 @@ public class Map {
 		pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
 		
 		// connecting points from the rows
-		for(int i = 0; i < xinitial - yfinal; i++) {
+		for(int i = 0; i < xfinal - xinitial; i++) {
 			
 			if(getConnectionCost(pauxinit1, pauxinit2) < cost) {
 				// connects two points from the xinitial column
@@ -557,12 +557,11 @@ public class Map {
 		lista.add(new Point(1,2));
 		lista.add(new Point(2,2));
 		lista.add(new Point(3,2));
-		lista.add(new Point(3,1));
-		lista.add(new Point(4,1));
-		lista.add(new Point(5,1));
-		lista.add(new Point(5,2));
-		lista.add(new Point(5,3));
+		lista.add(new Point(3,3));
+		lista.add(new Point(4,3));
+		lista.add(new Point(4,4));
 		lista.add(new Point(5,4));
+
 		
 		System.out.println("Cost of path is: " + mymap.calculateCost(lista));
 		

@@ -18,4 +18,5 @@ public abstract class IndividualEvent extends Event{
 	public void setIndividual(Individual individual) {
 		this.individual=individual;
 	}
+	
 }

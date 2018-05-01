@@ -37,16 +37,24 @@ public class GridSimulation extends SimulationA{
 		Individual currentInd=null; // individual of the current event
 		Event currentEvent= null; // current event 
 		
+		//initializing the simulation with the 1st event in pec
+		currentEvent=pec.nextEvent();			
+		if(currentEvent!=null)
+			currentTime=currentEvent.getTime();
+		
+		//simulation loop
+		while(currentEvent!=null && currentTime< finalTime) {
+		
 	}
 	
-	void reset() {	
+	public void reset() {	
 		super.init();		
 		finalPointHit=false;
 		bestInd=null;
 		population.clearIndividuals();
 	}
 	
-	void initialize() {
+	public void initialize() {
 		
 		Individual newInd=null;
 		
@@ -63,6 +71,7 @@ public class GridSimulation extends SimulationA{
 			pec.addEvent(new Move(RANDTIME,newInd));
 			pec.addEvent(new Reproduction(RANDTIME,newInd));
 	
+			//adding individual to the population
 			population.individuals.add(newInd);			
 			
 		}

@@ -11,6 +11,7 @@ public class Death extends IndividualEvent{
 	}
 	
 	public List<Event> simulateEvent() {
+		//removes the individual from the indiviuals list
 		this.individual.getPopulation().getIndividuals().remove(individual);
 		return null; //se isto der erro talvez tenha de retornar uma empty linked list??
 	}

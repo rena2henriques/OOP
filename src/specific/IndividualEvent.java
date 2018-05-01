@@ -19,4 +19,18 @@ public abstract class IndividualEvent extends Event{
 		this.individual=individual;
 	}
 	
+	/**
+	 * Receives the next event generated time and checks if its after the indiviual death
+	 * 
+	 * @param time
+	 * @return boolean
+	 */
+	boolean checkDeathTime(double time, Individual ind) {
+		if (time > ind.getIndDeath().getTime()) {
+			System.out.println("event not added");
+			return false;
+		}
+		return true;
+	}
+	
 }

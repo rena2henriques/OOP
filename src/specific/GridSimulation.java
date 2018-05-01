@@ -1,9 +1,10 @@
 package specific;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
-
 import general.SimulationA;
+import general.Event;
+import general.PEC;
 
 public class GridSimulation extends SimulationA{
 	
@@ -19,8 +20,10 @@ public class GridSimulation extends SimulationA{
 		//INITIALIZAÇÃO DO SIMULATIONA
 		//ALOCAR LOGO ESPAÇO NO PEC
 		Map map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
-		List<Individual> individuals = new ArrayList<Individual>(initPop);	//MUDARLIST
-		population = new Population(sensitivity,death, move,reproduction,map,individuals);	
+		List<Individual> individuals = new LinkedList<Individual>();	//LINKEDLIST OU ARRAYLIST COM CAPAC
+		population = new Population(sensitivity,death, move,reproduction,map);	
+		this.finalTime=finaltime;
+		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priorityqueue;
 	}
 	
 	public void simulate() {
@@ -28,6 +31,11 @@ public class GridSimulation extends SimulationA{
 		//reseting the dynamic variables and initializing the population of individuals
 		reset();
 		initialize();	
+		
+		//local variables
+		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
+		Individual currentInd=null; // individual of the current event
+		Event currentEvent= null; // current event 
 		
 	}
 	
@@ -40,15 +48,28 @@ public class GridSimulation extends SimulationA{
 	
 	void initialize() {
 		
+		Individual newInd=null;
+		
 		//initializing the population 
 		for(int i=0; i<initPop;i++) {
-			population.individuals.add(new Individual(map, initialPoint));
+			
+			newInd=new Individual(population, initialPoint);
+			
 			//first 3 events for each individual - death, move, reproduction
-			pec.addEvent(new Death(RANDTIME,individuals.get(individuals.size()-1),individuals));
-			pec.addEvent(new Move(RANDTIME,individuals.get(individuals.size()-1)));
-			pec.addEvent(new Reproduction(RANDTIME,individuals.get(individuals.size()-1),individuals));
+			Death death= new Death(RANDTIME,newInd);
+			newInd.setIndDeath(death);
+			pec.addEvent(death);			
+			//SÓ MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
+			pec.addEvent(new Move(RANDTIME,newInd));
+			pec.addEvent(new Reproduction(RANDTIME,newInd));
+	
+			population.individuals.add(newInd);			
+			
 		}
 		
+		//add first observation
+		pec.addEvent(new Observation(finalTime/20,this));
+			
 	}
 	
 	

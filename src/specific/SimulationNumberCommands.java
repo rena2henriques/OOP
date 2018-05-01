@@ -21,7 +21,7 @@ public class SimulationNumberCommands {
 		return deathTime.getNumber(ind);
 	}
 	
-	public double geMoveTime(Individual ind){
+	public double getMoveTime(Individual ind){
 		return moveTime.getNumber(ind);
 	}
 	

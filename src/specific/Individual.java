@@ -4,7 +4,7 @@
 package specific;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * @author Group 6
@@ -18,46 +18,76 @@ public class Individual implements Cloneable {
 	
 	private int cost;
 	private double comfort;
-	private static double sensitivity; //comfort sensitivity to small variations//COMO ESTÁTICO OU A RECEBER NO CONSTRUTOR???
 	private List<Point> path; //array of points
-	private Map map; //map in which the individual lives
+	private Population population; //population
+	private Death myDeath; //death event related to this individual
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param map map in which the individual lives
+	 * @param population population with the parameters of the simulation
 	 * @param initial initial point, where the path starts
 	 */
-	public Individual(Map map, Point initial){
-		this.map=map;
-		path = new ArrayList<Point>();
+	public Individual(Population population, Point initial){
+		this.population=population;
+		path = new LinkedList<Point>();
 		path.add(initial);
 		calculateComfort();
+		
+		
 	}
 	
 
 	/**
 	 * Constructor. To use when the individual already has a path 
 	 * 
-	 * @param map map in which the individual lives
+	 * @param population population with the parameters of the simulation
 	 * @param points initial path of the new individual
 	 */
-	public Individual(Map map, List<Point> points) {
-		this.map=map;
+	public Individual(Population population, List<Point> points) {
+		this.population=population;
 		path=points;
-		cost=map.calculateCost(points);
+		cost=population.map.calculateCost(points);
 		calculateComfort();
 	}
-	
-	//VER SE CLONE É PUBLIC OU PROTECTED
-	
+		
 	 @Override
 	 public Object clone() throws CloneNotSupportedException {
+		 
 		 Individual cloned = (Individual)super.clone();
-		 cloned.setPath(new ArrayList<Point>(cloned.getPath()));
-		 //cloned.setPath((ArrayList<Point>)cloned.getPath().clone());
-		 return cloned;
+		 cloned.setPath(new LinkedList<Point>(cloned.getPath()));
+		 cloned.setPopulation((Population)cloned.getPopulation().clone());
+		 return cloned;	 
+		
 	    }
+	 
+	 /**
+	 * @return death
+	 */
+	public Death getIndDeath() {
+		 return myDeath;
+	 }
+	 
+	 /**
+	 * @param death
+	 */
+	public void setIndDeath(Death death) {
+		 myDeath=death;
+	 }
+	 
+	 /**
+	 * @return population
+	 */
+	public Population getPopulation() {
+		 return population;
+	 }
+	 
+	 /**
+	 * @param population
+	 */
+	public void setPopulation(Population population) {
+		 this.population=population;
+	 }
 	
 	/**
 	 * @return the current path of the individual
@@ -71,20 +101,8 @@ public class Individual implements Cloneable {
 	 */
 	public void setPath(List<Point> path) {
 		this.path=path;
-	}
-
-	/**
-	 * @return the sensitivity to small variations
-	 */
-	public static double getSensitivity() {
-		return sensitivity;
-	}
-
-	/**
-	 * @param _sensitivity the sensitivity to set
-	 */
-	public static void setSensitivity(double _sensitivity) {
-		sensitivity = _sensitivity;
+		cost=population.map.calculateCost(this.path);
+		calculateComfort();
 	}
  	
 	/**
@@ -155,7 +173,7 @@ public class Individual implements Cloneable {
 		
 		if(checkCycle(new_point)) throw new CycleException();
 		
-		cost+=map.getConnectionCost(path.get(path.size()-1),new_point);
+		cost+=population.map.getConnectionCost(path.get(path.size()-1),new_point);
 		path.add(new_point);
 	}
 	
@@ -183,7 +201,7 @@ public class Individual implements Cloneable {
 		int lastIndex= path.indexOf(newPoint);
 		path.subList(lastIndex+1, path.size()).clear();
 		
-		cost=map.calculateCost(path);
+		cost=population.map.calculateCost(path);
 		//calculateComfort();				
 	}
 	
@@ -193,8 +211,8 @@ public class Individual implements Cloneable {
 	 */
 	private void calculateComfort() {
 		int length=path.size()-1;
-		int dist=map.calculateDist(path.get(path.size()-1));
-		comfort=Math.pow(1-(cost-length+2)*1.0/((map.getMaxCost()-1)*length+3),sensitivity)*Math.pow(1-(dist*1.0)/(map.getWidth()+map.getHeight()+1),sensitivity);
+		int dist=population.map.calculateDist(path.get(path.size()-1));
+		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.getMaxCost()-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.getWidth()+population.map.getHeight()+1),population.sensitivity);
 	}
 		
 	/**
@@ -220,25 +238,26 @@ public class Individual implements Cloneable {
 		mymap.addFinalPoint(5, 4);
 		mymap.addInitialPoint(1, 1);
 		mymap.addObstacle(2, 1);
-		mymap.addObstacle(2, 3);
+		//mymap.addObstacle(2, 3);
 		mymap.addObstacle(2, 4);
 		mymap.addObstacle(4, 2);
 		
 		mymap.addSpecialZone(2, 2, 3, 3, 4);
 		/*Point initial = new Point(1,1);
-		Individual i1= new Individual(mymap, initial);
-		Individual.setSensitivity(1.0);
+		Individual i1= new Individual(mymap, initial,1.0);
 		i1.addToPath(new Point(1,2));
 		i1.addToPath(new Point(2,2));
-		i1.addToPath(new Point(3,2));*/
-		List<Point> p= new ArrayList<Point>();
+		i1.addToPath(new Point(2,3));
+		System.out.println(i1);
+		System.out.println("cost:"+i1.getCost());
+		System.out.println("comfort:"+i1.getComfort());*/
+		List<Point> p= new LinkedList<Point>();
 		p.add(new Point(3,2));
 		p.add(new Point(3,3));
 		p.add(new Point(4,3));
 		p.add(new Point(4,4));
 		p.add(new Point(3,4));
-		Individual.setSensitivity(1.0);
-		Individual i1= new Individual(mymap,p);
+		Individual i1= new Individual(mymap,p,1.0);
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
 		System.out.println("comfort:"+i1.getComfort());
@@ -258,8 +277,8 @@ public class Individual implements Cloneable {
 		System.out.println("identity:"+(i2==i1));
 		
 		//testar sort
-		Individual i3= new Individual(mymap,p);
-		ArrayList<Individual> inds= new ArrayList<Individual>();
+		Individual i3= new Individual(mymap,p,1.0);
+		List<Individual> inds= new LinkedList<Individual>();
 		inds.add(i4);
 		inds.add(i3);
 		inds.sort(new IndividualComfortComparator());

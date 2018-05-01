@@ -2,19 +2,29 @@ package general;
 
 import java.util.List;
 
-public abstract class Event implements EventI {
+public abstract class Event implements EventI, Comparable<Event>{
 
-	private double time;
+	private double time; 
+	
+	public Event(double time) {
+		this.time=time;
+	}
 	
 	public double getTime() {
 		return time;		
 	}
 	
-	public void setTime(double _time) {
-		time=_time;
+	public void setTime(double time) {
+		this.time=time;
 	}
+		
+	public int compareTo(Event other) {
+		 if (time > other.time) return 1;
+		 else if (time == other.time) return 0;
+		 else return -1;
+		} 
 	
-	abstract public List<Event> simulateEvent(); //returns list of events or an empty list(or null?) if there are no next events
+	@Override
+	abstract public List<Event> simulateEvent(); //returns null if there are no next events
 	
-	abstract public Object getEventObject();
 }

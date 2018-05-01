@@ -4,13 +4,18 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 
 
-public class PEC implements PECI<Event>{ //AQUI DEVIA SER ? EXTENDS EVENTI? PORQUE ASSIM ESTAMOS A OBRIGAR A SER EVENT
+//IMPLEMENTACAO DA PECI, só funciona com eventos do tipo event, que têm um time
+
+public class PEC implements PECI<Event>{  
 	
-	//ver como implementar comparador
-	Queue<Event> events;
+	private Queue<Event> events; //PROTECTED? , QUEUE OU LIST?
 	
 	public PEC() {
 		events= new PriorityQueue<Event>();
+	}
+	
+	public PEC(int initialCapacity) {
+		events= new PriorityQueue<Event>(initialCapacity);
 	}
 	
 	public void addEvent(Event e) {

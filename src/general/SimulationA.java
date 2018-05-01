@@ -3,22 +3,34 @@ package general;
 import java.util.List;
 
 
+
+/**
+ * @author mariana
+ * 
+ * This class provides a skeletal implementation of the Simulation interface to
+ * minimize the effort required to implement this interface.
+ * 
+ */
 public abstract class SimulationA implements SimulationI {
 	
-	//VER SE ESTES SÃO PROTECTED OU SE SAO PRIVATE E TEM SETTER E GETTERS!!!
 	protected double currentTime, finalTime;
 	protected int numEvents;
 	protected PEC pec;
+	
+	public SimulationA (double finalt, int capacity) {
+		finalTime=finalt;
+		pec = new PEC(capacity);
+	}
 	
 	public SimulationA(double finalt) {
 		finalTime=finalt;
 		pec = new PEC();
 	}
-	//mudar
+	
 	public SimulationA() {
 		this(0);
 	}
-	
+	/*
 	public double getFinalTime() {
 		return finalTime;
 	}
@@ -35,13 +47,11 @@ public abstract class SimulationA implements SimulationI {
 	public double getSimulationClock() {
 		return currentTime;
 	}
-	
+	*/
 	public abstract void simulate(); // por isto ou não?
-	
-	//PROTECTED???
-	
-	protected void init() {
-		currentTime=0;
+		
+	public void init() {
+		currentTime=0; 
 		numEvents=0;
 		pec.clear();
 	}
@@ -53,5 +63,4 @@ public abstract class SimulationA implements SimulationI {
 		}
 	}
 
-	//VALE A PENA TER GETRESULT QUE RETORNA OBJETO?
 }

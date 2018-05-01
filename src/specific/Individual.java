@@ -4,7 +4,7 @@
 package specific;
 
 import java.util.List;
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * @author Group 6
@@ -18,7 +18,7 @@ public class Individual implements Cloneable {
 	
 	private int cost;
 	private double comfort;
-	private static double sensitivity; //comfort sensitivity to small variations//COMO ESTÁTICO OU A RECEBER NO CONSTRUTOR???
+	private double sensitivity; //comfort sensitivity to small variations//COMO ESTÁTICO OU A RECEBER NO CONSTRUTOR???
 	private List<Point> path; //array of points
 	private Map map; //map in which the individual lives
 	
@@ -27,10 +27,12 @@ public class Individual implements Cloneable {
 	 * 
 	 * @param map map in which the individual lives
 	 * @param initial initial point, where the path starts
+	 * @param sensitivity 
 	 */
-	public Individual(Map map, Point initial){
+	public Individual(Map map, Point initial, double sensitivity){
 		this.map=map;
-		path = new ArrayList<Point>();
+		this.sensitivity=sensitivity;
+		path = new LinkedList<Point>();
 		path.add(initial);
 		calculateComfort();
 	}
@@ -42,19 +44,19 @@ public class Individual implements Cloneable {
 	 * @param map map in which the individual lives
 	 * @param points initial path of the new individual
 	 */
-	public Individual(Map map, List<Point> points) {
+	public Individual(Map map, List<Point> points,double sensitivity) {
+		this.sensitivity=sensitivity;
 		this.map=map;
 		path=points;
 		cost=map.calculateCost(points);
 		calculateComfort();
 	}
-	
-	//VER SE CLONE É PUBLIC OU PROTECTED
-	
+		
 	 @Override
 	 public Object clone() throws CloneNotSupportedException {
 		 Individual cloned = (Individual)super.clone();
-		 cloned.setPath(new ArrayList<Point>(cloned.getPath()));
+		 cloned.setPath(new LinkedList<Point>(cloned.getPath()));
+		 //cloned.setPath(new ArrayList<Point>(cloned.getPath()));
 		 //cloned.setPath((ArrayList<Point>)cloned.getPath().clone());
 		 return cloned;
 	    }
@@ -71,19 +73,21 @@ public class Individual implements Cloneable {
 	 */
 	public void setPath(List<Point> path) {
 		this.path=path;
+		cost=map.calculateCost(this.path);
+		calculateComfort();
 	}
 
 	/**
 	 * @return the sensitivity to small variations
 	 */
-	public static double getSensitivity() {
+	public double getSensitivity() {
 		return sensitivity;
 	}
 
 	/**
 	 * @param _sensitivity the sensitivity to set
 	 */
-	public static void setSensitivity(double _sensitivity) {
+	public void setSensitivity(double _sensitivity) {
 		sensitivity = _sensitivity;
 	}
  	
@@ -220,29 +224,30 @@ public class Individual implements Cloneable {
 		mymap.addFinalPoint(5, 4);
 		mymap.addInitialPoint(1, 1);
 		mymap.addObstacle(2, 1);
-		mymap.addObstacle(2, 3);
+		//mymap.addObstacle(2, 3);
 		mymap.addObstacle(2, 4);
 		mymap.addObstacle(4, 2);
 		
 		mymap.addSpecialZone(2, 2, 3, 3, 4);
-		/*Point initial = new Point(1,1);
-		Individual i1= new Individual(mymap, initial);
-		Individual.setSensitivity(1.0);
+		Point initial = new Point(1,1);
+		Individual i1= new Individual(mymap, initial,1.0);
 		i1.addToPath(new Point(1,2));
 		i1.addToPath(new Point(2,2));
-		i1.addToPath(new Point(3,2));*/
-		List<Point> p= new ArrayList<Point>();
+		i1.addToPath(new Point(2,3));
+		System.out.println(i1);
+		System.out.println("cost:"+i1.getCost());
+		System.out.println("comfort:"+i1.getComfort());
+	/*	List<Point> p= new LinkedList<Point>();
 		p.add(new Point(3,2));
 		p.add(new Point(3,3));
 		p.add(new Point(4,3));
 		p.add(new Point(4,4));
 		p.add(new Point(3,4));
-		Individual.setSensitivity(1.0);
-		Individual i1= new Individual(mymap,p);
+		Individual i1= new Individual(mymap,p,1.0);
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());
-		Individual i4= (Individual) i1.clone();
+		System.out.println("comfort:"+i1.getComfort());*/
+		/*Individual i4= (Individual) i1.clone();
 
 		//testar check cycle
 		i1.addToPath(new Point(3,3));
@@ -258,13 +263,13 @@ public class Individual implements Cloneable {
 		System.out.println("identity:"+(i2==i1));
 		
 		//testar sort
-		Individual i3= new Individual(mymap,p);
-		ArrayList<Individual> inds= new ArrayList<Individual>();
+		Individual i3= new Individual(mymap,p,1.0);
+		List<Individual> inds= new LinkedList<Individual>();
 		inds.add(i4);
 		inds.add(i3);
 		inds.sort(new IndividualComfortComparator());
 		for(int i=0; i<inds.size();i++)
-			System.out.println("comfort:"+inds.get(i).getComfort());
+			System.out.println("comfort:"+inds.get(i).getComfort());*/
 	}
 
 }

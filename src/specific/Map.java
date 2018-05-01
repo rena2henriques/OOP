@@ -557,10 +557,8 @@ public class Map {
 		lista.add(new Point(1,2));
 		lista.add(new Point(2,2));
 		lista.add(new Point(3,2));
-		lista.add(new Point(3,1));
-		lista.add(new Point(4,1));
-		lista.add(new Point(5,1));
-		lista.add(new Point(5,2));
+		lista.add(new Point(3,3));
+		lista.add(new Point(4,3));
 		lista.add(new Point(5,3));
 		lista.add(new Point(5,4));
 		

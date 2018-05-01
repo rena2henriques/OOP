@@ -257,7 +257,8 @@ public class Individual implements Cloneable {
 		p.add(new Point(4,3));
 		p.add(new Point(4,4));
 		p.add(new Point(3,4));
-		Individual i1= new Individual(mymap,p,1.0);
+		Population pop= new Population(1,1,1,1,mymap);
+		Individual i1= new Individual(pop,p);
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
 		System.out.println("comfort:"+i1.getComfort());
@@ -274,10 +275,10 @@ public class Individual implements Cloneable {
 		System.out.println("i2:"+i2);
 		System.out.println("cost:"+i2.getCost());
 		System.out.println("comfort:"+i2.getComfort());
-		System.out.println("identity:"+(i2==i1));
+		System.out.println("identity:"+(i2.path==i1.path));
 		
 		//testar sort
-		Individual i3= new Individual(mymap,p,1.0);
+		Individual i3= new Individual(pop,p);
 		List<Individual> inds= new LinkedList<Individual>();
 		inds.add(i4);
 		inds.add(i3);

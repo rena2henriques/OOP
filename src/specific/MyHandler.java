@@ -182,24 +182,4 @@ public class MyHandler extends DefaultHandler {
 		   simulation.setPopulation(population);
 	   }
 	   
-	   public static void main(String[] args) {
-
-		      try {
-		         File inputFile = new File("projectexample.xml");
-		         SAXParserFactory factory = SAXParserFactory.newInstance();
-		         SAXParser saxParser = factory.newSAXParser();
-		         MyHandler handler = new MyHandler();
-		         saxParser.parse(inputFile, handler);     
-		      } catch (IOException e) {
-		    	  System.err.println("IO error"); 
-		    	  return;
-		      } catch (SAXException e) {
-		    	  System.err.println("Parser error");
-		    	  return;
-		      } catch (ParserConfigurationException e) {
-		    	  System.err.println("Parser Configuration error");
-		    	  return;
-		      }
-		   }   
-	   
 	}

@@ -229,15 +229,15 @@ public class Individual implements Cloneable {
 		mymap.addObstacle(4, 2);
 		
 		mymap.addSpecialZone(2, 2, 3, 3, 4);
-		Point initial = new Point(1,1);
+		/*Point initial = new Point(1,1);
 		Individual i1= new Individual(mymap, initial,1.0);
 		i1.addToPath(new Point(1,2));
 		i1.addToPath(new Point(2,2));
 		i1.addToPath(new Point(2,3));
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());
-	/*	List<Point> p= new LinkedList<Point>();
+		System.out.println("comfort:"+i1.getComfort());*/
+		List<Point> p= new LinkedList<Point>();
 		p.add(new Point(3,2));
 		p.add(new Point(3,3));
 		p.add(new Point(4,3));
@@ -246,8 +246,8 @@ public class Individual implements Cloneable {
 		Individual i1= new Individual(mymap,p,1.0);
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());*/
-		/*Individual i4= (Individual) i1.clone();
+		System.out.println("comfort:"+i1.getComfort());
+		Individual i4= (Individual) i1.clone();
 
 		//testar check cycle
 		i1.addToPath(new Point(3,3));
@@ -269,7 +269,7 @@ public class Individual implements Cloneable {
 		inds.add(i3);
 		inds.sort(new IndividualComfortComparator());
 		for(int i=0; i<inds.size();i++)
-			System.out.println("comfort:"+inds.get(i).getComfort());*/
+			System.out.println("comfort:"+inds.get(i).getComfort());
 	}
 
 }

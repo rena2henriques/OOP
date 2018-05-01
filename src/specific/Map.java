@@ -325,6 +325,8 @@ public class Map {
 	 * @param yfinal
 	 * @param cost
 	 */
+	
+	//TODO SÓ ADICIONA AS ARESTAS HORIZONTAIS, AS VERTICAIS CONTINUAM A 1 -- RESOLVER
 	public void addSpecialZone(int xinitial, int yinitial, int xfinal, int yfinal, int cost) {
 		
 		// PENSAR SE RECEBEMOS PONTOS OU COORDENADAS!!! <--- nÃ£o muda quase nada

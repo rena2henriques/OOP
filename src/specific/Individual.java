@@ -19,7 +19,8 @@ public class Individual implements Cloneable {
 	private int cost;
 	private double comfort;
 	private List<Point> path; //array of points
-	private Population population; //population 
+	private Population population; //population
+	private Death myDeath; //death event related to this individual
 	
 	/**
 	 * Constructor
@@ -59,6 +60,20 @@ public class Individual implements Cloneable {
 		 return cloned;	 
 		
 	    }
+	 
+	 /**
+	 * @return death
+	 */
+	public Death getIndDeath() {
+		 return myDeath;
+	 }
+	 
+	 /**
+	 * @param death
+	 */
+	public void setIndDeath(Death death) {
+		 myDeath=death;
+	 }
 	 
 	 /**
 	 * @return population

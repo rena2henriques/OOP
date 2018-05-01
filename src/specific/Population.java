@@ -47,5 +47,9 @@ public class Population {
 		this.individuals = individuals;
 	}
 	
+	public void clearIndividuals() {
+		individuals.clear();
+	}
+	
 	
 }

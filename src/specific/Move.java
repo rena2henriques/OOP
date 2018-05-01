@@ -3,45 +3,39 @@ package specific;
 import general.Event;
 
 import java.util.ArrayList;
+import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Move extends Event {
-	Individual individual; //aqui ou numa super?? 
-	
-	public Individual getEventObject() {
-		return individual;
-	}
+public class Move extends IndividualEvent {
 	
 	//constructor
 	public Move(double time, Individual ind) {
-		this.setTime(time); //super
-		this.individual = ind; //suepr tambem??
+		super(time, ind);
+
 	}
 	
 	//inherited implemetions
-	public LinkedList<Event> simulateEvent() {
+	public List<Event> simulateEvent() {
+
+		List<Event> newEventsList = new LinkedList<Event>();
+		Point currPos = individual.getPath().get(individual.getPath().size());
 		
-		//TODO
-		List<Event> newEventsList = new ArrayList<Event>(1);
-		List<Point> pointsList = individual.getPossibleDirections();
-		//get random number between 0 and 1
-		Point choosenPoint = chooseDirection(pointsList, number between 0 and 1) 
-		this.individual.addToPath(newPoint);//adicionar novo point à pessoa	
-		//newEventsList.add(new Move(this.get time + gera novo tempo))
-	
+		List<Point> pointsList = individual.getPopulation().getMap().getPossibleMoves(currPos);
+		double direction;//get random number between 0 and 1
+		Point choosenPoint = chooseDirection(pointsList, direction) 
+		this.individual.addToPath(choosenPoint);//adicionar novo point à pessoa	
+		double eventTime = this.getTime() + gera novo tempo;
+		//POR A UM IF\EXCEÇAO PARA NAO ADICIONAR EVENTOS AFTER DEATH
+		newEventsList.add(new Move(eventTime))
 		return newEventsList;
 		
 	}
 	
-	//public methods
-	//getters e setters
 	
 	//private methods
-	private void chooseDirection() {
-			return List(floor(list_size*number between 0 and 1))
+	private Point chooseDirection(List<Point> pointsList, double direction) {
+			return pointsList.get((int)(Math.floor(pointsList.size()*direction)));
 	}
 
 }
-
-//floor(p*n) da me a poisção que preciso de tirar do array.

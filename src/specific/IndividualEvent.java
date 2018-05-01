@@ -4,14 +4,11 @@ import general.Event;
 
 public abstract class IndividualEvent extends Event{
 	
-	private Individual individual;
+	Individual individual;
 	
 	IndividualEvent(double time,Individual individual){
 		super(time);
+		this.individual = individual;
 	}
 	
-	public Individual getIndividual() {
-		return individual;
-	}
-
 }

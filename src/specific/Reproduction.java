@@ -13,10 +13,19 @@ public class Reproduction extends IndividualEvent{
 
 	public List<Event> simulateEvent(){
 		LinkedList<Point> childPath = generateChildPath(this.individual);
-		Individual newInd = new Individual(this.individual.getPopulation(), childPath);
+		Individual newDude = new Individual(this.individual.getPopulation(), childPath);
 		individual.getPopulation().getIndividuals().add(newInd);
+
+		//POR A UM IF\EXCEÇAO PARA NAO ADICIONAR EVENTOS AFTER DEATH
+		List<Event> newEventsList = new LinkedList<Event>();
+		double eventTime = this.getTime() + gera novo tempo;
+		newEventsList.add(new Death(eventTime, newDude));
+		eventTime = this.getTime() + gera novo tempo;
+		newEventsList.add(new Move(eventTime, newDude));
+		eventTime = this.getTime() + gera novo tempo;
+		newEventsList.add(new Reproduction(eventTime, newDude));
 		
-		return null;
+		return newEventsList;
 	}
 	
 	private LinkedList<Point> generateChildPath(Individual ind) {

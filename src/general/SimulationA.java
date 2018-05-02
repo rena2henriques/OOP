@@ -44,25 +44,18 @@ public abstract class SimulationA implements SimulationI {
 	public SimulationA() {
 		this(0);
 	}
-	/*
-	public double getFinalTime() {
-		return finalTime;
-	}
-	public void setFinalTime(double final_time) {
-		this.finalTime = final_time;
-	}
+	
 	public int getNumEvents() {
 		return numEvents;
-	}
-	public void setNumEvents(int num_events) {
-		this.numEvents = num_events;
 	}
 	
 	public double getSimulationClock() {
 		return currentTime;
 	}
-	*/
+	
 	public abstract void simulate(); // por isto ou n�o?
+	
+	public abstract void initialize();
 		
 	public void init() {
 		currentTime=0; 

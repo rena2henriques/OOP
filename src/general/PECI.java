@@ -16,4 +16,5 @@ public interface PECI<E extends EventI>{
 	void removeEvent(E e);
 	E getEvent();
 	void clear();
+	boolean isEmpty();
 }

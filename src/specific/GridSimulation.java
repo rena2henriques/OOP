@@ -58,21 +58,15 @@ public class GridSimulation extends SimulationA{
 		
 		//initializing the simulation with the 1st event in pec
 		currentEvent=pec.nextEvent();			
-		if(currentEvent!=null)
-			currentTime=currentEvent.getTime();
+		currentTime=currentEvent.getTime();
 		
 		//simulation loop
-		while(currentEvent!=null && currentTime< finalTime) {
+		while(!pec.isEmpty() && currentTime< finalTime) {
 			
 			//simulate current event and add new list of events to pec
-			eventList=currentEvent.simulateEvent(); //cast to?(LinkedList<Event>) 
+			eventList=currentEvent.simulateEvent(); 
 			numEvents++;			
 			addNewEvents(eventList);
-			
-			//checking best fit
-			//checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
-			
-			//TODO CHECKAR SE PEC SÓ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
 			//checking epidemics
 			if(checkEpidemic())
@@ -80,8 +74,7 @@ public class GridSimulation extends SimulationA{
 					 
 			//next event
 			currentEvent=pec.nextEvent();			
-			if(currentEvent!=null)
-				currentTime=currentEvent.getTime();	
+			currentTime=currentEvent.getTime();	
 			
 		}
 		
@@ -240,12 +233,12 @@ public class GridSimulation extends SimulationA{
 		return population.finalPointHit;	
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 	
 		GridSimulation simulation = new GridSimulation("projectexample.xml");
 		
 		System.out.println(simulation.population.map.map.get(0).getType());
 		
-	}
+	}*/
 
 }

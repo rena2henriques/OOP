@@ -1,7 +1,7 @@
 /**
  * 
  */
-package specific;
+package general;
 
 /**
  * @author Group 6

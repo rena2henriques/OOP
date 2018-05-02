@@ -1,6 +1,7 @@
 package specific;
 
 import general.Event;
+import general.Point;
 import general.SimulationA;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -31,7 +32,7 @@ public class PathSimulation extends SimulationA {
 		//TEMOS QUE CHECKAR SE OS PARAMETROS FAZEM SENTIDO?
 		
 		
-		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML // não é preciso fazer assim, posso aceder logo
+		super.setFinalTime(finalinst);	//<--MUDAR ISTO	CONSOANTE O XML // nï¿½o ï¿½ preciso fazer assim, posso aceder logo
 		map = new Map(grid,initialpoint,finalpoint,obstacles,events); // VERIFICAR NOMES DAS VARIAVEIS
 		individuals = new ArrayList<Individual>(initPop);	
 	}
@@ -132,9 +133,9 @@ public class PathSimulation extends SimulationA {
 				obsvNumber++;				
 			}
 
-			//fazer try and catch com excepções: a cena da epidemia,
+			//fazer try and catch com excepï¿½ï¿½es: a cena da epidemia,
 			//FAZER TRY AND CATCH COM EPIDEMIA,  	
-			//excepção para ver se já acabou?, outra excepção?
+			//excepï¿½ï¿½o para ver se jï¿½ acabou?, outra excepï¿½ï¿½o?
 			
 			//simulate current event and add new list of events to pec
 			eventList=currentEvent.simulateEvent(); //cast to?(LinkedList<Event>) 
@@ -179,7 +180,7 @@ public class PathSimulation extends SimulationA {
 	
 	
 	
-	//CHECKAR VISIBILIDADES DAS FUNÇOES?
+	//CHECKAR VISIBILIDADES DAS FUNï¿½OES?
 	void reset() {
 		
 		super.init();		
@@ -239,7 +240,7 @@ public class PathSimulation extends SimulationA {
 		
 		individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 
-		//para os restantes fazer um for em que percorro e calculo se morrem ou não
+		//para os restantes fazer um for em que percorro e calculo se morrem ou nï¿½o
 		for(int i=5; i<individuals.size(); i++) {
 			if(Utils.getRandom(1)>individuals.get(i).getComfort()) {
 				//MORRE 		//como fazer a morte?

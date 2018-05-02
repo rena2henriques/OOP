@@ -234,7 +234,7 @@ public class Individual implements Cloneable {
 	
 	public static void main(String[] args) throws CloneNotSupportedException {
 
-		Map mymap = new Map(5,4,4);		
+		/*Map mymap = new Map(5,4,4);		
 		mymap.addFinalPoint(5, 4);
 		mymap.addInitialPoint(1, 1);
 		mymap.addObstacle(2, 1);
@@ -242,7 +242,7 @@ public class Individual implements Cloneable {
 		mymap.addObstacle(2, 4);
 		mymap.addObstacle(4, 2);
 		
-		mymap.addSpecialZone(2, 2, 3, 3, 4);
+		mymap.addSpecialZone(2, 2, 3, 3, 4);*/
 		/*Point initial = new Point(1,1);
 		Individual i1= new Individual(mymap, initial,1.0);
 		i1.addToPath(new Point(1,2));
@@ -251,7 +251,7 @@ public class Individual implements Cloneable {
 		System.out.println(i1);
 		System.out.println("cost:"+i1.getCost());
 		System.out.println("comfort:"+i1.getComfort());*/
-		List<Point> p= new LinkedList<Point>();
+		/*List<Point> p= new LinkedList<Point>();
 		p.add(new Point(3,2));
 		p.add(new Point(3,3));
 		p.add(new Point(4,3));
@@ -284,7 +284,7 @@ public class Individual implements Cloneable {
 		inds.add(i3);
 		inds.sort(new IndividualComfortComparator());
 		for(int i=0; i<inds.size();i++)
-			System.out.println("comfort:"+inds.get(i).getComfort());
+			System.out.println("comfort:"+inds.get(i).getComfort());*/
 	}
 
 }

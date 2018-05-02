@@ -12,7 +12,6 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import general.SimulationA;
-import general.Utils;
 import general.Event;
 import general.PEC;
 
@@ -23,8 +22,9 @@ public class GridSimulation extends SimulationA{
 	private Individual bestInd;
 	private int maxInd, initPop;
 	private boolean finalPointHit;
+	private SimulationNumberCommands simGenerator; //VER SE METEMOS AQUI OU NA ABSTRACTA
 
-	public GridSimulation(String filename) {
+	public GridSimulation(String filename, SimulationNumberCommands generator) {
 
 	      try {
 	    	  File file = new File(filename);
@@ -44,7 +44,8 @@ public class GridSimulation extends SimulationA{
 		  }
 		
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priorityqueue;
+		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
+		simGenerator= generator;
 	}
 	
 	public void simulate() {
@@ -72,6 +73,8 @@ public class GridSimulation extends SimulationA{
 			
 			//checking best fit
 			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
+			
+			//TODO CHECKAR SE PEC SÓ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
 			//checking epidemics
 			if(checkEpidemic())
@@ -101,7 +104,7 @@ public class GridSimulation extends SimulationA{
 		//para os restantes fazer um for em que percorro e calculo se morrem ou nï¿½o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
-			if(simCommands.getThreshold()>ind.getComfort()) {
+			if(simGenerator.getThreshold(null)>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				for(Event event: pec.getEvents()) {
 					if(event.peekEvent(ind))
@@ -131,12 +134,12 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			Death death= new Death(RANDTIME,newInd);
+			Death death= new Death(simGenerator.getDeathTime(newInd),newInd);
 			newInd.setIndDeath(death);
 			pec.addEvent(death);			
 			//Sï¿½ MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
-			pec.addEvent(new Move(RANDTIME,newInd));
-			pec.addEvent(new Reproduction(RANDTIME,newInd));
+			pec.addEvent(new Move(simGenerator.getMoveTime(newInd),newInd));
+			pec.addEvent(new Reproduction(simGenerator.getReproductionTime(newInd),newInd));
 	
 			//adding individual to the population
 			population.individuals.add(newInd);			
@@ -231,7 +234,7 @@ public class GridSimulation extends SimulationA{
 	}
 
 	public boolean isFinalPointHit() {
-		return finalPointHit;
+		return finalPointHit;	
 	}
 	
 	public static void main(String[] args) {

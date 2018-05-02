@@ -1,9 +1,12 @@
 package specific;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import general.Event;
+import general.INumberGenerator;
+import general.Point;
 
 public class ObservationEvent extends Event{
 	GridSimulation grid;
@@ -22,13 +25,21 @@ public class ObservationEvent extends Event{
 	}
 	
 	private void printObservation() {
-		//TODO
-		
+		System.out.println("Observation" + (this.getTime()/grid.getFinalTime()/20) + ":"); //Observation number:
+		System.out.println("Present instant: " + this.getTime());
+		System.out.println("Number of realized events: " + grid.getNumEvents());
+		System.out.println("Population size: " + grid.getPopulation().getIndividuals().size());
+		//vai returnar true\false, e nÃ£o yes\no, confirmar...
+		System.out.println("Final point has been hit: " + grid.getPopulation().finalPointHit);
+		System.out.println("Path of the best fit individual: " + grid.getPopulation().getBestInd());
+		System.out.println("Cost/Confort: " + grid.getPopulation().getBestInd().getCost() + "/" + grid.getPopulation().getBestInd().getComfort());
 		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
+		//POR TABS /t?
 	}
 	
 	public boolean peekEvent(Object o) {
-		//nunca queremos não simular o nosso evento
+		//nunca queremos nï¿½o simular o nosso evento
 		return false;
 	}
+	
 }

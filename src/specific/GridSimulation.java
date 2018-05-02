@@ -72,9 +72,7 @@ public class GridSimulation extends SimulationA{
 			eventList=currentEvent.simulateEvent(); 
 			numEvents++;			
 			addNewEvents(eventList);
-			
-			//checking best fit
-			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
+
 			
 			//TODO CHECKAR SE PEC S� TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
@@ -135,16 +133,16 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			Death death= new Death(simGenerator.getDeathTime(newInd),newInd);
+			Death death= new Death(simGenerator.getDeathTime(newInd),newInd, simGenerator);
 			newInd.setIndDeath(death);
 			pec.addEvent(death);			
 			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
 			double eventTime=simGenerator.getMoveTime(newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd));
-				pec.addEvent(new Move(eventTime,newInd));
+				pec.addEvent(new Move(eventTime,newInd, simGenerator));
 			eventTime=simGenerator.getReproductionTime(newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd));
-				pec.addEvent(new Reproduction(eventTime,newInd));
+				pec.addEvent(new Reproduction(eventTime,newInd, simGenerator));
 	
 			//adding individual to the population
 			population.individuals.add(newInd);			

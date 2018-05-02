@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import general.Event;
+import general.Point;
 
 public class Death extends IndividualEvent{
 

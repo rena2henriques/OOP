@@ -81,17 +81,12 @@ public class Reproduction extends IndividualEvent{
 		//mymap.addSpecialZone(2, 3, 3, 4, 5);
 
 		List<Point> lista = new ArrayList<Point>();
-
-		// best path
-		lista.add(new Point(1,1));
 		lista.add(new Point(1,2));
 		lista.add(new Point(2,2));
-		lista.add(new Point(3,3));
-		lista.add(new Point(4,4));
-		lista.add(new Point(4,3));
 		lista.add(new Point(3,2));
-		lista.add(new Point(5,4));
-		
+		lista.add(new Point(3,3));
+
+	
 		INumberGenerator<Individual> deaths = new DeathExpRandomTime();
 		INumberGenerator<Individual> moves = new MoveExpRandomTime();
 		INumberGenerator<Individual> reps = new ReproductionExpRandomTime();
@@ -101,6 +96,9 @@ public class Reproduction extends IndividualEvent{
 
 		Population pop = new Population(3,10,1,1, mymap);
 		Individual dude1 = new Individual(pop,lista);
+		
+		
+		
 		pop.individuals.add(dude1);
 		Reproduction rep = new Reproduction(sNC.getReproductionTime(dude1), dude1, sNC);	
 

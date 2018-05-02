@@ -271,6 +271,8 @@ public class Map {
 		return cost;
 	}
 	
+	{ -1 , -1, 1, -1}
+	
 	/**
 	 * returns the dist value (smallest nº of hops) between the param point and the final point
 	 * @param point we want to calculate the dist from

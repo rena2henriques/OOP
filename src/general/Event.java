@@ -2,7 +2,7 @@ package general;
 
 import java.util.List;
 
-public abstract class Event implements EventI, Comparable<Event>{
+public abstract class Event implements EventI{
 
 	private double time; 
 	
@@ -18,7 +18,7 @@ public abstract class Event implements EventI, Comparable<Event>{
 		this.time=time;
 	}
 		
-	public int compareTo(Event other) {
+	/*public int compareTo(Event other) {
 		
 		//TODO ver se isto é mesmo assim e se deviamos redefinir o equals
 		if(other==null) throw new NullPointerException(); 
@@ -26,7 +26,7 @@ public abstract class Event implements EventI, Comparable<Event>{
 		 if (time > other.time) return 1;
 		 else if (time == other.time) return 0;
 		 else return -1;
-		} 
+		} */
 	
 	public abstract boolean peekEvent(Object o); 
 	

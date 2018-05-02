@@ -31,6 +31,8 @@ public abstract class SimulationA implements SimulationI {
 	protected int numEvents;
 	protected PEC pec;
 	
+	
+	//TODO VER SE VALE A PENA TER ESTES CONSTRUTORES TODOS
 	public SimulationA (double finalt, int capacity) {
 		finalTime=finalt;
 		pec = new PEC(capacity);

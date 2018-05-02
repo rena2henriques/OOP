@@ -11,11 +11,11 @@ public class PEC implements PECI<Event>{
 	private Queue<Event> events; //PROTECTED? , QUEUE OU LIST?
 	
 	public PEC() {
-		events= new PriorityQueue<Event>();
+		events= new PriorityQueue<Event>(new TimeEventComparator());
 	}
 	
 	public PEC(int initialCapacity) {
-		events= new PriorityQueue<Event>(initialCapacity);
+		events= new PriorityQueue<Event>(initialCapacity,new TimeEventComparator());
 	}
 	
 	public Queue<Event> getEvents() {

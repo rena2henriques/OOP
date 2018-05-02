@@ -50,8 +50,13 @@ public abstract class IndividualEvent extends Event{
 	 * @return boolean
 	 */
 	static boolean checkDeathTime(double time, Individual ind) {
-		if (time > ind.getIndDeath().getTime()) {
-			System.out.println("event not added"); //NAO ESQUECER DE TIRAR
+		double deathTime = 0;
+		try{
+			deathTime = ind.getIndDeath().getTime();
+		} catch (NullPointerException e) { //case has no death event associated
+			//DAR EXIT DO PROGRAMA OU DEIXAR = 0?
+		}
+		if (time > deathTime) {
 			return false;
 		}
 		return true;

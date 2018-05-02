@@ -26,17 +26,25 @@ public class Move extends IndividualEvent {
 		Point currPos = ind.getPath().get((ind.getPath().size()) - 1);
 		//gets possible individual moves
 		List<Point> pointsList = ind.getPopulation().getMap().getPossibleMoves(currPos);
-		//gets a number between 0 and 1
-		double direction = this.getsNC().getThreshold(ind);
 		//chooses next point to move, based on available moves and the generated number
-		Point choosenPoint = chooseDirection(pointsList, direction);
-		//adds choosen point to the path
-		ind.addToPath(choosenPoint);//adicionar novo point à pessoa
-		checkBestFitIndividual(ind, ind.getPopulation());
-		//creates next move
-		double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
-		//if(checkDeathTime(eventTime, ind)) //para testar move, comentar esta condição
-			newEventsList.add(new Move(eventTime, ind, this.getsNC()));
+		if(!pointsList.isEmpty()) {
+			//gets a number between 0 and 1
+			double direction = this.getsNC().getThreshold(ind);
+			//exceçao par prevnir quem implete o getThreshold não retorne entre 0 e 1
+			try {
+				if(direction > 1 || direction < 0) throw new wrongThreshold();
+			} catch (wrongThreshold e) {
+				direction = 0; //sets to default
+			}
+			Point choosenPoint = chooseDirection(pointsList, direction);
+			//adds choosen point to the path
+			ind.addToPath(choosenPoint);//adicionar novo point à pessoa
+			checkBestFitIndividual(ind, ind.getPopulation());
+			//creates next move
+			double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
+			if(checkDeathTime(eventTime, ind)) //para testar move, comentar esta condição
+				newEventsList.add(new Move(eventTime, ind, this.getsNC()));
+		} //else there are no available moves
 		return newEventsList;
 	}
 	

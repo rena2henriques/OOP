@@ -16,15 +16,21 @@ public class Reproduction extends IndividualEvent{
 	}
 
 	public List<Event> simulateEvent(){
+		List<Event> newEventsList = new LinkedList<Event>();
 		Individual father = this.getIndividual();
-		List<Point> childPath = generateChildPath(father);
+		List<Point> childPath;
+		try {
+			childPath = generateChildPath(father);
+		} catch (NullPointerException e) { //case father's path is invalid
+			return newEventsList;
+		}
 		//cria filho
 		Individual newDude = new Individual(father.getPopulation(), childPath);
 		//adiciona novo filho à lista de individuos na simulação
 		father.getPopulation().getIndividuals().add(newDude);
 
 		//criação de 3 novos eventos, death, move, reproduction
-		List<Event> newEventsList = new LinkedList<Event>();
+		//garantir que o tempo gerado é >0??
 		double eventTime = this.getTime() + getsNC().getDeathTime(newDude); 
 		Death death = new Death(eventTime, newDude, getsNC());
 		newEventsList.add(death);
@@ -53,8 +59,13 @@ public class Reproduction extends IndividualEvent{
 	 * @param ind
 	 * @return prefix of father's path
 	 */
-	private List<Point> generateChildPath(Individual ind) {
-		List<Point> myPath = new LinkedList<Point>(ind.getPath());
+	private List<Point> generateChildPath(Individual ind) throws NullPointerException {
+		List<Point> myPath;
+		try { 
+			myPath = new LinkedList<Point>(ind.getPath());
+		} catch (NullPointerException e) { //case father's path is invalid
+			throw new NullPointerException();
+		}
 		double cutPathSize = myPath.size() * 0.90 + ind.getComfort() * (myPath.size() * 0.10);
 		for(int i = (ind.getPath().size()-1); i >= (int)Math.ceil(cutPathSize); i--) {
 			myPath.remove(i);

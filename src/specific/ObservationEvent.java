@@ -16,8 +16,7 @@ public class ObservationEvent extends Event{
 	public List<Event> simulateEvent(){
 		List<Event> newEventsList = new LinkedList<Event>();
 		printObservation(); //acho que n e preciso mandar argumento nenhum
-		double nextObsTime = this.getTime(); //+getFinalSimulationTime
-		newEventsList.add(new ObservationEvent(nextObsTime, this.grid));
+		newEventsList.add(new ObservationEvent(this.getTime()+grid.getFinalTime()/20, this.grid));
 		return newEventsList;
 		
 	}

@@ -239,5 +239,13 @@ public class GridSimulation extends SimulationA{
 	public boolean isFinalPointHit() {
 		return population.finalPointHit;	
 	}
+	
+	public static void main(String[] args) {
+	
+		GridSimulation simulation = new GridSimulation("projectexample.xml");
+		
+		System.out.println(simulation.population.map.map.get(0).getType());
+		
+	}
 
 }

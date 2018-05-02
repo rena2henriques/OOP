@@ -14,6 +14,7 @@ import org.xml.sax.SAXException;
 import general.SimulationA;
 import general.Event;
 import general.PEC;
+import general.Point;
 
 public class GridSimulation extends SimulationA{
 	
@@ -29,18 +30,22 @@ public class GridSimulation extends SimulationA{
 	      try {
 	    	  File file = new File(filename);
 	    	  SAXParserFactory factory = SAXParserFactory.newInstance();
+	    	  factory.setValidating(true);
 	    	  SAXParser saxParser = factory.newSAXParser();
 	    	  MyHandler handler = new MyHandler(this);
 	    	  saxParser.parse(file, handler);     
 		  } catch (IOException e) {
 			  System.err.println("IO error"); 
-			  return;
+			  System.exit(-1);
 		  } catch (SAXException e) {
 			  System.err.println("Parser error");
-			  return;
+			  System.exit(-1);
 		  } catch (ParserConfigurationException e) {
 			  System.err.println("Parser Configuration error");
-			  return;
+			  System.exit(-1);
+		  } catch(NumberFormatException e) {
+			  System.err.println("XML has an invalid Integer to parse");
+			  System.exit(-1);
 		  }
 		
 		//call XML Parser
@@ -74,7 +79,7 @@ public class GridSimulation extends SimulationA{
 			//checking best fit
 			checkBestFitIndividual(((IndividualEvent) currentEvent).getIndividual());
 			
-			//TODO CHECKAR SE PEC SÓ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
+			//TODO CHECKAR SE PEC Sï¿½ TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
 			//checking epidemics
 			if(checkEpidemic())
@@ -239,10 +244,9 @@ public class GridSimulation extends SimulationA{
 	
 	public static void main(String[] args) {
 	
-		GridSimulation simulation = new GridSimulation("projectexample.xml");
+		GridSimulation simulation = new GridSimulation("projectexample.xml", null);
 		
-		System.out.println(simulation.population.map.map.get(0).getType());
-		
+		System.out.println(simulation.population.map.getHeight());
 	}
 
 }

@@ -4,6 +4,9 @@
 package specific;
 
 import java.util.List;
+
+import general.Point;
+
 import java.util.LinkedList;
 
 /**
@@ -12,8 +15,8 @@ import java.util.LinkedList;
  *DIZER QUE AS EXCEPCOES QUE SAO THROW E MERDAS ASSIM NOS COMMENTS, VER AS TAGS
  */
 
-//QUE VISIBILIDADE POR À CLASSE???
-//MUDAR VISIBILIDADE DOS METODOS, ESTÁ TUDO A PUBLICO :(
+//QUE VISIBILIDADE POR ï¿½ CLASSE???
+//MUDAR VISIBILIDADE DOS METODOS, ESTï¿½ TUDO A PUBLICO :(
 public class Individual implements Cloneable {
 	
 	private int cost;
@@ -130,7 +133,7 @@ public class Individual implements Cloneable {
 	 */
 	/*public void addToPath(Point new_point) { 
 		
-		//checkar se há cicle
+		//checkar se hï¿½ cicle
 		if(checkCycle(new_point)) {
 		//se houve redefinir o path
 			breakCycle(new_point);
@@ -147,7 +150,7 @@ public class Individual implements Cloneable {
 	}
 	
 	*/
-	//VER SE É MELHOR ASSIM OU COMO ESTAVA ANTES <-- NAO SEI SE VALE A PENA TER UMA EXCEPTION NESTE CASO
+	//VER SE ï¿½ MELHOR ASSIM OU COMO ESTAVA ANTES <-- NAO SEI SE VALE A PENA TER UMA EXCEPTION NESTE CASO
 	//NAO TENHO QUE CRIAR UMA CLASSE QUE DESCENDA DE EXCEPTION
 	public void addToPath(Point newPoint) {
 		

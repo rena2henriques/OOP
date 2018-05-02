@@ -3,6 +3,8 @@ package specific;
 import java.util.ArrayList;
 import java.util.List;
 
+import general.Point;
+
 public class MapPoint extends Point {
 
 	// type of point: 0 - normal, 1 - obstacle, 2 - initialpoint, 3 - finalpoint

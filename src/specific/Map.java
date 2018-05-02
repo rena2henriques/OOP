@@ -6,6 +6,8 @@ package specific;
 import java.util.ArrayList;
 import java.util.List;
 
+import general.Point;
+
 /**
  * @author renato
  *
@@ -94,6 +96,11 @@ public class Map {
 		MapPoint origin = PointToMapPoint(p1);
 		MapPoint destiny = PointToMapPoint(p2);
 		
+		// if any of the points are null then there's no connection for sure
+		if(origin == null || destiny == null) {
+			return false;
+		}
+		
 		for(int i = 0; i < origin.connections.size(); i++) {
 			// if the point the origin is connected to is the destiny
 			if(origin.connections.get(i).getPoint().equals(destiny)) {
@@ -128,6 +135,7 @@ public class Map {
 			mappoint = map.get(CoordsToIndex(point.getX(), point.getY(), width));
 			
 		} catch (IndexOutOfBoundsException e) {
+			System.err.println("Error in PointToMapPoint:" + e.getMessage());
 			return null;
 		}
 		
@@ -137,13 +145,20 @@ public class Map {
 	/**
 	 * Checks if the received point corresponds to the finalpoint of the map
 	 * @param point
-	 * @return
+	 * @return true if the type of the correspondent MapPoint or false if it doesn't or if the map
+	 * doesn't include that point
 	 */
 	public boolean isFinal(Point point) {
 		
-		if(map.get((point.getY()-1)*width+(point.getX()-1)).getType() == 3) {
-			return true;
-		} 
+		try {
+			if(map.get((point.getY()-1)*width+(point.getX()-1)).getType() == 3) {
+				return true;
+			} 
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Error in isFinal:" + e.getMessage());
+			return false;
+		}
+
 		
 		return false;
 	}
@@ -153,7 +168,7 @@ public class Map {
 	/**
 	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
 	 */
-	public void generateGrid() {
+	private void generateGrid() {
 		
 		int column = 0, row = 0;
 		
@@ -224,6 +239,7 @@ public class Map {
 	}
 	
 	/**
+	 * Converts coordinates (starting in (1,1)) to a index of a point in an array
 	 * @param row or y of the grid
 	 * @param column or x of the grid
 	 * @param width or n of the map
@@ -258,9 +274,15 @@ public class Map {
 	/**
 	 * returns the dist value (smallest nº of hops) between the param point and the final point
 	 * @param point we want to calculate the dist from
-	 * @return dist
+	 * @return dist or 0 if the point received is null or the finalpoint isn't defined 
 	 */
 	public int calculateDist(Point point) {
+		
+		// preventing accessing in the case of these points being null 
+		if(point == null || finalpoint == null) {
+			return 0;
+		}
+		
 		// returns the distance (number of hops) between point and the final point
 		return Math.abs(point.getY() - finalpoint.getY()) + Math.abs(point.getX() - finalpoint.getX());
 	}
@@ -272,9 +294,14 @@ public class Map {
 	 */
 	public void addObstacle(int x, int y) {
 		
-		// set this point as an obstacle
-		map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
-
+		try {
+			// set this point as an obstacle
+			map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Error in addObstacle:" + e.getMessage());
+			return;
+		}
+		
 		// increments the number of obstacles
 		n_obst++;
 	}
@@ -285,8 +312,13 @@ public class Map {
 	 * @param y
 	 */
 	public void addInitialPoint(int x, int y) {
-		// set this point as an initial point
-		map.get((y-1)*width+(x-1)).setType(MapPoint.INITIALPOINT);;
+		try {
+			// set this point as an initial point
+			map.get((y-1)*width+(x-1)).setType(MapPoint.INITIALPOINT);
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Error in addInitialPoint:" + e.getMessage());
+			return;
+		}
 	}
 	
 	/**
@@ -309,8 +341,13 @@ public class Map {
 	 * @param y
 	 */
 	public void addFinalPoint(int x, int y) {
-		// set this point as an final point
-		map.get((y-1)*width+(x-1)).setType(MapPoint.FINALPOINT);
+		try {
+			// set this point as an final point
+			map.get((y-1)*width+(x-1)).setType(MapPoint.FINALPOINT);
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Error in addFinalPoint:" + e.getMessage());
+			return;
+		}
 		
 		finalpoint = new MapPoint(x, y, MapPoint.FINALPOINT);
 	}
@@ -324,8 +361,6 @@ public class Map {
 	 * @param cost
 	 */
 	public void addSpecialZone(int xinitial, int yinitial, int xfinal, int yfinal, int cost) {
-		
-		// PENSAR SE RECEBEMOS PONTOS OU COORDENADAS!!! <--- não muda quase nada
 		
 		// update max_cost
 		if (cost > max_cost)
@@ -358,19 +393,27 @@ public class Map {
 			pinitial = map.get(CoordsToIndex(xinitial, yinitial, width));
 			pfinal = map.get(CoordsToIndex(xfinal,yfinal, width));
 		} catch(IndexOutOfBoundsException e) {
-			// coordinates not correct 
+			// coordinates not correct
+			System.err.println("Points not correct-> Error in addSpecialZone:" + e.getMessage());
 			return;
 		}
 		
 		// starts with the initial point
 		MapPoint pauxinit1 = pinitial;
-		// get the point right to the initial point
-		MapPoint pauxinit2 = map.get(CoordsToIndex(pinitial.getX()+1, pinitial.getY(), width));
-		
 		// starts with the final point
 		MapPoint pauxfinal1 = pfinal;
-		// get the point left to the final point
-		MapPoint pauxfinal2 = map.get(CoordsToIndex(pfinal.getX()-1, pfinal.getY(), width));
+		
+		MapPoint pauxinit2, pauxfinal2;
+		
+		try {
+			// get the point right to the initial point
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getX()+1, pinitial.getY(), width));
+			// get the point left to the final point
+			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX()-1, pfinal.getY(), width));
+		} catch(IndexOutOfBoundsException e) {
+			return;
+		}
+		
 		
 		// connecting points from the rows
 		for(int i = 0; i < yfinal - yinitial; i++) {
@@ -392,22 +435,26 @@ public class Map {
 			
 			// moves to the next two points
 			pauxinit1 = pauxinit2;
-			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX()+1,pauxinit2.getY(),  width));
-			
 			pauxfinal1 = pauxfinal2;
+			
+			// no need to test exceptions because of the previous if statement
+			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX()+1,pauxinit2.getY(),  width));
 			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX()-1, pauxfinal2.getY(), width));
 			
 		}
 		
 		// starts with the initial point
 		pauxinit1 = pinitial;
-		// get the point above to the initial point
-		pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()-1, width));
-		
 		// starts the final point
 		pauxfinal1 = pfinal;
-		// get the point under the final point
-		pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
+		try {
+			// get the point above to the initial point
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()-1, width));
+			// get the point under the final point
+			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
+		} catch(IndexOutOfBoundsException e) {
+			return;
+		}
 		
 		// connecting points from the rows
 		for(int i = 0; i < xfinal - xinitial; i++) {
@@ -429,9 +476,10 @@ public class Map {
 			
 			// moves to the next two points
 			pauxinit1 = pauxinit2;
-			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()+1, width));
-			
 			pauxfinal1 = pauxfinal2;
+			
+			// no need to test exceptions because of the previous if statement
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()+1, width));
 			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
 		}
 		
@@ -477,13 +525,19 @@ public class Map {
 	 */
 	public int getConnectionCost(Point p1, Point p2) {
 		
-		// get the correspondent MapPoints of the argument Points
-		MapPoint pointA = map.get(CoordsToIndex(p1.getX(), p1.getY(), width));
-		MapPoint pointB = map.get(CoordsToIndex(p2.getX(), p2.getY(), width));
+		MapPoint pointA, pointB;
 		
+		try {
+			// get the correspondent MapPoints of the argument Points
+			pointA = map.get(CoordsToIndex(p1.getX(), p1.getY(), width));
+			pointB = map.get(CoordsToIndex(p2.getX(), p2.getY(), width));
+		} catch(IndexOutOfBoundsException e) {
+			System.err.println("Points not available in map: " + e.getMessage());
+			return 0;
+		}
+			
 		// checks every pointA connection
 		for(int i = 0; i < pointA.connections.size(); i++) {
-			
 			// if the point 2 is the one that point 1 is connected in the connection then return the cost 
 			if(pointB.equals(pointA.connections.get(i).point)) {
 				// returns the cost of the connection

@@ -9,9 +9,9 @@
 <!ELEMENT initialpoint EMPTY>
 <!ATTLIST initialpoint xinitial CDATA #REQUIRED>
 <!ATTLIST initialpoint yinitial CDATA #REQUIRED>
-<!ELEMENT finallpoint EMPTY>
-<!ATTLIST finallpoint xfinal CDATA #REQUIRED>
-<!ATTLIST finallpoint yfinal CDATA #REQUIRED>
+<!ELEMENT finalpoint EMPTY>
+<!ATTLIST finalpoint xfinal CDATA #REQUIRED>
+<!ATTLIST finalpoint yfinal CDATA #REQUIRED>
 <!ELEMENT specialcostzones (zone+)>
 <!ATTLIST specialcostzones num CDATA #REQUIRED>
 <!ELEMENT zone (#PCDATA)>
@@ -20,6 +20,7 @@
 <!ATTLIST zone xfinal CDATA #REQUIRED>
 <!ATTLIST zone yfinal CDATA #REQUIRED>
 <!ELEMENT obstacles (obstacle+)>
+<!ATTLIST obstacles num CDATA #REQUIRED>
 <!ELEMENT obstacle EMPTY>
 <!ATTLIST obstacle xpos CDATA #REQUIRED>
 <!ATTLIST obstacle ypos CDATA #REQUIRED>

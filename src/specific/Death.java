@@ -14,7 +14,7 @@ public class Death extends IndividualEvent{
 	
 	public List<Event> simulateEvent() {
 		List<Event> newEventsList = new LinkedList<Event>();
-		//removes the individual from the indiviuals list
+		//removes the individual from the individuals list
 		Individual ind = this.getIndividual();
 		ind.getPopulation().getIndividuals().remove(ind);
 		return newEventsList; //deve ser melhor do que return null;

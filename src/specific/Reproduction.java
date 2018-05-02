@@ -2,7 +2,6 @@ package specific;
 
 import general.Event;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +13,7 @@ public class Reproduction extends IndividualEvent{
 
 	public List<Event> simulateEvent(){
 		Individual father = this.getIndividual();
-		LinkedList<Point> childPath = generateChildPath(father);
+		List<Point> childPath = generateChildPath(father);
 		//cria filho
 		Individual newDude = new Individual(father.getPopulation(), childPath);
 		//adiciona novo filho à lista de individuos na simulação
@@ -34,6 +33,10 @@ public class Reproduction extends IndividualEvent{
 		eventTime = this.getTime() + 0.22; //temp
 		if(checkDeathTime(eventTime, newDude))
 			newEventsList.add(new Reproduction(eventTime, newDude));
+		//adds next reproduction for father
+		eventTime = this.getTime() + 0.25; //temp
+		if(checkDeathTime(eventTime, father))
+			newEventsList.add(new Move(eventTime, father));
 		
 		return newEventsList;
 	}
@@ -46,8 +49,8 @@ public class Reproduction extends IndividualEvent{
 	 * @param ind
 	 * @return prefix of father's path
 	 */
-	private LinkedList<Point> generateChildPath(Individual ind) {
-		LinkedList<Point> myPath = new LinkedList<Point>(ind.getPath());
+	private List<Point> generateChildPath(Individual ind) {
+		List<Point> myPath = new LinkedList<Point>(ind.getPath());
 		double cutPathSize = myPath.size() * 0.90 + ind.getComfort() * (myPath.size() * 0.10);
 		for(int i = (ind.getPath().size()-1); i >= (int)Math.ceil(cutPathSize); i--) {
 			myPath.remove(i);

@@ -8,9 +8,13 @@ public class Population implements Cloneable{
 	int deathParam;
 	int moveParam;
 	int reproductionParam;
+	boolean finalPointHit;
 	Map map;
 	List<Individual> individuals;
+	Individual bestInd;
 	
+	
+
 	public Population(int sensitivity, int deathParam, int moveParam, int reproductionParam, Map map,
 			List<Individual> individuals) {
 		super();
@@ -20,6 +24,8 @@ public class Population implements Cloneable{
 		this.reproductionParam = reproductionParam;
 		this.map = map;
 		this.individuals = individuals;
+		this.finalPointHit = false;
+		this.bestInd = null;
 	}
 	
 	public Population(int sensitivity, int deathParam, int moveParam, int reproductionParam, Map map) {
@@ -30,6 +36,8 @@ public class Population implements Cloneable{
 		this.reproductionParam = reproductionParam;
 		this.map = map;
 		individuals= new LinkedList<Individual>();
+		this.finalPointHit = false;
+		this.bestInd = null;
 	}
 	
 	@Override
@@ -60,5 +68,12 @@ public class Population implements Cloneable{
 		individuals.clear();
 	}
 	
+	public Individual getBestInd() {
+		return bestInd;
+	}
+
+	public void setBestInd(Individual bestInd) {
+		this.bestInd = bestInd;
+	}
 	
 }

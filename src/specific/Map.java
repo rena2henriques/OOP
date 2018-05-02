@@ -271,8 +271,6 @@ public class Map {
 		return cost;
 	}
 	
-	{ -1 , -1, 1, -1}
-	
 	/**
 	 * returns the dist value (smallest nº of hops) between the param point and the final point
 	 * @param point we want to calculate the dist from
@@ -300,7 +298,7 @@ public class Map {
 			// set this point as an obstacle
 			map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
 		} catch(IndexOutOfBoundsException e) {
-			System.err.println("Error in addObstacle:" + e.getMessage());
+			System.err.println("Error in addObstacle, wrong coordinates:" + e.getMessage());
 			return;
 		}
 		

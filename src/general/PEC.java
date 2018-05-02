@@ -43,6 +43,10 @@ public class PEC implements PECI<Event>{
 		events.remove(event);
 	}
 	
+	public boolean isEmpty() {
+		return events.isEmpty();
+	}
+	
 	
 	
 }

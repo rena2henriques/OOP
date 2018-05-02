@@ -20,10 +20,8 @@ public class GridSimulation extends SimulationA{
 	
 	private Population population;
 	private Point initialPoint;
-	private Individual bestInd;
 	private int maxInd, initPop;
-	private boolean finalPointHit;
-	private SimulationNumberCommands simGenerator; //VER SE METEMOS AQUI OU NA ABSTRACTA
+	private SimulationNumberCommands simGenerator; //VER SE METEMOS AQUI e mandar de evento em evento OU Na population
 
 	public GridSimulation(String filename, SimulationNumberCommands generator) {
 
@@ -65,14 +63,13 @@ public class GridSimulation extends SimulationA{
 		
 		//initializing the simulation with the 1st event in pec
 		currentEvent=pec.nextEvent();			
-		if(currentEvent!=null)
-			currentTime=currentEvent.getTime();
+		currentTime=currentEvent.getTime();
 		
 		//simulation loop
-		while(currentEvent!=null && currentTime< finalTime) {
+		while(!pec.isEmpty() && currentTime< finalTime) {
 			
 			//simulate current event and add new list of events to pec
-			eventList=currentEvent.simulateEvent(); //cast to?(LinkedList<Event>) 
+			eventList=currentEvent.simulateEvent(); 
 			numEvents++;			
 			addNewEvents(eventList);
 			
@@ -87,8 +84,7 @@ public class GridSimulation extends SimulationA{
 					 
 			//next event
 			currentEvent=pec.nextEvent();			
-			if(currentEvent!=null)
-				currentTime=currentEvent.getTime();	
+			currentTime=currentEvent.getTime();	
 			
 		}
 		
@@ -124,8 +120,8 @@ public class GridSimulation extends SimulationA{
 	
 	public void reset() {	
 		super.init();		
-		finalPointHit=false;
-		bestInd=null;
+		population.finalPointHit=false;
+		population.bestInd=null;
 		population.clearIndividuals();
 	}
 	
@@ -142,9 +138,13 @@ public class GridSimulation extends SimulationA{
 			Death death= new Death(simGenerator.getDeathTime(newInd),newInd);
 			newInd.setIndDeath(death);
 			pec.addEvent(death);			
-			//S� MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
-			pec.addEvent(new Move(simGenerator.getMoveTime(newInd),newInd));
-			pec.addEvent(new Reproduction(simGenerator.getReproductionTime(newInd),newInd));
+			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE
+			double eventTime=simGenerator.getMoveTime(newInd);
+			if(IndividualEvent.checkDeathTime(eventTime, newInd));
+				pec.addEvent(new Move(eventTime,newInd));
+			eventTime=simGenerator.getReproductionTime(newInd);
+			if(IndividualEvent.checkDeathTime(eventTime, newInd));
+				pec.addEvent(new Reproduction(eventTime,newInd));
 	
 			//adding individual to the population
 			population.individuals.add(newInd);			
@@ -155,7 +155,7 @@ public class GridSimulation extends SimulationA{
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
-	
+	/*
 	private void checkBestFitIndividual(Individual currentInd) {
 		
 		//if none of the individuals has reached the final point before and the current individual
@@ -197,13 +197,14 @@ public class GridSimulation extends SimulationA{
 			e.printStackTrace();
 		}
 	}
+	*/
 	
 	public List<Point> getResult() {
-		return bestInd.getPath();
+		return population.bestInd.getPath();
 	}
 	
 	public void printResult() {
-		System.out.println("Path of the best fit individual = "+bestInd.toString()); 
+		System.out.println("Path of the best fit individual = "+population.bestInd.toString()); 
 	}
 
 	public Point getInitialPoint() {
@@ -239,7 +240,7 @@ public class GridSimulation extends SimulationA{
 	}
 
 	public boolean isFinalPointHit() {
-		return finalPointHit;	
+		return population.finalPointHit;	
 	}
 	
 	public static void main(String[] args) {
@@ -248,5 +249,6 @@ public class GridSimulation extends SimulationA{
 		
 		System.out.println(simulation.population.map.getHeight());
 	}
+
 
 }

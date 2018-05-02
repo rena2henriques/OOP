@@ -21,12 +21,19 @@ public abstract class IndividualEvent extends Event{
 	
 	public boolean peekEvent(Object o) {
 		
-		if(individual==(Individual) o)
-			return true;
+		//PODE DAR MERDA POR CAUSA DO CAST, VERIFICAR!
+		//we want this event to be peeked if o equals its individual
+		try {
+			if(individual== (Individual) o)
+				return true;
+		} catch(ClassCastException exception) {
+			return false;
+		}
 		
 		return false;
-		//EXCEPÇAO caso nao recebamos um individuo???			
-}
+		//EXCEPÇAO caso nao recebamos um individuo???
+		
+	}
 
 	/**
 	 * Receives the next event generated time and checks if its after the indiviual death

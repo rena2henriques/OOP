@@ -1,16 +1,17 @@
 package specific;
 
 import general.Event;
+import general.INumberGenerator;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class Move extends IndividualEvent {
 	
 	//constructor
-	public Move(double time, Individual ind) {
-		super(time, ind);
-
+	public Move(double time, Individual ind, SimulationNumberCommands sNC) {
+		super(time, ind, sNC);
 	}
 	
 	//inherited implemetions
@@ -23,16 +24,16 @@ public class Move extends IndividualEvent {
 		//gets possible individual moves
 		List<Point> pointsList = ind.getPopulation().getMap().getPossibleMoves(currPos);
 		//gets a number between 0 and 1
-		double direction = 0.49;//temp
+		double direction = this.getsNC().getThreshold(ind);
 		//chooses next point to move, based on available moves and the generated number
 		Point choosenPoint = chooseDirection(pointsList, direction);
 		//adds choosen point to the path
 		ind.addToPath(choosenPoint);//adicionar novo point à pessoa
 		checkBestFitIndividual(ind, ind.getPopulation());
 		//creates next move
-		double eventTime = this.getTime() + 0.23; //temp
+		double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
 		//if(checkDeathTime(eventTime, ind)) //para testar move, comentar esta condição
-			newEventsList.add(new Move(eventTime, ind));
+			newEventsList.add(new Move(eventTime, ind, this.getsNC()));
 		return newEventsList;
 	}
 	
@@ -92,12 +93,11 @@ public class Move extends IndividualEvent {
 			e.printStackTrace();
 		}
 	}
-}
+	
 
-//test code below :) 
-
-
-/*public static void main(String[] args) {
+	//main teste
+	
+public static void main(String[] args) {
 		
 		Map mymap = new Map(5,4);
 		
@@ -134,8 +134,15 @@ public class Move extends IndividualEvent {
 		Population pop = new Population(3,10,1,1, mymap);
 		Individual dude1 = new Individual(pop,lista);
 		Individual dude2 = new Individual(pop,new Point(2,1));
+		
+		INumberGenerator<Individual> deaths = new DeathExpRandomTime();
+		INumberGenerator<Individual> moves = new MoveExpRandomTime();
+		INumberGenerator<Individual> reps = new ReproductionExpRandomTime();
+		INumberGenerator<Individual> thrs = new RandomPercentage();
+		SimulationNumberCommands sNC = new SimulationNumberCommands(deaths, moves, reps, thrs);
+		
 		pop.individuals.add(dude1);
-		Move move = new Move(2.32, dude1);
+		Move move = new Move(sNC.getMoveTime(dude1), dude1, sNC);
 		pop.individuals.add(dude2);
 		
 		System.out.println("moves are: " + dude1.getPath());
@@ -155,4 +162,10 @@ public class Move extends IndividualEvent {
 		System.out.println("new best dude: " + dude1.getPath());
 		
 
-	}*/
+	}
+}
+
+//test code below :) 
+
+
+/**/

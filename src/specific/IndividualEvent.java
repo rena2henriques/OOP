@@ -5,10 +5,12 @@ import general.Event;
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;
+	private SimulationNumberCommands sNC;
 	
-	IndividualEvent(double time,Individual individual){
+	IndividualEvent(double time,Individual individual, SimulationNumberCommands simNumCom){
 		super(time);
 		this.individual = individual;
+		this.sNC = simNumCom;
 	}
 	
 	public Individual getIndividual() {
@@ -17,6 +19,10 @@ public abstract class IndividualEvent extends Event{
 	
 	public void setIndividual(Individual individual) {
 		this.individual=individual;
+	}
+	
+	public SimulationNumberCommands getsNC() {
+		return sNC;
 	}
 	
 	public boolean peekEvent(Object o) {
@@ -31,9 +37,11 @@ public abstract class IndividualEvent extends Event{
 		}
 		
 		return false;
-		//EXCEPÇAO caso nao recebamos um individuo???
+		//EXCEPï¿½AO caso nao recebamos um individuo???
 		
 	}
+
+	
 
 	/**
 	 * Receives the next event generated time and checks if its after the indiviual death

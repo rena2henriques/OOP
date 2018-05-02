@@ -29,6 +29,7 @@ public class ObservationEvent extends Event{
 	}
 	
 	public boolean peekEvent(Object o) {
+		//nunca queremos não simular o nosso evento
 		return false;
 	}
 }

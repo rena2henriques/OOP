@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -104,25 +103,50 @@ public class GridSimulation extends SimulationA{
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
 			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
-				//percorrer a pec e retirar todos os eventos do individual morto
-				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
-				for(Event event: pecCopy) {
-				//for(int j=0; j<pec.getEvents().size();j++) {
-					if(event.peekEvent(ind))
-						pec.removeEvent(event);
-				}*/
 				//clears dead individual events
-				if(ind.getNextMove() != null)
-					pec.removeEvent(ind.getNextMove());
-				if(ind.getNextRep() != null)
-					pec.removeEvent(ind.getNextRep());
-				if(ind.getIndDeath() != null)
-					pec.removeEvent(ind.getIndDeath());
-				
+				clearDeadEvents(pec, ind);
 				//retirar individual da lista de individuals
 				population.individuals.remove(ind);
 			}
 		}
+	}
+	
+	/**
+	 * Checks if individual that will be killed by epidemy, has events on the pec
+	 * and erases them
+	 * 
+	 * @param pec
+	 * @param ind
+	 */
+	private void clearDeadEvents(PEC pec, Individual ind) {
+		
+		/*if the individual has an event associated to him, with time
+		 * higher than the simulation time, that event is not in the pec
+		 * it's just old information
+		 * otherwise it's deleted from the pec 
+		 */
+		
+		if(ind.getNextMove() != null)
+			if(ind.getNextMove().getTime() < finalTime) 
+				pec.removeEvent(ind.getNextMove());
+		
+		if(ind.getNextRep() != null)
+			if(ind.getNextRep().getTime() < finalTime)	
+				pec.removeEvent(ind.getNextRep());
+	
+		if(ind.getIndDeath() != null) 
+			if(ind.getIndDeath().getTime() < finalTime)
+				pec.removeEvent(ind.getIndDeath());
+		
+		//percorrer a pec e retirar todos os eventos do individual morto
+		/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
+		for(Event event: pecCopy) {
+		//for(int j=0; j<pec.getEvents().size();j++) {
+			if(event.peekEvent(ind))
+				pec.removeEvent(event);
+		}*/
+		/***^Versão antiga^ ***/
+		
 	}
 	
 	public void reset() {	
@@ -172,49 +196,6 @@ public class GridSimulation extends SimulationA{
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
-	/*
-	private void checkBestFitIndividual(Individual currentInd) {
-		
-		//if none of the individuals has reached the final point before and the current individual
-		//reaches it, we change the flag and set the current individual as the best individual
-		if(!finalPointHit && population.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1))) {
-			finalPointHit=true; 
-			updateBestFit(currentInd);			
-		}
-		
-		//we only check if it is the best individual if the final point hasn't been reached 
-		//or if it has, we only check if our individual is also in the final point
-		else if(!finalPointHit || (finalPointHit &&  population.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))) {
-			if(checkIfIsBestFit(currentInd))
-				updateBestFit(currentInd);			
-		}
-	}
-	
-	private boolean checkIfIsBestFit(Individual currentInd) {
-		
-		if(bestInd==null)
-			return true;
-		
-		//if none of the individuals has reached the final point we check the comfort
-		else if(!finalPointHit && currentInd.getComfort()>bestInd.getComfort()) {
-			return true;
-		} 
-		//if an individual has already reached the final point, we check the cost
-		else if(finalPointHit && currentInd.getCost() < bestInd.getCost()) {
-			return true;
-		}
-		
-		return false;
-	}
-	
-	private void updateBestFit(Individual currentInd) {
-		try {
-		bestInd=(Individual) currentInd.clone(); 	
-		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
-	}
-	*/
 	
 	public List<Point> getResult() {
 		return population.bestInd.getPath();

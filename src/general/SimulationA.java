@@ -72,7 +72,8 @@ public abstract class SimulationA implements SimulationI {
 	protected void addNewEvents(List<Event> eventList) {
 		if(eventList!=null) { //se der merda por os eventos a retornar null
 			for(int i=0; i < eventList.size();i++)
-				pec.addEvent(eventList.get(i));
+				if(eventList.get(i).getTime() <= this.finalTime)
+					pec.addEvent(eventList.get(i));
 		}
 	}
 

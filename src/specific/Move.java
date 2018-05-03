@@ -21,6 +21,8 @@ public class Move extends IndividualEvent {
 	public List<Event> simulateEvent() {
 		
 		Individual ind = this.getIndividual();
+		//current event simulated, cleans association until new one generated
+		ind.setNextMove(null);
 		List<Event> newEventsList = new LinkedList<Event>();
 		//gets individual current position, which is the last one of the path
 		Point currPos = ind.getPath().get((ind.getPath().size()) - 1);

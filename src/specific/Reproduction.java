@@ -18,6 +18,8 @@ public class Reproduction extends IndividualEvent{
 	public List<Event> simulateEvent(){
 		List<Event> newEventsList = new LinkedList<Event>();
 		Individual father = this.getIndividual();
+		//current event simulated, cleans association until new one generated
+		father.setNextRep(null);
 		List<Point> childPath;
 		try {
 			childPath = generateChildPath(father);

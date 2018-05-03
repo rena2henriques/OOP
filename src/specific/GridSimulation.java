@@ -142,11 +142,14 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			Death death = new Death(simGenerator.getDeathTime(newInd),newInd, simGenerator);
-			newInd.setIndDeath(death);
-			pec.addEvent(death);			
+			double eventTime = simGenerator.getDeathTime(newInd);
+			if(eventTime < finalTime) {
+				Death death = new Death(eventTime,newInd, simGenerator);
+				newInd.setIndDeath(death);
+				pec.addEvent(death);
+			}
 			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE e de simTime
-			double eventTime=simGenerator.getMoveTime(newInd);
+			eventTime=simGenerator.getMoveTime(newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
 				Move move = new Move(eventTime,newInd, simGenerator);
 				pec.addEvent(move);

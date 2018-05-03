@@ -236,6 +236,7 @@ public class GridSimulation extends SimulationA{
 	
 	public void setInitialPoint(Point initialPoint) {
 		this.initialPoint=initialPoint;
+		population.getMap().addInitialPoint(initialPoint.getX(),initialPoint.getY());
 	}
 	
 	public Population getPopulation() {

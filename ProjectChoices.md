@@ -29,6 +29,14 @@ Optou-se também por fornecer uma interface para a pec, caso se pretenda ter um 
 ## SimulationA
 Providencia já algumas funcionalidades que podem ser extendidas por outra classe para serem utilizadas noutros exemplos que façam uso de uma pec, cujos eventos são simulados por ordem temporal, como por exemplo, a simulação da auto-estrada. Providencia o método addNewEvents que adiciona os novos eventos à pec, e o método Init que dá reset às variaveis para o caso em que se pretende correr várias simulações sequencialmente. Fornece como métodos abstract: simulate e initialize..
 
+## Observação como evento
+Observação é definida por um tempo espeficifico por isso faz sentido adicioná-la como um evento à pec. Adicionamos uma observação de cada vez para não encher demasiado a pec..
+
+## Individuos possume referência para a população da Simulação
+População da simulação possui parâmetros informativos da simulação necessários aos individuos, por isso esta foi a melhor alternativa arranjada para poder passar esses parâmetros aos individuos e aos eventos, sem ter que estar a copiar todos os parâmetros necessários. Deste modo, guarda-se apenas uma única referência para a população em cada individuo!
+
+
+
 
 
 

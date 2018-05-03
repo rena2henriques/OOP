@@ -106,12 +106,19 @@ public class GridSimulation extends SimulationA{
 			ind=population.individuals.get(i); 
 			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
-				PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
+				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
 				for(Event event: pecCopy) {
 				//for(int j=0; j<pec.getEvents().size();j++) {
 					if(event.peekEvent(ind))
 						pec.removeEvent(event);
-				}
+				}*/
+				//clears dead individual events
+				if(ind.getNextMove() != null)
+					pec.removeEvent(ind.getNextMove());
+				if(ind.getNextRep() != null)
+					pec.removeEvent(ind.getNextRep());
+				if(ind.getIndDeath() != null)
+					pec.removeEvent(ind.getIndDeath());
 				
 				//retirar individual da lista de individuals
 				population.individuals.remove(ind);
@@ -136,16 +143,25 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			Death death= new Death(simGenerator.getDeathTime(newInd),newInd, simGenerator);
-			newInd.setIndDeath(death);
-			pec.addEvent(death);			
+			double eventTime = simGenerator.getDeathTime(newInd);
+			if(eventTime < finalTime) {
+				Death death = new Death(eventTime,newInd, simGenerator);
+				newInd.setIndDeath(death);
+				pec.addEvent(death);
+			}
 			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE e de simTime
-			double eventTime=simGenerator.getMoveTime(newInd);
-			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime);
-				pec.addEvent(new Move(eventTime,newInd, simGenerator));
+			eventTime=simGenerator.getMoveTime(newInd);
+			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
+				Move move = new Move(eventTime,newInd, simGenerator);
+				pec.addEvent(move);
+				newInd.setNextMove(move);
+			}
 			eventTime=simGenerator.getReproductionTime(newInd);
-			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime);
-				pec.addEvent(new Reproduction(eventTime,newInd, simGenerator));
+			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
+				Reproduction rep = new Reproduction(eventTime,newInd, simGenerator);
+				pec.addEvent(rep);
+				newInd.setNextRep(rep);
+			}
 	
 			//adding individual to the population
 			population.individuals.add(newInd);			

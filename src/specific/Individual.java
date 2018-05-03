@@ -24,6 +24,8 @@ public class Individual implements Cloneable {
 	private List<Point> path; //array of points
 	private Population population; //population
 	private Death myDeath; //death event related to this individual
+	private Move nextMove;
+	private Reproduction nextRep;
 	
 	/**
 	 * Constructor
@@ -39,7 +41,7 @@ public class Individual implements Cloneable {
 		
 		
 	}
-	
+
 
 	/**
 	 * Constructor. To use when the individual already has a path 
@@ -122,6 +124,24 @@ public class Individual implements Cloneable {
 		return comfort;
 	}
 	
+	public Move getNextMove() {
+		return nextMove;
+	}
+
+
+	public void setNextMove(Move nextMove) {
+		this.nextMove = nextMove;
+	}
+
+
+	public Reproduction getNextRep() {
+		return nextRep;
+	}
+
+
+	public void setNextRep(Reproduction nextRep) {
+		this.nextRep = nextRep;
+	}
 	
 	/**
 	 * Add a new point to the path and updates the cost and comfort accordingly.	

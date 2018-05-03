@@ -38,16 +38,24 @@ public class Reproduction extends IndividualEvent{
 		newDude.setIndDeath(death);
 		//adds next reproduciton and move
 		eventTime = this.getTime() + this.getsNC().getMoveTime(newDude); 
-		if(checkDeathTime(eventTime, newDude))
-			newEventsList.add(new Move(eventTime, newDude, getsNC()));
+		if(checkDeathTime(eventTime, newDude)) {
+			Move move = new Move(eventTime, newDude, getsNC());
+			newEventsList.add(move);
+			newDude.setNextMove(move);
+		}
 		eventTime = this.getTime() + this.getsNC().getReproductionTime(newDude); 
-		if(checkDeathTime(eventTime, newDude))
-			newEventsList.add(new Reproduction(eventTime, newDude, getsNC()));
+		if(checkDeathTime(eventTime, newDude)) {
+			Reproduction rep = new Reproduction(eventTime, newDude, getsNC());
+			newEventsList.add(rep);
+			newDude.setNextRep(rep);
+		}
 		//adds next reproduction for father
 		eventTime = this.getTime() + this.getsNC().getReproductionTime(father); 
-		if(checkDeathTime(eventTime, father))
-			newEventsList.add(new Reproduction(eventTime, father, getsNC()));
-		
+		if(checkDeathTime(eventTime, father)) {
+			Reproduction faRep = new Reproduction(eventTime, father, getsNC());
+			newEventsList.add(faRep);
+			father.setNextRep(faRep);
+		}
 		return newEventsList;
 	}
 	

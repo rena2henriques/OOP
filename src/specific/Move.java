@@ -42,8 +42,11 @@ public class Move extends IndividualEvent {
 			checkBestFitIndividual(ind, ind.getPopulation());
 			//creates next move
 			double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
-			if(checkDeathTime(eventTime, ind)) //para testar move, comentar esta condição
-				newEventsList.add(new Move(eventTime, ind, this.getsNC()));
+			if(checkDeathTime(eventTime, ind)) {
+				Move move = new Move(eventTime, ind, this.getsNC());
+				newEventsList.add(move);
+				ind.setNextMove(move);
+			}
 		} //else there are no available moves
 		return newEventsList;
 	}

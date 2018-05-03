@@ -18,15 +18,24 @@ public class SimulationNumberCommands {
 		}
 	
 	public double getDeathTime(Individual ind){
-		return deathTime.getNumber(ind);
+		double time = deathTime.getNumber(ind);
+		if(time<0)
+			time=0;
+		return time;
 	}
 	
 	public double getMoveTime(Individual ind){
-		return moveTime.getNumber(ind);
+		double time= moveTime.getNumber(ind);
+		if(time<0)
+			time=0;
+		return time;
 	}
 	
 	public double getReproductionTime(Individual ind){
-		return reproductionTime.getNumber(ind);
+		double time= reproductionTime.getNumber(ind);
+		if(time<0)
+			time=0;
+		return time;
 	}
 	
 	public double getThreshold(Individual ind) throws wrongThresholdException{

@@ -18,7 +18,7 @@ public class MainSimulator {
 	 */
 	public static void main(String[] args) {
 		
-		//MUDAR EVENTUALMENTE
+		//MUDAR EVENTUALMENTE <- por NUMA CLASSE PARA NAO TER QUE ESTAR AQUI
 		INumberGenerator<Individual> death = new DeathExpRandomTime();
 		INumberGenerator<Individual> move = new MoveExpRandomTime();
 		INumberGenerator<Individual> reproduction = new ReproductionExpRandomTime();

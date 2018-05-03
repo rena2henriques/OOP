@@ -40,7 +40,10 @@ public class PEC implements PECI<Event>{
 	}
 	
 	public void removeEvent(Event event) {
-		events.remove(event);
+
+		if(!events.remove(event)) {
+			System.err.println("Error: try to remove an event that doesn't exist");	
+		}
 	}
 	
 	public boolean isEmpty() {

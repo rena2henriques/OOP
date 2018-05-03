@@ -21,7 +21,7 @@ public class GridSimulation extends SimulationA{
 	private Population population;
 	private Point initialPoint;
 	private int maxInd, initPop;
-	private SimulationNumberCommands simGenerator; //VER SE METEMOS AQUI e mandar de evento em evento OU Na population
+	private SimulationNumberCommands simGenerator; 
 
 	public GridSimulation(String filename, SimulationNumberCommands generator) {
 
@@ -72,9 +72,6 @@ public class GridSimulation extends SimulationA{
 			eventList=currentEvent.simulateEvent(); 
 			numEvents++;			
 			addNewEvents(eventList);
-
-			
-			//TODO CHECKAR SE PEC S� TEM 1 EVENTO? DEVIA SER UMA EXCEPCAO??
 			
 			//checking epidemics
 			if(checkEpidemic())
@@ -103,7 +100,7 @@ public class GridSimulation extends SimulationA{
 		//para os restantes fazer um for em que percorro e calculo se morrem ou n�o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
-			if(simGenerator.getThreshold(null)>ind.getComfort()) {
+			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				for(Event event: pec.getEvents()) {
 					if(event.peekEvent(ind))

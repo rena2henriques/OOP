@@ -1,13 +1,9 @@
 package specific;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import general.Event;
-import general.INumberGenerator;
-import general.Point;
-
 public class ObservationEvent extends Event{
 	GridSimulation grid;
 	
@@ -28,14 +24,17 @@ public class ObservationEvent extends Event{
 	 * Prints observation state
 	 */
 	private void printObservation() {
+		String finalHit="no";
+		if(grid.getPopulation().finalPointHit) {
+			finalHit="yes";
+		}
 		System.out.println("Observation" + (this.getTime()/grid.getFinalTime()/20) + ":"); //Observation number:
-		System.out.println("Present instant: " + this.getTime());
-		System.out.println("Number of realized events: " + grid.getNumEvents());
-		System.out.println("Population size: " + grid.getPopulation().getIndividuals().size());
-		//vai returnar true\false, e não yes\no, confirmar...
-		System.out.println("Final point has been hit: " + grid.getPopulation().finalPointHit);
-		System.out.println("Path of the best fit individual: " + grid.getPopulation().getBestInd());
-		System.out.println("Cost/Confort: " + grid.getPopulation().getBestInd().getCost() + "/" + grid.getPopulation().getBestInd().getComfort());
+		System.out.println("\t\tPresent instant: " + this.getTime());
+		System.out.println("\t\tNumber of realized events: " + grid.getNumEvents());
+		System.out.println("\t\tPopulation size: " + grid.getPopulation().getIndividuals().size());
+		System.out.println("\t\tFinal point has been hit: " + finalHit);
+		System.out.println("\t\tPath of the best fit individual: " + grid.getPopulation().getBestInd());
+		System.out.println("\t\tCost/Confort: " + grid.getPopulation().getBestInd().getCost() + "/" + grid.getPopulation().getBestInd().getComfort());
 		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
 		//POR TABS /t?
 	}

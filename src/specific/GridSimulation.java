@@ -46,6 +46,7 @@ public class GridSimulation extends SimulationA{
 			  System.exit(-1);
 		  }
 		
+	     System.out.println(initialPoint);
 		//call XML Parser
 		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
 		simGenerator= generator;

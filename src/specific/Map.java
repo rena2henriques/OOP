@@ -60,6 +60,17 @@ public class Map {
 		
 		List<Point> list = new ArrayList<Point>(4);
 		
+		// @TODO prevenir maroscas
+		if(p1 == null) {
+			System.err.println("Error: Point received at getPossibleMoves is null!");
+			return null;
+		}
+		
+		if(p1.getY() > height || p1.getY() <= 0 || p1.getX() < width || p1.getX() <= 0) {
+			System.err.println("Error: Point received at getPossibleMoves doesn't belong to the Map!");
+			return null;
+		}
+		
 		// point above p1
 		if(checkMove(p1, new Point(p1.getX(),p1.getY()+1)) == true) {
 			list.add(new Point(p1.getX(),p1.getY()+1));

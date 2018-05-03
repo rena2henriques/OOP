@@ -247,7 +247,7 @@ public class GridSimulation extends SimulationA{
 	
 		GridSimulation simulation = new GridSimulation("projectexample.xml", null);
 		
-		System.out.println(simulation.population.map.getHeight());
+		System.out.println(simulation.initialPoint);
 	}
 
 

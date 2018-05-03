@@ -8,6 +8,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import general.Point;
+
 public class MyHandler extends DefaultHandler {
 
 	boolean bZone = false;
@@ -64,8 +66,8 @@ public class MyHandler extends DefaultHandler {
 	    	  int colsnb = Integer.parseInt(attributes.getValue("colsnb"));
 		      int rowsnb = Integer.parseInt(attributes.getValue("rowsnb"));
 		      
-		      if (colsnb < 0 || rowsnb < 0) {
-		    	  System.err.println("Dimensions of grid in XML are negative!");
+		      if (colsnb <= 0 || rowsnb <= 0) {
+		    	  System.err.println("Dimensions of grid in XML are negative or 0!");
 		    	  System.exit(-1);
 		      }
 		      
@@ -82,6 +84,8 @@ public class MyHandler extends DefaultHandler {
 		    	  System.err.println("Coordinates received in XML are negative!");
 		    	  System.exit(-1);
 		      }
+		      
+		      simulation.setInitialPoint(new Point(xinitial, yinitial));
 		   
 		      map.addInitialPoint(xinitial, yinitial);
 		      
@@ -175,7 +179,7 @@ public class MyHandler extends DefaultHandler {
 	      }
 	   }
 
-	   @Override
+	@Override
 	public void characters(char ch[], int start, int length) throws SAXException, NumberFormatException {
 	      
 	      if (bZone) {
@@ -197,10 +201,10 @@ public class MyHandler extends DefaultHandler {
 		   simulation.setPopulation(population);
 	   }
 	   
-	   @Override
+	@Override
 	public void error(SAXParseException e) throws SAXException {
 		   System.err.println("Error Message: " + e.getMessage());
 		   System.exit(-1);
-	   }
+	}
 	   	   
 }

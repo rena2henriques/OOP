@@ -49,7 +49,7 @@ public class GridSimulation extends SimulationA{
 		
 	     System.out.println(initialPoint);
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
+		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
 		simGenerator= generator;
 	}
 	
@@ -85,6 +85,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		// simulate final observation
 		eventList=currentEvent.simulateEvent(); 
 		//printing final results of the simulation
 		printResult(); 

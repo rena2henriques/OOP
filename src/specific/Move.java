@@ -31,10 +31,11 @@ public class Move extends IndividualEvent {
 		//chooses next point to move, based on available moves and the generated number
 		if(!pointsList.isEmpty()) {
 			//gets a number between 0 and 1
-			double direction = this.getsNC().getThreshold(ind);
+			double direction = 0;
 			//exceçao par prevnir quem implete o getThreshold não retorne entre 0 e 1
 			try {
-				if(direction > 1 || direction < 0) throw new wrongThresholdException();
+				//if(direction > 1 || direction < 0) throw new wrongThresholdException();
+				 direction= this.getsNC().getThreshold(ind);
 			} catch (wrongThresholdException e) {
 				direction = 0; //sets to default
 			}

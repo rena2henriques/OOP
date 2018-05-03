@@ -48,7 +48,7 @@ public class GridSimulation extends SimulationA{
 		
 	     System.out.println(initialPoint);
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initialcapacity of the priority queue;
+		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
 		simGenerator= generator;
 	}
 	
@@ -84,6 +84,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		// simulate final observation
 		eventList=currentEvent.simulateEvent(); 
 		//printing final results of the simulation
 		printResult(); 
@@ -102,7 +103,22 @@ public class GridSimulation extends SimulationA{
 		//para os restantes fazer um for em que percorro e calculo se morrem ou n�o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
-			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
+
+			ind=population.individuals.get(i); 
+			double percentage = 0;
+			try {
+				percentage= simGenerator.getThreshold(ind);
+			} catch (wrongThresholdException e) {
+				percentage = 0; //sets to default
+} 
+			if(percentage>ind.getComfort()) {
+				//percorrer a pec e retirar todos os eventos do individual morto
+				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
+				for(Event event: pecCopy) {
+				//for(int j=0; j<pec.getEvents().size();j++) {
+					if(event.peekEvent(ind))
+						pec.removeEvent(event);
+				}*/
 				//clears dead individual events
 				clearDeadEvents(pec, ind);
 				//retirar individual da lista de individuals
@@ -209,8 +225,9 @@ public class GridSimulation extends SimulationA{
 		return initialPoint;
 	}
 	
-	public void setInitialPoint(Point p) {
-		initialPoint=p;
+	public void setInitialPoint(Point initialPoint) {
+		this.initialPoint=initialPoint;
+		population.getMap().addInitialPoint(initialPoint.getX(),initialPoint.getY());
 	}
 	
 	public Population getPopulation() {

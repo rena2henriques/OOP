@@ -10,7 +10,7 @@ public final class Utils {
 	 */
 	public static double getUniformRandom(int n) {
 		Random rand= new Random();
-		return rand.nextDouble()*n;//VER ISTO
+		return rand.nextDouble()*n;
 	}
 	
 	

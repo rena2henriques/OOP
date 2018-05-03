@@ -29,7 +29,11 @@ public class SimulationNumberCommands {
 		return reproductionTime.getNumber(ind);
 	}
 	
-	public double getThreshold(Individual ind){
-		return threshold.getNumber(ind);
+	public double getThreshold(Individual ind) throws wrongThresholdException{
+		double percent = threshold.getNumber(ind);
+		
+		if(percent > 1 || percent <0) throw new wrongThresholdException();
+		
+		return percent;
 	}
 }

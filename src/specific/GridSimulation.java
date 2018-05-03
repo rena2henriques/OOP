@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.PriorityQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -104,7 +103,13 @@ public class GridSimulation extends SimulationA{
 		//para os restantes fazer um for em que percorro e calculo se morrem ou n�o
 		for(int i=5; i<population.individuals.size(); i++) {
 			ind=population.individuals.get(i); 
-			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
+			double percentage = 0;
+			try {
+				percentage= simGenerator.getThreshold(ind);
+			} catch (wrongThresholdException e) {
+				percentage = 0; //sets to default
+			}		
+			if(percentage>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
 				for(Event event: pecCopy) {

@@ -20,7 +20,6 @@ public abstract class Event implements EventI{
 		
 	/*public int compareTo(Event other) {
 		
-		//TODO ver se isto � mesmo assim e se deviamos redefinir o equals
 		if(other==null) throw new NullPointerException(); 
 		
 		 if (time > other.time) return 1;

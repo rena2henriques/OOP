@@ -64,6 +64,14 @@ public class Move extends IndividualEvent {
 			return pointsList.get((int)(Math.floor(pointsList.size()*direction)));
 	}
 	
+	
+	
+	/**
+	 * Evaluates if the received individual is current best fit, and updates
+	 * 
+	 * @param currentInd
+	 * @param pop
+	 */
 	private void checkBestFitIndividual(Individual currentInd, Population pop) {
 			
 		//if none of the individuals has reached the final point before and the current individual
@@ -80,6 +88,13 @@ public class Move extends IndividualEvent {
 		}
 	}
 	
+	
+	/**
+	 * Evaluates if the received individual is current best fit of the population
+	 * @param currentInd
+	 * @param pop
+	 * @return
+	 */
 	private boolean checkIfIsBestFit(Individual currentInd, Population pop) {
 			
 		if(pop.bestInd==null)
@@ -97,6 +112,12 @@ public class Move extends IndividualEvent {
 		return false;
 	}
 		
+	/**
+	 * Current individual is now the population's best fit
+	 * 
+	 * @param currentInd
+	 * @param pop
+	 */
 	private void updateBestFit(Individual currentInd, Population pop) {
 		try {
 			pop.bestInd=(Individual) currentInd.clone(); 	

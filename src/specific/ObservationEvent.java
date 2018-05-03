@@ -24,6 +24,9 @@ public class ObservationEvent extends Event{
 		
 	}
 	
+	/**
+	 * Prints observation state
+	 */
 	private void printObservation() {
 		System.out.println("Observation" + (this.getTime()/grid.getFinalTime()/20) + ":"); //Observation number:
 		System.out.println("Present instant: " + this.getTime());

@@ -2,6 +2,7 @@ package specific;
 
 import general.Event;
 
+
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;
@@ -24,6 +25,9 @@ public abstract class IndividualEvent extends Event{
 	public SimulationNumberCommands getsNC() {
 		return sNC;
 	}
+	
+	
+	
 	
 	public boolean peekEvent(Object o) {
 		

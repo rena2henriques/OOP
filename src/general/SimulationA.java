@@ -51,6 +51,10 @@ public abstract class SimulationA implements SimulationI {
 		return numEvents;
 	}
 	
+	public void setNumEvents(int nevents) {
+		numEvents=nevents;
+	}
+	
 	public double getSimulationClock() {
 		return currentTime;
 	}

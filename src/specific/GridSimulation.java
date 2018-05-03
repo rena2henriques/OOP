@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.PriorityQueue;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -84,6 +85,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		eventList=currentEvent.simulateEvent(); 
 		//printing final results of the simulation
 		printResult(); 
 	}
@@ -103,7 +105,9 @@ public class GridSimulation extends SimulationA{
 			ind=population.individuals.get(i); 
 			if(simGenerator.getThreshold(ind)>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
-				for(Event event: pec.getEvents()) {
+				PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
+				for(Event event: pecCopy) {
+				//for(int j=0; j<pec.getEvents().size();j++) {
 					if(event.peekEvent(ind))
 						pec.removeEvent(event);
 				}
@@ -147,6 +151,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		population.bestInd=population.getIndividuals().get(0);
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			

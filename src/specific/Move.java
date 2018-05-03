@@ -32,8 +32,8 @@ public class Move extends IndividualEvent {
 			double direction = this.getsNC().getThreshold(ind);
 			//exceçao par prevnir quem implete o getThreshold não retorne entre 0 e 1
 			try {
-				if(direction > 1 || direction < 0) throw new wrongThreshold();
-			} catch (wrongThreshold e) {
+				if(direction > 1 || direction < 0) throw new wrongThresholdException();
+			} catch (wrongThresholdException e) {
 				direction = 0; //sets to default
 			}
 			Point choosenPoint = chooseDirection(pointsList, direction);

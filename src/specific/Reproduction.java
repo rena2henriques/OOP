@@ -22,7 +22,7 @@ public class Reproduction extends IndividualEvent{
 		try {
 			childPath = generateChildPath(father);
 		} catch (NullPointerException e) { //case father's path is invalid
-			return newEventsList;
+			return newEventsList;	//continues the program without killing the program
 		}
 		//cria filho
 		Individual newDude = new Individual(father.getPopulation(), childPath);

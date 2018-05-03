@@ -71,23 +71,31 @@ public class Map {
 		}
 		
 		// point above p1
-		if(checkMove(p1, new Point(p1.getX(),p1.getY()+1)) == true) {
-			list.add(new Point(p1.getX(),p1.getY()+1));
+		if(p1.getY()+1 > height) {
+			if(checkMove(p1, new Point(p1.getX(),p1.getY()+1)) == true) {
+				list.add(new Point(p1.getX(),p1.getY()+1));
+			}
 		}
-		
+
 		// point right to p1
-		if(checkMove(p1, new Point(p1.getX()+1,p1.getY())) == true) {
-			list.add(new Point(p1.getX()+1,p1.getY()));
+		if(p1.getX()+1 > width) {
+			if(checkMove(p1, new Point(p1.getX()+1,p1.getY())) == true) {
+				list.add(new Point(p1.getX()+1,p1.getY()));
+			}
 		}
 		
 		// point under p1
-		if(checkMove(p1, new Point(p1.getX(),p1.getY()-1)) == true) {
-			list.add(new Point(p1.getX(),p1.getY()-1));
+		if(p1.getY()-1 <= 0) {
+			if(checkMove(p1, new Point(p1.getX(),p1.getY()-1)) == true) {
+				list.add(new Point(p1.getX(),p1.getY()-1));
+			}
 		}
 		
 		// point left to p1
-		if(checkMove(p1, new Point(p1.getX()-1,p1.getY())) == true) {
-			list.add(new Point(p1.getX()-1,p1.getY()));
+		if(p1.getX()-1 <= 0) {
+			if(checkMove(p1, new Point(p1.getX()-1,p1.getY())) == true) {
+				list.add(new Point(p1.getX()-1,p1.getY()));
+			}
 		}
 		
 		return list;
@@ -102,6 +110,8 @@ public class Map {
 	 * or if there is no connection between origin and destiny
 	 */
 	public boolean checkMove(Point p1, Point p2) {
+		
+		// PREVENIR POINTS ESTAREM FORA DO MAPA
 		
 		MapPoint origin = PointToMapPoint(p1);
 		MapPoint destiny = PointToMapPoint(p2);

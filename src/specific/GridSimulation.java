@@ -213,8 +213,8 @@ public class GridSimulation extends SimulationA{
 		return initialPoint;
 	}
 	
-	public void setInitialPoint(Point p) {
-		initialPoint=p;
+	public void setInitialPoint(Point initialPoint) {
+		this.initialPoint=initialPoint;
 	}
 	
 	public Population getPopulation() {

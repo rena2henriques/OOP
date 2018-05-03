@@ -20,4 +20,24 @@ de cada evento teriamos que dar sort da priority queue de qualquer forma, o que 
 ## Guardar o evento de cada individuo para Epidemia
 Optou-se por guardar a referência para cada evento de um individuo em cada objeto Individual, de forma a tornar a epidemia mais eficiente. Uma alternativa seria, caso o individuo morre-se percorrer o pec de forma a encontrar cada evento pertencente a esse individuo e retirá-lo da pec. Mas isso implicaria percorrer realizar uma cópia da pec para os N individuos e percorrê-la N vezes...
 
+## Retornar lista de eventos no simulateEvent
+Optou-se por ter o simulateEvent a retornar uma lista de eventos. Assim, caso não se queira retornar nenhum evento pode-se mandar a lista a null ou empty, mas caso se queira retornar torna mais fácil o processo de adicionar eventos à pec já que o evento não tem que ter acesso à pec(ou pecs) onde está a ser adicionado.
+
+## Interface Event e PEC
+Optou-se também por fornecer uma interface para a pec, caso se pretenda ter um containet para outros eventos que implementem a interface EventI mas que não sejam descendam da classe Event e para não limitar a pec a ser ordenada pelo tempo. Dar exemplos de casos em que isto pode ser util
+
+## SimulationA
+Providencia já algumas funcionalidades que podem ser extendidas por outra classe para serem utilizadas noutros exemplos que façam uso de uma pec, cujos eventos são simulados por ordem temporal, como por exemplo, a simulação da auto-estrada. Providencia o método addNewEvents que adiciona os novos eventos à pec, e o método Init que dá reset às variaveis para o caso em que se pretende correr várias simulações sequencialmente. Fornece como métodos abstract: simulate e initialize..
+
+## Observação como evento
+Observação é definida por um tempo espeficifico por isso faz sentido adicioná-la como um evento à pec. Adicionamos uma observação de cada vez para não encher demasiado a pec..
+
+## Individuos possume referência para a população da Simulação
+População da simulação possui parâmetros informativos da simulação necessários aos individuos, por isso esta foi a melhor alternativa arranjada para poder passar esses parâmetros aos individuos e aos eventos, sem ter que estar a copiar todos os parâmetros necessários. Deste modo, guarda-se apenas uma única referência para a população em cada individuo!
+
+
+
+
+
+
 

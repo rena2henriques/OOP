@@ -20,7 +20,7 @@ public abstract class Event implements EventI{
 		
 	/*public int compareTo(Event other) {
 		
-		//TODO ver se isto é mesmo assim e se deviamos redefinir o equals
+		//TODO ver se isto ï¿½ mesmo assim e se deviamos redefinir o equals
 		if(other==null) throw new NullPointerException(); 
 		
 		 if (time > other.time) return 1;
@@ -28,6 +28,13 @@ public abstract class Event implements EventI{
 		 else return -1;
 		} */
 	
+	/**
+	 * Receives an object and returns true if the event has the exact same 
+	 * object associated to him
+	 * 
+	 * @param o
+	 * @return bool
+	 */
 	public abstract boolean peekEvent(Object o); 
 	
 	@Override

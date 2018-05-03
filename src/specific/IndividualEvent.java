@@ -2,13 +2,16 @@ package specific;
 
 import general.Event;
 
+
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;
+	private SimulationNumberCommands sNC;
 	
-	IndividualEvent(double time,Individual individual){
+	IndividualEvent(double time,Individual individual, SimulationNumberCommands simNumCom){
 		super(time);
 		this.individual = individual;
+		this.sNC = simNumCom;
 	}
 	
 	public Individual getIndividual() {
@@ -18,6 +21,13 @@ public abstract class IndividualEvent extends Event{
 	public void setIndividual(Individual individual) {
 		this.individual=individual;
 	}
+	
+	public SimulationNumberCommands getsNC() {
+		return sNC;
+	}
+	
+	
+	
 	
 	public boolean peekEvent(Object o) {
 		
@@ -31,9 +41,11 @@ public abstract class IndividualEvent extends Event{
 		}
 		
 		return false;
-		//EXCEPÇAO caso nao recebamos um individuo???
+		//EXCEPï¿½AO caso nao recebamos um individuo???
 		
 	}
+
+	
 
 	/**
 	 * Receives the next event generated time and checks if its after the indiviual death
@@ -42,8 +54,13 @@ public abstract class IndividualEvent extends Event{
 	 * @return boolean
 	 */
 	static boolean checkDeathTime(double time, Individual ind) {
-		if (time > ind.getIndDeath().getTime()) {
-			System.out.println("event not added"); //NAO ESQUECER DE TIRAR
+		double deathTime = 0;
+		try{
+			deathTime = ind.getIndDeath().getTime();
+		} catch (NullPointerException e) { //case has no death event associated
+			//DAR EXIT DO PROGRAMA OU DEIXAR = 0?
+		}
+		if (time > deathTime) {
 			return false;
 		}
 		return true;

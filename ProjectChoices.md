@@ -6,7 +6,7 @@ O mapa retangular é um grafo esparso, ou seja, o número de arestas não é mui
 ## Reset method in PathSimulation Class
 Podemos querer correr a mesma simula��o (com os mesmos par�metros) mais do que uma vez, assim sempre que se faz simulate garantimos que os par�metros din�micos da simula��o s�o os iniciais(tempo=0, e coisas assim)
 
-##Generic Type na interface PECI
+## Generic Type na interface PECI
 Caso queiramos ter outro tipo e containers com os Events ou caso queiramos ter outro tipo de events que implementem a interface EventI. Deste modo aceita qualquer tipo de eventos e n�o est� t�o restrito a eventos que sejam conduzidos pelo tempo.
 
 ## Estrutura de dados para guardar a lista de individuos (população)
@@ -16,5 +16,8 @@ ajustavel aumentando bastante a complexidade da inserção de individuos.
 ## Lista de individuos: PriorityQueue vs Collection::Sort da LinkedList
 Collection::Sort porque a priorityQueue tem uma capacity ajustável e como temos que recalcular o conforto depois da execução
 de cada evento teriamos que dar sort da priority queue de qualquer forma, o que não se justifica.
+
+## Guardar o evento de cada individuo para Epidemia
+Optou-se por guardar a referência para cada evento de um individuo em cada objeto Individual, de forma a tornar a epidemia mais eficiente. Uma alternativa seria, caso o individuo morre-se percorrer o pec de forma a encontrar cada evento pertencente a esse individuo e retirá-lo da pec. Mas isso implicaria percorrer realizar uma cópia da pec para os N individuos e percorrê-la N vezes...
 
 

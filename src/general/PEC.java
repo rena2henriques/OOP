@@ -5,6 +5,7 @@ import java.util.Queue;
 
 
 //IMPLEMENTACAO DA PECI, só funciona com eventos do tipo event, que têm um time
+//compara eventos obrigatoriamente a partir do tempo
 
 public class PEC implements PECI<Event>{  
 	

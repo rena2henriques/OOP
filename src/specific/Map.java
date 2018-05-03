@@ -67,7 +67,7 @@ public class Map {
 		}
 		
 		if(p1.getY() > height || p1.getY() <= 0 || p1.getX() < width || p1.getX() <= 0) {
-			System.err.println("Error: Point received at getPossibleMoves doesn't belong to the Map!");
+			System.err.println("Error: Point " + p1 + " received at getPossibleMoves doesn't belong to the Map!");
 			return null;
 		}
 		

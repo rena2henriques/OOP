@@ -34,7 +34,7 @@ public abstract class Event implements EventI{
 	 * @param o
 	 * @return bool
 	 */
-	public abstract boolean peekEvent(Object o); 
+	//public abstract boolean peekEvent(Object o); 
 	
 	@Override
 	abstract public List<Event> simulateEvent(); //returns null if there are no next events

@@ -44,9 +44,9 @@ public class ObservationEvent extends Event{
 		//POR TABS /t?
 	}
 	
-	public boolean peekEvent(Object o) {
+	/*public boolean peekEvent(Object o) {
 		//nunca queremos n�o simular o nosso evento
 		return false;
-	}
+	}*/
 	
 }

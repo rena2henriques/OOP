@@ -8,9 +8,9 @@ public final class Utils {
 	 * @param n max bound
 	 * @return uniform random between 0 and n
 	 */
-	public static double getUniformRandom(int n) {
+	public static double getUniformRandom(int nmin, int nmax) {
 		Random rand= new Random();
-		return rand.nextDouble()*n;
+		return rand.nextDouble()*(nmax-nmin)+nmin;
 	}
 	
 	

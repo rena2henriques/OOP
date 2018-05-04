@@ -29,7 +29,7 @@ public abstract class IndividualEvent extends Event{
 	
 	
 	
-	public boolean peekEvent(Object o) {
+	/*public boolean peekEvent(Object o) {
 		
 		//PODE DAR MERDA POR CAUSA DO CAST, VERIFICAR!
 		//we want this event to be peeked if o equals its individual
@@ -43,7 +43,7 @@ public abstract class IndividualEvent extends Event{
 		return false;
 		//EXCEP�AO caso nao recebamos um individuo???
 		
-	}
+	}*/
 
 	
 

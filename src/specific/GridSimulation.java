@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Iterator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -46,7 +47,6 @@ public class GridSimulation extends SimulationA{
 			  System.exit(-1);
 		  }
 		
-	     System.out.println(initialPoint);
 		//call XML Parser
 		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
 		simGenerator= generator;
@@ -101,10 +101,11 @@ public class GridSimulation extends SimulationA{
 		
 		Individual ind=null;
 		//para os restantes fazer um for em que percorro e calculo se morrem ou n�o
-		for(int i=5; i<population.individuals.size(); i++) {
-			ind=population.individuals.get(i); 
+		//for(int i=5; i<population.individuals.size(); i++) {
+		for(Iterator<Individual> i=population.individuals.iterator();i.hasNext();) {
 
-			ind=population.individuals.get(i); 
+			//ind=population.individuals.get(i);
+			ind=i.next();
 			double percentage = 0;
 			try {
 				percentage= simGenerator.getThreshold(ind);
@@ -122,7 +123,10 @@ public class GridSimulation extends SimulationA{
 				//clears dead individual events
 				clearDeadEvents(pec, ind);
 				//retirar individual da lista de individuals
-				population.individuals.remove(ind);
+				//population.individuals.remove(ind);
+				
+				//to avoid concurrent modification exception
+				i.remove();
 			}
 		}
 	}

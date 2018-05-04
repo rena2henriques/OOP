@@ -18,7 +18,17 @@ import java.util.List;
  */
 public abstract class SimulationA implements SimulationI {
 	
-	protected double currentTime, finalTime;
+	/**
+	 * Current instant of the simulation
+	 */
+	protected double currentTime;
+		
+	/**
+	 * Final instant of the simulation
+	 */
+	protected double finalTime;
+	
+	
 	/**
 	 * @return the finalTime
 	 */
@@ -33,7 +43,15 @@ public abstract class SimulationA implements SimulationI {
 		this.finalTime = finalTime;
 	}
 
+	/**
+	 * current number of events of the simulation
+	 */
 	protected int numEvents;
+	
+	
+	/**
+	 * Pending Event Container with the events to be simulated
+	 */
 	protected PEC pec;
 	
 	/*

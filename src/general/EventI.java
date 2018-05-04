@@ -3,9 +3,8 @@ package general;
 import java.util.List;
 
 /**
- * 
- * Provides a method to simulate any type of events.
- * Provides the guidelines to implement event classes to be handled by the PecI implementations, and the method simulateEvent has to implemented
+ * Provides the guidelines to implement event classes to be handled by the PECI implementations.
+ * Provides a method to simulate any type of events, which has to be implemented.
  * 
  * @author Grupo 6
  *

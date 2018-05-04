@@ -4,12 +4,24 @@
 package general;
 
 /**
+ * Point representing a location in the 2D coordinate space, with coordinates (x,y).
+ * The coordinates are specified in integer precision.
+ * It overrides the method equals, hashCode in order to compare points accordingly to their coordinates. 
+ * The method toString is also overridden in order to print the point coordinates: (x,y);
+ * 
  * @author Group 6
  *
  */
 public class Point {
 	
-	private int x, y;
+	/**
+	 * The x coordinate of this Point.
+	 */
+	private int x;
+	/**
+	 * The y coordinate of this Point.
+	 */
+	private int y;
 
 	/**
 	 * @param x coordinate along x axis

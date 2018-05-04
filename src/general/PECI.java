@@ -2,9 +2,9 @@ package general;
 
 /**
  *  A container that provides operations made to a collection (it can be any kind of collection) 
- *  of objects of classes that implement the interface EventI
+ *  of event classes that implement the interface EventI
  *
- * @author Grupo 6
+ * @author Group 6
  *
  * @param <E> event that necessarily implements the interface EventI
  */
@@ -44,7 +44,7 @@ public interface PECI<E extends EventI>{
 	
 	
 	/**
-	 * Removes all of the events from the container.
+	 * Removes all of the events from the container. The result is an empty container
 	 */
 	void clear();
 	

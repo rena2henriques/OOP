@@ -14,10 +14,14 @@ import java.util.List;
  */
 public abstract class Event implements EventI{
 
+	/**
+	 * time of the event
+	 */
 	private double time; 
 	
 	/**
 	 * Constructor
+	 * Creates an Event with the specified time
 	 * 
 	 * @param time time of the event
 	 */
@@ -65,7 +69,7 @@ public abstract class Event implements EventI{
 	 * @see general.EventI#simulateEvent()
 	 */
 	/**
-	 * The programmer that extends this class should return a list of events of this class
+	 * The programmer that extends this class should return a list of events of the class Event
 	 * 
 	 * */
 	@Override

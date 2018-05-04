@@ -7,6 +7,9 @@ public class Connection {
 	MapPoint point;
 
 	/**
+	 * Constructor.
+	 * Creates a Connection with the specified cost and connected point.
+	 * 
 	 * @param cost of the link
 	 * @param connection - point which has a connection
 	 */

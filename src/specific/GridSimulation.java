@@ -222,7 +222,7 @@ public class GridSimulation extends SimulationA{
 	}
 	
 	public void printResult() {
-		System.out.println("Path of the best fit individual = "+population.bestInd.toString()); 
+		System.out.println("Path of the best fit individual = "+population.bestInd.pathString()); 
 	}
 
 	public Point getInitialPoint() {

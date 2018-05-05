@@ -279,16 +279,12 @@ public class Individual implements Cloneable {
 		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.getMaxCost()-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.getWidth()+population.map.getHeight()+1),population.sensitivity);
 	}
 		
-	//TODO TO STRING OU TER UM METODO PATHSTRING?
 	/**
-	 * Override of the lang.Object method toString.
 	 * Returns a string with the path of the individual.
+	 * 
+	 * @return String with the path of the individual
 	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	public String pathString() {
 		
 		String s="{";
 		for(Point pt: path)

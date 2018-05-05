@@ -38,7 +38,7 @@ public class ObservationEvent extends Event{
 		System.out.println("\t\tNumber of realized events: " + grid.getNumEvents());
 		System.out.println("\t\tPopulation size: " + grid.getPopulation().getIndividuals().size());
 		System.out.println("\t\tFinal point has been hit: " + finalHit);
-		System.out.println("\t\tPath of the best fit individual: " + grid.getPopulation().getBestInd());
+		System.out.println("\t\tPath of the best fit individual: " + grid.getPopulation().getBestInd().pathString());
 		System.out.println("\t\tCost/Confort: " + bestScore );
 		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
 		//POR TABS /t?

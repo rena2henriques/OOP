@@ -2,6 +2,12 @@ package specific;
 
 import java.util.Comparator;
 
+/**
+ * Implements Comparator<Individual> and compares individuals according to their comfort, in descendant order.
+ * 
+ * @author Group 6
+ *
+ */
 public class IndividualComfortComparator implements Comparator<Individual>{
 	
 	@Override

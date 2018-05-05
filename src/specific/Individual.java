@@ -1,6 +1,4 @@
-/**
- * DESCREVER A CLASSE INDIVIDUALS MAIS PORMENORIZADAMENTE....
- */
+
 package specific;
 
 import java.util.List;
@@ -10,25 +8,55 @@ import general.Point;
 import java.util.LinkedList;
 
 /**
+ * This Class provides an Individual which is associated with a path of points in the map, 
+ * and therefore with the correspondent cost and comfort.
+ * 
  * @author Group 6
- * POR OS NOSSOS NUMEROS, AQUI E EM TODAS AS CLASSES :)
- *DIZER QUE AS EXCEPCOES QUE SAO THROW E MERDAS ASSIM NOS COMMENTS, VER AS TAGS
  */
 
+// TODO
 //QUE VISIBILIDADE POR � CLASSE???
 //MUDAR VISIBILIDADE DOS METODOS, EST� TUDO A PUBLICO :(
 public class Individual implements Cloneable {
 	
+	/**
+	 * The cost of the path of the individual
+	 */
 	private int cost;
+	
+	/**
+	 * The comfort of the individual
+	 */
 	private double comfort;
+	
+	/**
+	 * The list of points that make the path of the Individual
+	 */
 	private List<Point> path; //array of points
+	
+	/**
+	 * The population (with the simulation info) in which the indiviudal lives
+	 */
 	private Population population; //population
+	
+	/**
+	 * The death event related to this individual
+	 */
 	private Death myDeath; //death event related to this individual
+	
+	/**
+	 * The move event related to this individual
+	 */
 	private Move nextMove;
+	
+	/**
+	 * The reproduction event related to this individual
+	 */
 	private Reproduction nextRep;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 * Creates an Individual with the specified Population and initial point.
 	 * 
 	 * @param population population with the parameters of the simulation
 	 * @param initial initial point, where the path starts
@@ -37,14 +65,13 @@ public class Individual implements Cloneable {
 		this.population=population;
 		path = new LinkedList<Point>();
 		path.add(initial);
-		calculateComfort();
-		
-		
+		calculateComfort();		
 	}
 
 
 	/**
-	 * Constructor. To use when the individual already has a path 
+	 * Constructor. To use when the individual already has a path.
+	 * Creates an Individual with the specified Population and list of points.
 	 * 
 	 * @param population population with the parameters of the simulation
 	 * @param points initial path of the new individual
@@ -102,6 +129,8 @@ public class Individual implements Cloneable {
 	}
 	
 	/**
+	 * Sets the path of the individual and recalculates its comfort and cost
+	 * 
 	 * @param path path to set
 	 */
 	public void setPath(List<Point> path) {
@@ -124,21 +153,33 @@ public class Individual implements Cloneable {
 		return comfort;
 	}
 	
+	/**
+	 * @return the next move event of the individual
+	 */
 	public Move getNextMove() {
 		return nextMove;
 	}
 
 
+	/**
+	 * @param nextMove sets the next move event of the individual
+	 */
 	public void setNextMove(Move nextMove) {
 		this.nextMove = nextMove;
 	}
 
-
+	
+	/**
+	 * @return the next reproduction event of the individual
+	 */
 	public Reproduction getNextRep() {
 		return nextRep;
 	}
 
 
+	/**
+	 * @param nextRep sets the next reproduction event of the individual
+	 */
 	public void setNextRep(Reproduction nextRep) {
 		this.nextRep = nextRep;
 	}
@@ -238,6 +279,7 @@ public class Individual implements Cloneable {
 		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.getMaxCost()-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.getWidth()+population.map.getHeight()+1),population.sensitivity);
 	}
 		
+	//TODO TO STRING OU TER UM METODO PATHSTRING?
 	/**
 	 * Override of the lang.Object method toString.
 	 * Returns a string with the path of the individual.

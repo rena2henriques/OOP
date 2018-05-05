@@ -2,7 +2,6 @@ package specific;
 
 import general.Event;
 
-
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;

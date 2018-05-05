@@ -3,7 +3,7 @@ package general;
 import java.util.Comparator;
 
 /**
- * Implements Comparator<Event> and compares events according to time, in ascendent order.
+ * Implements Comparator<Event> and compares events according to time, in ascendant order.
  * 
  * @author Group 6
  *

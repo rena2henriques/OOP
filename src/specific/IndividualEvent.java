@@ -57,8 +57,8 @@ public abstract class IndividualEvent extends Event{
 		try{
 			deathTime = ind.getIndDeath().getTime();
 		} catch (NullPointerException e) { //case has no death event associated
-			//DAR EXIT DO PROGRAMA OU DEIXAR = 0?
-		}
+			return true; //means that death event will not happen before simulation ends
+		}				 
 		if (time > deathTime) {
 			return false;
 		}

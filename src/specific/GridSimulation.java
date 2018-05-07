@@ -207,7 +207,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
-		population.bestInd=population.getIndividuals().get(0);
+		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			

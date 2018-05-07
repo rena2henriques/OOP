@@ -1,5 +1,7 @@
 package general;
 
+//TODO PASSAR PARA SPECIFIC
+
 /**
  * Provides a method to get a number (random or deterministic) related to any type T
  * 

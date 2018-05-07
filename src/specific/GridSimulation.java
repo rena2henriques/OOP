@@ -106,12 +106,8 @@ public class GridSimulation extends SimulationA{
 
 			//ind=population.individuals.get(i);
 			ind=i.next();
-			double percentage = 0;
-			try {
-				percentage= simGenerator.getThreshold(ind);
-			} catch (wrongThresholdException e) {
-				percentage = 0; //sets to default
-} 
+			double percentage= simGenerator.getThreshold(ind);
+	
 			if(percentage>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());

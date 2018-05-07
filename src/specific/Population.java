@@ -3,7 +3,7 @@ package specific;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Population implements Cloneable{
+public class Population{
 	int sensitivity; //fica package? ou damos sets?
 	int deathParam;
 	int moveParam;
@@ -38,14 +38,6 @@ public class Population implements Cloneable{
 		individuals= new LinkedList<Individual>();
 		this.finalPointHit = false;
 		this.bestInd = null;
-	}
-	
-	@Override
-	 public Object clone() throws CloneNotSupportedException {
-		 
-		 Population cloned = (Population)super.clone();
-		 cloned.setIndividuals(new LinkedList<Individual>(cloned.getIndividuals()));
-		 return cloned;	
 	}
 
 	public Map getMap() {

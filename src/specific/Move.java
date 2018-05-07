@@ -31,14 +31,9 @@ public class Move extends IndividualEvent {
 		//chooses next point to move, based on available moves and the generated number
 		if(!pointsList.isEmpty()) {
 			//gets a number between 0 and 1
-			double direction = 0;
-			//exceçao par prevnir quem implete o getThreshold não retorne entre 0 e 1
-			try {
-				//if(direction > 1 || direction < 0) throw new wrongThresholdException();
-				 direction= this.getsNC().getThreshold(ind);
-			} catch (wrongThresholdException e) {
-				direction = 0; //sets to default
-			}
+
+			double direction= this.getsNC().getThreshold(ind);
+	
 			Point choosenPoint = chooseDirection(pointsList, direction);
 			//adds choosen point to the path
 			ind.addToPath(choosenPoint);//adicionar novo point à pessoa
@@ -124,12 +119,8 @@ public class Move extends IndividualEvent {
 	 * @param currentInd
 	 * @param pop
 	 */
-	private void updateBestFit(Individual currentInd, Population pop) {
-		try {
-			pop.bestInd=(Individual) currentInd.clone(); 	
-		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
+	private void updateBestFit(Individual currentInd, Population pop) {	
+			pop.bestInd=currentInd.getPathIndividual(); 	
 	}
 	
 

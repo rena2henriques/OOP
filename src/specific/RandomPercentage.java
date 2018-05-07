@@ -6,6 +6,6 @@ import general.Utils;
 public class RandomPercentage implements INumberGenerator<Individual> {
 
 	public double getNumber(Individual individual){
-		return Utils.getUniformRandom(1);
+		return Utils.getUniformRandom(0,1);
 	}
 }

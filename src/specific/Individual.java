@@ -17,7 +17,7 @@ import java.util.LinkedList;
 // TODO
 //QUE VISIBILIDADE POR � CLASSE???
 //MUDAR VISIBILIDADE DOS METODOS, EST� TUDO A PUBLICO :(
-public class Individual implements Cloneable {
+public class Individual {
 	
 	/**
 	 * The cost of the path of the individual
@@ -82,16 +82,18 @@ public class Individual implements Cloneable {
 		cost=population.map.calculateCost(points);
 		calculateComfort();
 	}
+	
+	public Individual(List<Point> points) {
+		path= new LinkedList<Point>(points);
+	}
 		
-	 @Override
-	 public Object clone() throws CloneNotSupportedException {
-		 
-		 Individual cloned = (Individual)super.clone();
-		 cloned.setPath(new LinkedList<Point>(cloned.getPath()));
-		 cloned.setPopulation((Population)cloned.getPopulation().clone());
-		 return cloned;	 
-		
-	    }
+	public Individual getPathIndividual() {
+		Individual newInd= new Individual(path);
+		newInd.cost=this.cost;
+		newInd.comfort=this.comfort;
+
+		return newInd;
+	}
 	 
 	 /**
 	 * @return death
@@ -192,7 +194,7 @@ public class Individual implements Cloneable {
 	 * 
 	 * @param new_point new position of the individual
 	 */
-	/*public void addToPath(Point new_point) { 
+	public void addToPath(Point new_point) { 
 		
 		//checkar se h� cicle
 		if(checkCycle(new_point)) {
@@ -200,43 +202,22 @@ public class Individual implements Cloneable {
 			breakCycle(new_point);
 		}
 		else {
-			//dar update ao cost 
-			cost+=map.getConnectionCost(path.get(path.size()-1),new_point);
-			//adicionar novo ponto ao path e dar update ao comfort
-			path.add(new_point);
-			calculateComfort();			
+			addNewPoint(new_point);
 		}
+		
+		calculateComfort();			
+
 		
 		return;
 	}
-	
-	*/
-	//VER SE � MELHOR ASSIM OU COMO ESTAVA ANTES <-- NAO SEI SE VALE A PENA TER UMA EXCEPTION NESTE CASO
-	//NAO TENHO QUE CRIAR UMA CLASSE QUE DESCENDA DE EXCEPTION
-	public void addToPath(Point newPoint) {
-		
-		try {
-			addNewPoint(newPoint);
-		} catch (CycleException e){
-			 breakCycle(newPoint);		
-		}
-		finally {
-			calculateComfort();
-		}
-	}
-	
-	
-	
+
 	/**
 	 * Adds new point to path and throws exception when there is a cycle in the path
 	 * 
 	 * @param new_point point to add to path
 	 * @throws Exception if there is a cycle in the path with the new point
 	 */
-	private void addNewPoint(Point new_point) throws CycleException{
-		
-		if(checkCycle(new_point)) throw new CycleException();
-		
+	private void addNewPoint(Point new_point) {	
 		cost+=population.map.getConnectionCost(path.get(path.size()-1),new_point);
 		path.add(new_point);
 	}

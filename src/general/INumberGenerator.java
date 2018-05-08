@@ -9,11 +9,11 @@ package general;
  *
  * @param <T> it can extend class Number or any other class
  */
-public interface INumberGenerator<T> {
+public interface INumberGenerator {
 
 	/**
 	 * @param t 
 	 * @return a double related to object t
 	 */
-	double getNumber(T t);
+	double getNumber();
 }

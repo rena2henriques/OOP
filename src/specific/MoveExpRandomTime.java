@@ -1,11 +1,10 @@
 package specific;
 
-import general.INumberGenerator;
 import general.Utils;
 
-public class MoveExpRandomTime implements INumberGenerator<Individual> {
+public class MoveExpRandomTime extends IndividualTimeGenerator {
 
-	public double getNumber(Individual individual){
+	public double getNumber(){
 		return Utils.getExpRandom((1-Math.log(individual.getComfort()))*individual.getPopulation().moveParam);
 	}
 

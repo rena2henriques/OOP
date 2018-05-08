@@ -16,16 +16,22 @@ import general.SimulationA;
 import general.Event;
 import general.PEC;
 import general.Point;
+import general.INumberGenerator;
 
 public class GridSimulation extends SimulationA{
 	
 	private Population population;
 	private Point initialPoint;
 	private int maxInd, initPop;
-	private SimulationNumberCommands simGenerator; 
+	//private SimulationNumberCommands simGenerator; 
+	static final int DEATH=0;
+	static final int MOVE=1;
+	static final int REP=2;
+	static final int THRESH=3;
 
-	public GridSimulation(String filename, SimulationNumberCommands generator) {
-
+	
+	public GridSimulation(String filename) {
+	
 	      try {
 	    	  File file = new File(filename);
 	    	  SAXParserFactory factory = SAXParserFactory.newInstance();
@@ -49,7 +55,14 @@ public class GridSimulation extends SimulationA{
 		
 		//call XML Parser
 		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
-		simGenerator= generator;
+		
+		INumberGenerator gens[] = new INumberGenerator[4];
+		gens[DEATH]=new DeathExpRandomTime();
+		gens[MOVE]=new MoveExpRandomTime();
+		gens[REP]= new ReproductionExpRandomTime();
+		gens[THRESH]= new RandomPercentage();
+		
+		simComms= new GridCommands(gens);
 	}
 	
 	public void simulate() {
@@ -106,7 +119,8 @@ public class GridSimulation extends SimulationA{
 
 			//ind=population.individuals.get(i);
 			ind=i.next();
-			double percentage= simGenerator.getThreshold(ind);
+			//double percentage= simGenerator.getThreshold(ind);
+			double percentage=simComms.getCommand(THRESH);
 	
 			if(percentage>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
@@ -182,22 +196,22 @@ public class GridSimulation extends SimulationA{
 			newInd=new Individual(population, initialPoint);
 			
 			//first 3 events for each individual - death, move, reproduction
-			double eventTime = simGenerator.getDeathTime(newInd);
+			double eventTime = ((GridCommands) simComms).getCommand(DEATH,newInd);
 			if(eventTime < finalTime) {
-				Death death = new Death(eventTime,newInd, simGenerator);
+				Death death = new Death(eventTime,newInd, simComms);
 				newInd.setIndDeath(death);
 				pec.addEvent(death);
 			}
 			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE e de simTime
-			eventTime=simGenerator.getMoveTime(newInd);
+			eventTime=((GridCommands) simComms).getCommand(MOVE,newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
-				Move move = new Move(eventTime,newInd, simGenerator);
+				Move move = new Move(eventTime,newInd, simComms);
 				pec.addEvent(move);
 				newInd.setNextMove(move);
 			}
-			eventTime=simGenerator.getReproductionTime(newInd);
+			eventTime=((GridCommands) simComms).getCommand(REP,newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
-				Reproduction rep = new Reproduction(eventTime,newInd, simGenerator);
+				Reproduction rep = new Reproduction(eventTime,newInd, simComms);
 				pec.addEvent(rep);
 				newInd.setNextRep(rep);
 			}
@@ -207,7 +221,7 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
-		population.bestInd=population.getIndividuals().get(0);
+		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
@@ -257,12 +271,12 @@ public class GridSimulation extends SimulationA{
 		return population.finalPointHit;	
 	}
 	
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 	
 		GridSimulation simulation = new GridSimulation("projectexample.xml", null);
 		
 		System.out.println(simulation.initialPoint);
-	}
+	}*/
 
 
 }

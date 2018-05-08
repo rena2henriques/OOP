@@ -1,13 +1,14 @@
 package specific;
 
 import general.Event;
+import general.SimulationCommands;
 
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;
-	private SimulationNumberCommands sNC;
+	private SimulationCommands sNC;
 	
-	IndividualEvent(double time,Individual individual, SimulationNumberCommands simNumCom){
+	IndividualEvent(double time,Individual individual, SimulationCommands simNumCom){
 		super(time);
 		this.individual = individual;
 		this.sNC = simNumCom;
@@ -21,7 +22,7 @@ public abstract class IndividualEvent extends Event{
 		this.individual=individual;
 	}
 	
-	public SimulationNumberCommands getsNC() {
+	public SimulationCommands getsNC() {
 		return sNC;
 	}
 	
@@ -57,7 +58,7 @@ public abstract class IndividualEvent extends Event{
 		try{
 			deathTime = ind.getIndDeath().getTime();
 		} catch (NullPointerException e) { //case has no death event associated
-			//DAR EXIT DO PROGRAMA OU DEIXAR = 0?
+			return true; // means that death will not happen before simulatio ends
 		}
 		if (time > deathTime) {
 			return false;

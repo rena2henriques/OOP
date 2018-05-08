@@ -18,6 +18,8 @@ import java.util.List;
  */
 public abstract class SimulationA implements SimulationI {
 	
+	protected SimulationCommands simComms;
+	
 	/**
 	 * Current instant of the simulation
 	 */

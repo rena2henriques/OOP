@@ -9,11 +9,12 @@ import general.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import general.SimulationCommands;
 
 public class Move extends IndividualEvent {
 	
 	//constructor
-	public Move(double time, Individual ind, SimulationNumberCommands sNC) {
+	public Move(double time, Individual ind, SimulationCommands sNC) {
 		super(time, ind, sNC);
 	}
 	
@@ -32,14 +33,14 @@ public class Move extends IndividualEvent {
 		if(!pointsList.isEmpty()) {
 			//gets a number between 0 and 1
 
-			double direction= this.getsNC().getThreshold(ind);
+			double direction= this.getsNC().getCommand(GridSimulation.THRESH);
 	
 			Point choosenPoint = chooseDirection(pointsList, direction);
 			//adds choosen point to the path
 			ind.addToPath(choosenPoint);//adicionar novo point à pessoa
 			checkBestFitIndividual(ind, ind.getPopulation());
 			//creates next move
-			double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
+			double eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.MOVE,ind); //temp
 			if(checkDeathTime(eventTime, ind)) {
 				Move move = new Move(eventTime, ind, this.getsNC());
 				newEventsList.add(move);
@@ -125,7 +126,7 @@ public class Move extends IndividualEvent {
 	
 
 	//main teste
-	
+	/*
 public static void main(String[] args) {
 		
 		Map mymap = new Map(5,4);
@@ -191,7 +192,7 @@ public static void main(String[] args) {
 		System.out.println("new best dude: " + dude1.getPath());
 		
 
-	}
+	}*/
 }
 
 //test code below :) 

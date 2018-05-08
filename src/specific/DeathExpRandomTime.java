@@ -1,11 +1,10 @@
 package specific;
 
-import general.INumberGenerator;
 import general.Utils;
 
-public class DeathExpRandomTime implements INumberGenerator<Individual> {
+public class DeathExpRandomTime extends IndividualTimeGenerator {
 		
-	public double getNumber(Individual individual){
+	public double getNumber(){
 		return Utils.getExpRandom((1-Math.log(1-individual.getComfort()))*individual.getPopulation().deathParam);
 	}
 	

@@ -87,8 +87,8 @@ public class GridSimulation extends SimulationA{
 			numEvents++;			
 			addNewEvents(eventList);
 			
-			//checking epidemics
 			if(checkEpidemic())
+				//checking epidemics
 				epidemic();
 					 
 			//next event

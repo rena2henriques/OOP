@@ -19,7 +19,7 @@ public class MainSimulator {
 		
 		//SimulationNumberCommands generator= new SimulationNumberCommands(death,move,reproduction,threshold);
 
-		GridSimulation simulation = new GridSimulation("test_4_initialpointrodeado.xml");
+		GridSimulation simulation = new GridSimulation("projectexample.xml");
 		simulation.simulate();		
 	}
 

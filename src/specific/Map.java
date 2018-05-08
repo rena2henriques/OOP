@@ -405,7 +405,34 @@ public class Map {
 				xfinal = temp;
 			}
 		}
+		
+		// testing if the given points correspond to a horizontal (lineh) or vertical (linev)
+		boolean lineh = false;
+		boolean linev = false;
 
+		// Testing situations that the special cost zone isn't a rectangle 
+		if (xinitial == xfinal) {
+			
+			// case 1: the special cost zone is a vertical line or just a point (invalid)
+			if (yinitial != yfinal) {
+				
+				linev = true;
+				
+			// case 2: the special cost zone is just a point (invalid)
+			} else {
+				System.err.println("Special Cost Zone is just a point, situation invalid. Not Inserted!");
+				return;
+			}
+			
+		// testing if the special cost zone is a horizontal line
+		} else if (yinitial == yfinal) {
+			
+			// there's no need to test if the zone is a point because it was tested in the previous if statement
+			
+			lineh = true;
+		}
+		
+		// getting the MapPoint corresponding to the coordinates recv from the arguments
 		MapPoint pinitial;
 		MapPoint pfinal;
 		
@@ -414,15 +441,69 @@ public class Map {
 			pfinal = map.get(CoordsToIndex(xfinal,yfinal, width));
 		} catch(IndexOutOfBoundsException e) {
 			// coordinates not correct
-			System.err.println("Points not correct-> Error in addSpecialZone:" + e.getMessage());
+			System.err.println("Error in addSpecialZone, Coordinates not valid:" + e.getMessage());
+			System.err.println("Zone not inserted");
 			return;
 		}
+		
+		
+		// adds a vertical line as a special zone
+		if (linev) {
+			
+			MapPoint pauxinit = pinitial;
+			// no need to test for exceptions because the if statements in the beginning of the function prevent this excp
+			MapPoint pauxfinal = map.get(CoordsToIndex(pauxinit.getX(), pauxinit.getY()+1, width));
+			
+			while(pauxinit.getY() != yfinal) {
+				
+				if(getConnectionCost(pauxinit, pauxfinal) < cost) {
+					// connects two points from the yinitial row
+					setConnectionCost(pauxinit, pauxfinal, cost);
+				}
+				
+				pauxinit = pauxfinal;
+				
+				try {
+					pauxfinal = map.get(CoordsToIndex(pauxfinal.getX(), pauxfinal.getY()+1, width));
+				} catch(IndexOutOfBoundsException e) {
+					return;
+				}
+			}
+			
+			return;
+			
+		// adds a horizontal line as a special zone
+		} else if (lineh) {
+			
+			MapPoint pauxinit = pinitial;
+			// no need to test for exceptions because the if statements in the beginning of the function prevent this excp 
+			MapPoint pauxfinal = map.get(CoordsToIndex(pauxinit.getX()+1, pauxinit.getY(), width));
+			
+			while(pauxinit.getX() != xfinal) {
+				
+				if(getConnectionCost(pauxinit, pauxfinal) < cost) {
+					// connects two points from the yinitial row
+					setConnectionCost(pauxinit, pauxfinal, cost);
+				}
+				
+				pauxinit = pauxfinal;
+				
+				try {
+					pauxfinal = map.get(CoordsToIndex(pauxfinal.getX()+1, pauxfinal.getY(), width));
+				} catch(IndexOutOfBoundsException e) {
+					return;
+				}
+			}
+			
+			return;
+		}
+		
+		// Cases that the special cost zone is indeed a rectangle 
 		
 		// starts with the initial point
 		MapPoint pauxinit1 = pinitial;
 		// starts with the final point
 		MapPoint pauxfinal1 = pfinal;
-		
 		MapPoint pauxinit2, pauxfinal2;
 		
 		try {
@@ -434,32 +515,31 @@ public class Map {
 			return;
 		}
 		
-		
 		// connecting points from the rows
 		for(int i = 0; i < yfinal - yinitial; i++) {
 		
-			if(getConnectionCost(pauxinit1, pauxinit2) < cost) {
-				// connects two points from the yinitial row
-				setConnectionCost(pauxinit1, pauxinit2, cost);
-			}
-			
-			if(getConnectionCost(pauxfinal1, pauxfinal2) < cost) {
-				// connects two points from the yfinal row
-				setConnectionCost(pauxfinal1, pauxfinal2, cost);
-			}
-			
-			// in the case Xs exceeds the boundaries of the specialzone
-			if (pauxinit2.getX()+1 > xfinal || pauxfinal2.getX()-1 < xinitial) {
-				break;
-			}
-			
-			// moves to the next two points
-			pauxinit1 = pauxinit2;
-			pauxfinal1 = pauxfinal2;
-			
-			// no need to test exceptions because of the previous if statement
-			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX()+1,pauxinit2.getY(),  width));
-			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX()-1, pauxfinal2.getY(), width));
+				if(getConnectionCost(pauxinit1, pauxinit2) < cost) {
+					// connects two points from the yinitial row
+					setConnectionCost(pauxinit1, pauxinit2, cost);
+				}
+				
+				if(getConnectionCost(pauxfinal1, pauxfinal2) < cost) {
+					// connects two points from the yfinal row
+					setConnectionCost(pauxfinal1, pauxfinal2, cost);
+				}
+				
+				// in the case Xs exceeds the boundaries of the special zone
+				if (pauxinit2.getX()+1 > xfinal || pauxfinal2.getX()-1 < xinitial) {
+					break;
+				}
+				
+				// moves to the next two points
+				pauxinit1 = pauxinit2;
+				pauxfinal1 = pauxfinal2;
+				
+				// no need to test exceptions because of the previous if statement
+				pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX()+1,pauxinit2.getY(),  width));
+				pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX()-1, pauxfinal2.getY(), width));
 			
 		}
 		
@@ -469,7 +549,7 @@ public class Map {
 		pauxfinal1 = pfinal;
 		try {
 			// get the point above to the initial point
-			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()-1, width));
+			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()+1, width));
 			// get the point under the final point
 			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
 		} catch(IndexOutOfBoundsException e) {
@@ -499,8 +579,8 @@ public class Map {
 			pauxfinal1 = pauxfinal2;
 			
 			// no need to test exceptions because of the previous if statement
-			pauxinit2 = map.get(CoordsToIndex(pinitial.getX(), pinitial.getY()+1, width));
-			pauxfinal2 = map.get(CoordsToIndex(pfinal.getX(), pfinal.getY()-1, width));
+			pauxinit2 = map.get(CoordsToIndex(pauxinit2.getX(), pauxinit2.getY()+1, width));
+			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX(), pauxfinal2.getY()-1, width));
 		}
 		
 	}

@@ -73,6 +73,11 @@ public class GridSimulation extends SimulationA{
 	
 	public void simulate() {
 		
+		if(this.finalTime==0) {
+			System.out.println("The final instant is 0, so there is no simulation");
+			System.exit(0);
+		}
+		
 		//reseting the dynamic variables and initializing the population of individuals
 		reset();
 		initialize();	

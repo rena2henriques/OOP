@@ -141,8 +141,12 @@ public class MyHandler extends DefaultHandler {
 		    	  System.exit(-1);
 		      }
 		      
-		      // add an obstacle to the graph with the received connections
-		      map.addObstacle(xpos, ypos);
+		      if(simulation.getInitialPoint().getX() == xpos && simulation.getInitialPoint().getY() == ypos) {
+		    	  System.err.println("Obstacle wasn't inserted because the coordinates requested were equal to the initial point!");
+		      } else {
+		    	// add an obstacle to the graph with the received connections
+			      map.addObstacle(xpos, ypos);
+		      }
 		      
 		  // death param
 	      } else if (qName.equalsIgnoreCase("death")) {

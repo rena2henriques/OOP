@@ -36,7 +36,11 @@ public class PEC implements PECI<Event>{
 	 * @param initialCapacity 
 	 */
 	public PEC(int initialCapacity) {
-		events= new PriorityQueue<Event>(initialCapacity,new TimeEventComparator());
+		if(initialCapacity==0) {
+			events= new PriorityQueue<Event>(new TimeEventComparator());
+		} else {
+			events= new PriorityQueue<Event>(initialCapacity,new TimeEventComparator());
+		}
 	}
 	
 	/**

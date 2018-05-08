@@ -54,7 +54,7 @@ public class GridSimulation extends SimulationA{
 		  }
 		
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
+		pec = new PEC(3*maxInd); //3*maxInd is the initial capacity of the priority queue;
 		
 		INumberGenerator gens[] = new INumberGenerator[4];
 		gens[DEATH]=new DeathExpRandomTime();
@@ -134,6 +134,7 @@ public class GridSimulation extends SimulationA{
 			//double percentage= simGenerator.getThreshold(ind);
 			double percentage=simComms.getCommand(THRESH);
 	
+			//we dont check if k=0 because its verified in the xml parser
 			if(percentage>ind.getComfort()) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
@@ -239,7 +240,10 @@ public class GridSimulation extends SimulationA{
 			epidemic();
 		}
 		
-		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		if (initPop>0) {
+			population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		}
+		
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
@@ -249,8 +253,13 @@ public class GridSimulation extends SimulationA{
 		return population.bestInd.getPath();
 	}
 	
-	public void printResult() {
-		System.out.println("Path of the best fit individual = "+population.bestInd.pathString()); 
+	public void printResult() {	
+		try {
+			System.out.println("Path of the best fit individual = "+population.bestInd.pathString());
+		} catch (NullPointerException e) {
+			System.out.println("There is no individual to simulate events.");
+		}
+		 
 	}
 
 	public Point getInitialPoint() {

@@ -23,7 +23,7 @@ public class MainSimulator {
 		INumberGenerator moveTime=new MoveExpRandomTime();
 		INumberGenerator repTime= new ReproductionExpRandomTime();
 		INumberGenerator thresh= new RandomPercentage();
-		SimulationA simulation = new GridSimulation("test_14_soumindividual.xml",deathTime,moveTime,repTime,thresh);
+		SimulationA simulation = new GridSimulation("test_zigzag_take2.xml",deathTime,moveTime,repTime,thresh);
 
 		simulation.simulate();
 	}

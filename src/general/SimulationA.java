@@ -89,7 +89,7 @@ public abstract class SimulationA implements SimulationI {
 	 * @param eventList list with the events to be added to the PEC
 	 */
 	protected void addNewEvents(List<Event> eventList) {
-		if(eventList!=null) { //se der merda por os eventos a retornar null
+		if(eventList!=null) { 
 			for(Event e: eventList) {
 				if(e.getTime() <= this.finalTime)
 					pec.addEvent(e);

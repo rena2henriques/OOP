@@ -43,8 +43,10 @@ Mas se metermos ponto final mais perto do inicial já é o mesmo que normalmente
 
 K maior -> menor comfort -> tempo para reprodução e move maior -> menos eventos
                           -> tempo de death menor
-                         -> mas morre mais gente nas epidemias quando existem epidemias - por exemplo quando initpop é maior que maxpop 
+                         -> mas morre mais gente nas epidemias quando existem epidemias - por exemplo quando initpop é maior que maxpop (test10)
 
+Test11 - final inst grande, death grande e final pop pequena para existirem muitas epidemias
+Test12 - maxpop e death grande, reproduction pequena para haver populacao bue grande -> bue eventos 
 
 
 

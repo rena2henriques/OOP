@@ -5,8 +5,8 @@ import general.SimulationCommands;
 
 public abstract class IndividualEvent extends Event{
 	
-	private Individual individual;
-	private SimulationCommands sNC;
+	protected Individual individual;
+	protected SimulationCommands sNC;
 	
 	IndividualEvent(double time,Individual individual, SimulationCommands simNumCom){
 		super(time);

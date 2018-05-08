@@ -121,10 +121,11 @@ public class GridSimulation extends SimulationA{
 	
 	
 	private void epidemic() {
-				
+						
+		// TODO MUDAR ISTO, ACHO QUE NAO FAZ SENTIDO AFINAL
 		int epidemic_size=5;
-		if(maxInd<epidemic_size)
-			epidemic_size=maxInd;
+		/*if(maxInd<epidemic_size)
+			epidemic_size=maxInd;*/
 		
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
@@ -134,7 +135,7 @@ public class GridSimulation extends SimulationA{
 		
 		Iterator<Individual> i=population.individuals.iterator();
 		
-		for (int x=0; x < epidemic_size; x++) {
+		for (int x=0; x < epidemic_size && i.hasNext(); x++) {
 	        i.next(); // ignore the first x values
 	    }
 		

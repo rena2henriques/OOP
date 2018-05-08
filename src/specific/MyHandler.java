@@ -80,8 +80,11 @@ public class MyHandler extends DefaultHandler {
 	    	  int xinitial = Integer.parseInt(attributes.getValue("xinitial"));
 		      int yinitial = Integer.parseInt(attributes.getValue("yinitial"));
 		      
-		      if(xinitial > map.getWidth() || xinitial < 0 || yinitial > map.getHeight() || yinitial < 0) {
+		      if( xinitial < 0 || yinitial < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
+		    	  System.exit(-1);
+		      } else if (xinitial > map.getWidth() || yinitial > map.getHeight()) {
+		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
 		      
@@ -95,8 +98,11 @@ public class MyHandler extends DefaultHandler {
 	    	  int xfinal = Integer.parseInt(attributes.getValue("xfinal"));
 		      int yfinal = Integer.parseInt(attributes.getValue("yfinal"));
 		      
-		      if(xfinal > map.getWidth() || xfinal < 0 || yfinal > map.getHeight() || yfinal < 0) {
+		      if(xfinal < 0 || yfinal < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
+		    	  System.exit(-1);
+		      } else if (xfinal > map.getWidth() || yfinal > map.getHeight()) {
+		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
 		      
@@ -110,9 +116,11 @@ public class MyHandler extends DefaultHandler {
 		      xfinSCZ = Integer.parseInt(attributes.getValue("xfinal"));
 		      yfinSCZ = Integer.parseInt(attributes.getValue("yfinal"));
 		      
-		      if(xfinSCZ > map.getWidth() || xfinSCZ < 0 || yfinSCZ > map.getHeight() || yfinSCZ < 0 || xiniSCZ > map.getWidth() 
-		    		  		|| xiniSCZ < 0 || yiniSCZ > map.getHeight() || yiniSCZ < 0) {
+		      if( xfinSCZ < 0 || yfinSCZ < 0  || xiniSCZ < 0 || yiniSCZ < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
+		    	  System.exit(-1);
+		      } else if(xfinSCZ > map.getWidth() || yfinSCZ > map.getHeight() || xiniSCZ > map.getWidth()|| yiniSCZ > map.getHeight()) {
+		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
 		      
@@ -136,8 +144,11 @@ public class MyHandler extends DefaultHandler {
 	    	  int xpos = Integer.parseInt(attributes.getValue("xpos"));
 		      int ypos = Integer.parseInt(attributes.getValue("ypos"));
 		      
-		      if(xpos > map.getWidth() || xpos < 0 || ypos > map.getHeight() || ypos < 0) {
+		      if( xpos < 0 || ypos < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
+		    	  System.exit(-1);
+		      } else if (xpos > map.getWidth() || ypos > map.getHeight() ) {
+		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
 		      

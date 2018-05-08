@@ -25,7 +25,8 @@ public class MainSimulator {
 		INumberGenerator thresh= new RandomPercentage();
 		SimulationA simulation = new GridSimulation("projectexample.xml",deathTime,moveTime,repTime,thresh);
 
-		simulation.simulate();		
+		simulation.simulate();	
+		simulation.simulate();
 	}
 
 }

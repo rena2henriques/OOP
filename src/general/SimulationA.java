@@ -64,22 +64,14 @@ public abstract class SimulationA implements SimulationI {
 	}
 	
 	/**
-	 * @param nevents number of realized events to set
-	 */
-	public void setNumEvents(int nevents) {
-		numEvents=nevents;
-	}
-	
-	/**
 	 * @return the simulation current time
 	 */
 	public double getSimulationClock() {
 		return currentTime;
 	}
 	
-	public abstract void simulate();
-	
-	public abstract void initialize();
+	//TODO POR ISTO OU NAO? DUVIDA
+	public abstract void simulate(); // por isto ou n�o????
 		
 	/**
 	 * Resets the variables that change with the simulation of the system. 

@@ -275,10 +275,19 @@ public class GridSimulation extends SimulationA{
 		return initialPoint;
 	}
 	
+	/**
+	 * @param nevents number of realized events to set
+	 */
+	void setNumEvents(int nevents) {
+		numEvents=nevents;
+	}
+	
+	// TODO VER SE NAO É MELHOR POR OS PARAMETROS COMO PACKAGE EM VEZ DE TER ISTO
+	
 	public void setInitialPoint(Point initialPoint) {
 		this.initialPoint=initialPoint;
 	}
-	
+		
 	public Population getPopulation() {
 		return population;
 	}

@@ -3,10 +3,6 @@ package general;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-
-//IMPLEMENTACAO DA PECI, só funciona com eventos do tipo event, que têm um time
-//compara eventos obrigatoriamente a partir do tempo
-
 /**
  * This class provides an implementation of the PECI interface.
  * It provides a priority queue of events that have a time (class Event) and orders them accordingly to that attribute.

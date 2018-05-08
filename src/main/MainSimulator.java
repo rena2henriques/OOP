@@ -3,6 +3,7 @@ package main;
  * 
  */
 
+import general.SimulationA;
 import specific.*;
 	
 
@@ -19,7 +20,7 @@ public class MainSimulator {
 		
 		//SimulationNumberCommands generator= new SimulationNumberCommands(death,move,reproduction,threshold);
 
-		GridSimulation simulation = new GridSimulation("projectexample.xml");//DECLARAR COMO SIMULATIONA??
+		SimulationA simulation = new GridSimulation("projectexample.xml");
 
 		simulation.simulate();		
 	}

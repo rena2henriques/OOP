@@ -17,11 +17,11 @@ public class Point {
 	/**
 	 * The x coordinate of this Point.
 	 */
-	private int x;
+	protected int x;
 	/**
 	 * The y coordinate of this Point.
 	 */
-	private int y;
+	protected int y;
 
 	/**
 	 * @param x coordinate along x axis

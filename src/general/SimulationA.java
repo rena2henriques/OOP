@@ -56,22 +56,6 @@ public abstract class SimulationA implements SimulationI {
 	 */
 	protected PEC pec;
 	
-	/*
-	//TODO VER SE VALE A PENA TER ESTES CONSTRUTORES TODOS
-	public SimulationA (double finalt, int capacity) {
-		finalTime=finalt;
-		pec = new PEC(capacity);
-	}
-	
-	public SimulationA(double finalt) {
-		finalTime=finalt;
-		pec = new PEC();
-	}
-	
-	public SimulationA() {
-		this(0);
-	}*/
-	
 	/**
 	 * @return number of realized events
 	 */
@@ -93,8 +77,9 @@ public abstract class SimulationA implements SimulationI {
 		return currentTime;
 	}
 	
-	//TODO POR ISTO OU NAO? DUVIDA
-	public abstract void simulate(); // por isto ou n�o????
+	public abstract void simulate();
+	
+	public abstract void initialize();
 		
 	/**
 	 * Resets the variables that change with the simulation of the system. 

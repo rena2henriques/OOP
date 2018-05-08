@@ -11,12 +11,12 @@ public class Connection {
 	/**
 	 * The cost of the connection
 	 */
-	private int cost;
+	protected int cost;
 	
 	/**
 	 * The end point of the connection
 	 */
-	MapPoint point;
+	protected MapPoint point;
 
 	/**
 	 * Constructor.

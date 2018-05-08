@@ -43,8 +43,8 @@ public class MyHandler extends DefaultHandler {
 	         int maxpop = Integer.parseInt(attributes.getValue("maxpop"));
 	         comfortsens = Integer.parseInt(attributes.getValue("comfortsens"));
 	         
-	         if(finalinst < 0 || initpop < 0 || maxpop < 0 || comfortsens < 0) {
-	        	 System.err.println("simulation attributes received from XML are negative when they shouldn't.");
+	         if(finalinst < 0 || initpop < 0 || maxpop < 0 || comfortsens <= 0) {
+	        	 System.err.println("simulation attributes received from XML are negative or zero when they shouldn't.");
 	        	 System.exit(-1);
 	         }
 	         

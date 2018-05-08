@@ -97,8 +97,9 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
-		// simulate final observation
-		eventList=currentEvent.simulateEvent(); 
+		//simulate final observation
+		if(population.individuals.size()!=0)
+			eventList=currentEvent.simulateEvent(); 
 		//printing final results of the simulation
 		printResult(); 
 	}

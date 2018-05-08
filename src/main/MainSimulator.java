@@ -20,6 +20,7 @@ public class MainSimulator {
 		//SimulationNumberCommands generator= new SimulationNumberCommands(death,move,reproduction,threshold);
 
 		GridSimulation simulation = new GridSimulation("test_5_valorestoscos.xml");//DECLARAR COMO SIMULATIONA??
+
 		simulation.simulate();		
 	}
 

@@ -53,6 +53,12 @@ public class GridSimulation extends SimulationA{
 			  System.exit(-1);
 		  }
 		
+	    // If initPop is zero means that no event will be simulated, cause there's no individual to have events
+	    if (initPop == 0) {
+	    	System.out.println("The initial population is zero, so there are no individuals to associate events to.");
+	    	System.exit(0);
+	    }
+	      
 		//call XML Parser
 		pec = new PEC(3*maxInd); //3*maxInd is the initial capacity of the priority queue;
 		
@@ -234,14 +240,12 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		
 		//in case of having initPop bigger than maxInd
 		if(checkEpidemic()) {
 			//checking epidemics
 			epidemic();
-		}
-		
-		if (initPop>0) {
-			population.bestInd=population.getIndividuals().get(0).getPathIndividual();
 		}
 		
 		//add first observation

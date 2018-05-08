@@ -67,6 +67,11 @@ public class GridSimulation extends SimulationA{
 	
 	public void simulate() {
 		
+		if(this.finalTime==0) {
+			System.out.println("The final instant is 0, so there is no simulation");
+			System.exit(0);
+		}
+		
 		//reseting the dynamic variables and initializing the population of individuals
 		reset();
 		initialize();	
@@ -240,7 +245,9 @@ public class GridSimulation extends SimulationA{
 			epidemic();
 		}
 		
-		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		if(initPop>0) {
+			population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		}
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			

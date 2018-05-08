@@ -30,7 +30,7 @@ public class GridSimulation extends SimulationA{
 	static final int THRESH=3;
 
 	
-	public GridSimulation(String filename) {
+	public GridSimulation(String filename,INumberGenerator deathTime,INumberGenerator moveTime,INumberGenerator repTime ,INumberGenerator thresh) {
 	
 	      try {
 	    	  File file = new File(filename);
@@ -63,10 +63,10 @@ public class GridSimulation extends SimulationA{
 		pec = new PEC(3*maxInd); //3*maxInd is the initial capacity of the priority queue;
 		
 		INumberGenerator gens[] = new INumberGenerator[4];
-		gens[DEATH]=new DeathExpRandomTime();
-		gens[MOVE]=new MoveExpRandomTime();
-		gens[REP]= new ReproductionExpRandomTime();
-		gens[THRESH]= new RandomPercentage();
+		gens[DEATH]=deathTime;
+		gens[MOVE]=moveTime;
+		gens[REP]= repTime;
+		gens[THRESH]= thresh;
 		
 		simComms= new GridCommands(gens);
 	}

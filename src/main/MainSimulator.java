@@ -3,6 +3,7 @@ package main;
  * 
  */
 
+import general.INumberGenerator;
 import general.SimulationA;
 import specific.*;
 	
@@ -18,9 +19,11 @@ public class MainSimulator {
 	 */
 	public static void main(String[] args) {
 		
-		//SimulationNumberCommands generator= new SimulationNumberCommands(death,move,reproduction,threshold);
-
-		SimulationA simulation = new GridSimulation("projectexample.xml");
+		INumberGenerator deathTime=new DeathExpRandomTime();
+		INumberGenerator moveTime=new MoveExpRandomTime();
+		INumberGenerator repTime= new ReproductionExpRandomTime();
+		INumberGenerator thresh= new RandomPercentage();
+		SimulationA simulation = new GridSimulation("projectexample.xml",deathTime,moveTime,repTime,thresh);
 
 		simulation.simulate();		
 	}

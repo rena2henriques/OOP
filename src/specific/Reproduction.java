@@ -1,12 +1,10 @@
 package specific;
 
 import general.Event;
-import general.INumberGenerator;
 
 import general.Point;
 import general.SimulationCommands;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 

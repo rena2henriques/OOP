@@ -1,6 +1,4 @@
-/**
- * DESCREVER A CLASSE INDIVIDUALS MAIS PORMENORIZADAMENTE....
- */
+
 package specific;
 
 import java.util.List;
@@ -10,25 +8,55 @@ import general.Point;
 import java.util.LinkedList;
 
 /**
+ * This Class provides an Individual which is associated with a path of points in the map, 
+ * and therefore with the correspondent cost and comfort.
+ * 
  * @author Group 6
- * POR OS NOSSOS NUMEROS, AQUI E EM TODAS AS CLASSES :)
- *DIZER QUE AS EXCEPCOES QUE SAO THROW E MERDAS ASSIM NOS COMMENTS, VER AS TAGS
  */
 
+// TODO
 //QUE VISIBILIDADE POR � CLASSE???
 //MUDAR VISIBILIDADE DOS METODOS, EST� TUDO A PUBLICO :(
-public class Individual implements Cloneable {
+public class Individual {
 	
+	/**
+	 * The cost of the path of the individual
+	 */
 	private int cost;
+	
+	/**
+	 * The comfort of the individual
+	 */
 	private double comfort;
+	
+	/**
+	 * The list of points that make the path of the Individual
+	 */
 	private List<Point> path; //array of points
+	
+	/**
+	 * The population (with the simulation info) in which the indiviudal lives
+	 */
 	private Population population; //population
+	
+	/**
+	 * The death event related to this individual
+	 */
 	private Death myDeath; //death event related to this individual
+	
+	/**
+	 * The move event related to this individual
+	 */
 	private Move nextMove;
+	
+	/**
+	 * The reproduction event related to this individual
+	 */
 	private Reproduction nextRep;
 	
 	/**
-	 * Constructor
+	 * Constructor.
+	 * Creates an Individual with the specified Population and initial point.
 	 * 
 	 * @param population population with the parameters of the simulation
 	 * @param initial initial point, where the path starts
@@ -37,14 +65,13 @@ public class Individual implements Cloneable {
 		this.population=population;
 		path = new LinkedList<Point>();
 		path.add(initial);
-		calculateComfort();
-		
-		
+		calculateComfort();		
 	}
 
 
 	/**
-	 * Constructor. To use when the individual already has a path 
+	 * Constructor. To use when the individual already has a path.
+	 * Creates an Individual with the specified Population and list of points.
 	 * 
 	 * @param population population with the parameters of the simulation
 	 * @param points initial path of the new individual
@@ -55,16 +82,18 @@ public class Individual implements Cloneable {
 		cost=population.map.calculateCost(points);
 		calculateComfort();
 	}
+	
+	public Individual(List<Point> points) {
+		path= new LinkedList<Point>(points);
+	}
 		
-	 @Override
-	 public Object clone() throws CloneNotSupportedException {
-		 
-		 Individual cloned = (Individual)super.clone();
-		 cloned.setPath(new LinkedList<Point>(cloned.getPath()));
-		 cloned.setPopulation((Population)cloned.getPopulation().clone());
-		 return cloned;	 
-		
-	    }
+	public Individual getPathIndividual() {
+		Individual newInd= new Individual(path);
+		newInd.cost=this.cost;
+		newInd.comfort=this.comfort;
+
+		return newInd;
+	}
 	 
 	 /**
 	 * @return death
@@ -102,6 +131,8 @@ public class Individual implements Cloneable {
 	}
 	
 	/**
+	 * Sets the path of the individual and recalculates its comfort and cost
+	 * 
 	 * @param path path to set
 	 */
 	public void setPath(List<Point> path) {
@@ -124,21 +155,33 @@ public class Individual implements Cloneable {
 		return comfort;
 	}
 	
+	/**
+	 * @return the next move event of the individual
+	 */
 	public Move getNextMove() {
 		return nextMove;
 	}
 
 
+	/**
+	 * @param nextMove sets the next move event of the individual
+	 */
 	public void setNextMove(Move nextMove) {
 		this.nextMove = nextMove;
 	}
 
-
+	
+	/**
+	 * @return the next reproduction event of the individual
+	 */
 	public Reproduction getNextRep() {
 		return nextRep;
 	}
 
 
+	/**
+	 * @param nextRep sets the next reproduction event of the individual
+	 */
 	public void setNextRep(Reproduction nextRep) {
 		this.nextRep = nextRep;
 	}
@@ -151,7 +194,7 @@ public class Individual implements Cloneable {
 	 * 
 	 * @param new_point new position of the individual
 	 */
-	/*public void addToPath(Point new_point) { 
+	public void addToPath(Point new_point) { 
 		
 		//checkar se h� cicle
 		if(checkCycle(new_point)) {
@@ -159,43 +202,22 @@ public class Individual implements Cloneable {
 			breakCycle(new_point);
 		}
 		else {
-			//dar update ao cost 
-			cost+=map.getConnectionCost(path.get(path.size()-1),new_point);
-			//adicionar novo ponto ao path e dar update ao comfort
-			path.add(new_point);
-			calculateComfort();			
+			addNewPoint(new_point);
 		}
+		
+		calculateComfort();			
+
 		
 		return;
 	}
-	
-	*/
-	//VER SE � MELHOR ASSIM OU COMO ESTAVA ANTES <-- NAO SEI SE VALE A PENA TER UMA EXCEPTION NESTE CASO
-	//NAO TENHO QUE CRIAR UMA CLASSE QUE DESCENDA DE EXCEPTION
-	public void addToPath(Point newPoint) {
-		
-		try {
-			addNewPoint(newPoint);
-		} catch (CycleException e){
-			 breakCycle(newPoint);		
-		}
-		finally {
-			calculateComfort();
-		}
-	}
-	
-	
-	
+
 	/**
 	 * Adds new point to path and throws exception when there is a cycle in the path
 	 * 
 	 * @param new_point point to add to path
 	 * @throws Exception if there is a cycle in the path with the new point
 	 */
-	private void addNewPoint(Point new_point) throws CycleException{
-		
-		if(checkCycle(new_point)) throw new CycleException();
-		
+	private void addNewPoint(Point new_point) {	
 		cost+=population.map.getConnectionCost(path.get(path.size()-1),new_point);
 		path.add(new_point);
 	}
@@ -239,14 +261,11 @@ public class Individual implements Cloneable {
 	}
 		
 	/**
-	 * Override of the lang.Object method toString.
 	 * Returns a string with the path of the individual.
+	 * 
+	 * @return String with the path of the individual
 	 */
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
-	@Override
-	public String toString() {
+	public String pathString() {
 		
 		String s="{";
 		for(Point pt: path)

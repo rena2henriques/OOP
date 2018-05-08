@@ -4,6 +4,7 @@ import general.Event;
 import general.INumberGenerator;
 
 import general.Point;
+import general.SimulationCommands;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public class Reproduction extends IndividualEvent{
 
-	public Reproduction(double time, Individual individual, SimulationNumberCommands sNC) {
+	public Reproduction(double time, Individual individual, SimulationCommands sNC) {
 		super(time, individual, sNC);
 	}
 
@@ -33,26 +34,26 @@ public class Reproduction extends IndividualEvent{
 
 		//criação de 3 novos eventos, death, move, reproduction
 		//garantir que o tempo gerado é >0??
-		double eventTime = this.getTime() + getsNC().getDeathTime(newDude); 
+		double eventTime = this.getTime() + ((GridCommands) this.getsNC()).getCommand(GridSimulation.DEATH,newDude); 
 		Death death = new Death(eventTime, newDude, getsNC());
 		newEventsList.add(death);
 		//sets new dude's death time
 		newDude.setIndDeath(death);
 		//adds next reproduciton and move
-		eventTime = this.getTime() + this.getsNC().getMoveTime(newDude); 
+		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.MOVE,newDude); 
 		if(checkDeathTime(eventTime, newDude)) {
 			Move move = new Move(eventTime, newDude, getsNC());
 			newEventsList.add(move);
 			newDude.setNextMove(move);
 		}
-		eventTime = this.getTime() + this.getsNC().getReproductionTime(newDude); 
+		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.REP,newDude); 
 		if(checkDeathTime(eventTime, newDude)) {
 			Reproduction rep = new Reproduction(eventTime, newDude, getsNC());
 			newEventsList.add(rep);
 			newDude.setNextRep(rep);
 		}
 		//adds next reproduction for father
-		eventTime = this.getTime() + this.getsNC().getReproductionTime(father); 
+		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.REP,father); 
 		if(checkDeathTime(eventTime, father)) {
 			Reproduction faRep = new Reproduction(eventTime, father, getsNC());
 			newEventsList.add(faRep);
@@ -83,7 +84,7 @@ public class Reproduction extends IndividualEvent{
 		return myPath;
 	}
 	
-	
+	/*
 	//main teste
 	public static void main(String[] args) {
 
@@ -144,7 +145,7 @@ public class Reproduction extends IndividualEvent{
 		System.out.println("pop size after rep= " + pop.getIndividuals().size());
 		System.out.println("child path = " + pop.getIndividuals().get(2).getPath());
 
-		}
+		}*/
 }
 
 

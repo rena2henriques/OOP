@@ -7,10 +7,11 @@ import java.util.List;
 
 import general.Event;
 import general.Point;
+import general.SimulationCommands;
 
 public class Death extends IndividualEvent{
 
-	public Death(double time, Individual ind, SimulationNumberCommands sNC) {
+	public Death(double time, Individual ind, SimulationCommands sNC) {
 		super(time, ind, sNC);
 	}
 	

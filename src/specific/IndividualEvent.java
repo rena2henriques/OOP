@@ -1,14 +1,14 @@
 package specific;
 
 import general.Event;
-
+import general.SimulationCommands;
 
 public abstract class IndividualEvent extends Event{
 	
 	private Individual individual;
-	private SimulationNumberCommands sNC;
+	private SimulationCommands sNC;
 	
-	IndividualEvent(double time,Individual individual, SimulationNumberCommands simNumCom){
+	IndividualEvent(double time,Individual individual, SimulationCommands simNumCom){
 		super(time);
 		this.individual = individual;
 		this.sNC = simNumCom;
@@ -22,14 +22,14 @@ public abstract class IndividualEvent extends Event{
 		this.individual=individual;
 	}
 	
-	public SimulationNumberCommands getsNC() {
+	public SimulationCommands getsNC() {
 		return sNC;
 	}
 	
 	
 	
 	
-	public boolean peekEvent(Object o) {
+	/*public boolean peekEvent(Object o) {
 		
 		//PODE DAR MERDA POR CAUSA DO CAST, VERIFICAR!
 		//we want this event to be peeked if o equals its individual
@@ -43,7 +43,7 @@ public abstract class IndividualEvent extends Event{
 		return false;
 		//EXCEP�AO caso nao recebamos um individuo???
 		
-	}
+	}*/
 
 	
 
@@ -58,8 +58,8 @@ public abstract class IndividualEvent extends Event{
 		try{
 			deathTime = ind.getIndDeath().getTime();
 		} catch (NullPointerException e) { //case has no death event associated
-			//DAR EXIT DO PROGRAMA OU DEIXAR = 0?
-		}
+			return true; //means that death event will not happen before simulation ends
+		}				 
 		if (time > deathTime) {
 			return false;
 		}

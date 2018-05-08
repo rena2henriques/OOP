@@ -9,11 +9,12 @@ import general.Point;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import general.SimulationCommands;
 
 public class Move extends IndividualEvent {
 	
 	//constructor
-	public Move(double time, Individual ind, SimulationNumberCommands sNC) {
+	public Move(double time, Individual ind, SimulationCommands sNC) {
 		super(time, ind, sNC);
 	}
 	
@@ -31,20 +32,15 @@ public class Move extends IndividualEvent {
 		//chooses next point to move, based on available moves and the generated number
 		if(!pointsList.isEmpty()) {
 			//gets a number between 0 and 1
-			double direction = 0;
-			//exceçao par prevnir quem implete o getThreshold não retorne entre 0 e 1
-			try {
-				//if(direction > 1 || direction < 0) throw new wrongThresholdException();
-				 direction= this.getsNC().getThreshold(ind);
-			} catch (wrongThresholdException e) {
-				direction = 0; //sets to default
-			}
+
+			double direction= this.getsNC().getCommand(GridSimulation.THRESH);
+	
 			Point choosenPoint = chooseDirection(pointsList, direction);
 			//adds choosen point to the path
 			ind.addToPath(choosenPoint);//adicionar novo point à pessoa
 			checkBestFitIndividual(ind, ind.getPopulation());
 			//creates next move
-			double eventTime = this.getTime() + this.getsNC().getMoveTime(ind); //temp
+			double eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.MOVE,ind); //temp
 			if(checkDeathTime(eventTime, ind)) {
 				Move move = new Move(eventTime, ind, this.getsNC());
 				newEventsList.add(move);
@@ -124,17 +120,13 @@ public class Move extends IndividualEvent {
 	 * @param currentInd
 	 * @param pop
 	 */
-	private void updateBestFit(Individual currentInd, Population pop) {
-		try {
-			pop.bestInd=(Individual) currentInd.clone(); 	
-		} catch(CloneNotSupportedException e) {
-			e.printStackTrace();
-		}
+	private void updateBestFit(Individual currentInd, Population pop) {	
+			pop.bestInd=currentInd.getPathIndividual(); 	
 	}
 	
 
 	//main teste
-	
+	/*
 public static void main(String[] args) {
 		
 		Map mymap = new Map(5,4);
@@ -200,7 +192,7 @@ public static void main(String[] args) {
 		System.out.println("new best dude: " + dude1.getPath());
 		
 
-	}
+	}*/
 }
 
 //test code below :) 

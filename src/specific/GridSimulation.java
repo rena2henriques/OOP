@@ -87,8 +87,8 @@ public class GridSimulation extends SimulationA{
 			numEvents++;			
 			addNewEvents(eventList);
 			
+			//checking epidemics
 			if(checkEpidemic())
-				//checking epidemics
 				epidemic();
 					 
 			//next event
@@ -110,7 +110,7 @@ public class GridSimulation extends SimulationA{
 	
 	
 	private void epidemic() {
-		
+				
 		int epidemic_size=5;
 		if(maxInd<epidemic_size)
 			epidemic_size=maxInd;
@@ -231,6 +231,12 @@ public class GridSimulation extends SimulationA{
 			//adding individual to the population
 			population.individuals.add(newInd);			
 			
+		}
+		
+		//in case of having initPop bigger than maxInd
+		if(checkEpidemic()) {
+			//checking epidemics
+			epidemic();
 		}
 		
 		population.bestInd=population.getIndividuals().get(0).getPathIndividual();

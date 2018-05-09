@@ -62,7 +62,7 @@ public abstract class SimulationA implements SimulationI {
 	public int getNumEvents() {
 		return numEvents;
 	}
-		
+
 	/**
 	 * Resets the variables that change with the simulation of the system. 
 	 * Sets the current time and the number of events to 0, and clears the PEC

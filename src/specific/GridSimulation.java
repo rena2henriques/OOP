@@ -86,13 +86,15 @@ public class GridSimulation extends SimulationA{
 	 * @see SimulationCommands
 	 */
 	protected static final int THRESH=3;
-
 	
 	/**
 	 * Constructor.
 	 * Creates a GridSimulation from the specified file and number generators.
 	 * <p>
-	 * TODO FALAR SOBRE O PARSER
+	 * The SAX Parser is called in this constructor and a File with the filename received is opened. The validation of the parser
+	 * is set to true in order to get its validity using the dtd. In case of error, many exceptions can be caught. IOException in 
+	 * case of the file not being available, SAXException in case of the xml not being in accord with the dtd and also a 
+	 * NumberFormatException in case of other variables are sent instead of just integers
 	 * <p>
 	 * Initializes the PEC with an initial capacity of 3*maxInd and creates a GridCommands with the provided INumberGenerators.
 	 * 
@@ -349,6 +351,7 @@ public class GridSimulation extends SimulationA{
 	public void printResult() {	
 		try {
 			System.out.println("Path of the best fit individual = "+population.bestInd.pathString());
+
 		} catch (NullPointerException e) {
 			System.out.println("There is no individual to simulate events.");
 		}

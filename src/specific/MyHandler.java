@@ -50,7 +50,7 @@ public class MyHandler extends DefaultHandler {
 			comfortsens = Integer.parseInt(attributes.getValue("comfortsens"));
 	         
 			if(finalinst < 0 || initpop < 0 || maxpop < 0 || comfortsens <= 0) {
-				System.err.println("simulation attributes received from XML are negative or zero when they shouldn't.");
+				System.err.println("Simulation attributes received from XML are negative or zero when they shouldn't.");
 				System.exit(-1);
 			}
 	         

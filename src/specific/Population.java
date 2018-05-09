@@ -37,7 +37,7 @@ public class Population{
 	 */
 	Map map;
 	/**
-	 * List of the alive inidividuals present in the simulation
+	 * List of the alive individuals present in the simulation
 	 */
 	List<Individual> individuals;
 	/**

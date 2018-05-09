@@ -254,7 +254,7 @@ public class Individual {
 	private void calculateComfort() {
 		int length=path.size()-1;
 		int dist=population.map.calculateDist(path.get(path.size()-1));
-		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.getMaxCost()-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.getWidth()+population.map.getHeight()+1),population.sensitivity);
+		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.max_cost-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.width+population.map.height+1),population.sensitivity);
 	}
 		
 	/**

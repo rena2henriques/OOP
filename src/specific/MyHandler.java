@@ -81,7 +81,7 @@ public class MyHandler extends DefaultHandler {
 		      if( xinitial < 0 || yinitial < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
 		    	  System.exit(-1);
-		      } else if (xinitial > map.getWidth() || yinitial > map.getHeight()) {
+		      } else if (xinitial > map.width || yinitial > map.height) {
 		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
@@ -99,7 +99,7 @@ public class MyHandler extends DefaultHandler {
 		      if(xfinal < 0 || yfinal < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
 		    	  System.exit(-1);
-		      } else if (xfinal > map.getWidth() || yfinal > map.getHeight()) {
+		      } else if (xfinal > map.width || yfinal > map.height) {
 		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
@@ -117,7 +117,7 @@ public class MyHandler extends DefaultHandler {
 		      if( xfinSCZ < 0 || yfinSCZ < 0  || xiniSCZ < 0 || yiniSCZ < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
 		    	  System.exit(-1);
-		      } else if(xfinSCZ > map.getWidth() || yfinSCZ > map.getHeight() || xiniSCZ > map.getWidth()|| yiniSCZ > map.getHeight()) {
+		      } else if(xfinSCZ > map.width || yfinSCZ > map.height || xiniSCZ > map.width|| yiniSCZ > map.height) {
 		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }
@@ -135,7 +135,7 @@ public class MyHandler extends DefaultHandler {
 	    	  }
 	    	  
 		      // set the number of obstacles in the map
-		      map.setN_obst(num);
+		      map.n_obst=num;
 		      
 		  // obstacles coordinates  
 	      } else if (qName.equalsIgnoreCase("obstacle")) {
@@ -145,7 +145,7 @@ public class MyHandler extends DefaultHandler {
 		      if( xpos < 0 || ypos < 0) {
 		    	  System.err.println("Coordinates received in XML are negative!");
 		    	  System.exit(-1);
-		      } else if (xpos > map.getWidth() || ypos > map.getHeight() ) {
+		      } else if (xpos > map.width || ypos > map.height ) {
 		    	  System.err.println("Coordinates received in XML are out of boundaries!");
 		    	  System.exit(-1);
 		      }

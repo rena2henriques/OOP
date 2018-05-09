@@ -14,7 +14,6 @@ import org.xml.sax.helpers.DefaultHandler;
  * 
  * It also prevents some errors in the input values of the XML
  * 
- * @author Group 6
  *
  */
 public class MyHandler extends DefaultHandler {

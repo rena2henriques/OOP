@@ -8,8 +8,8 @@ import general.Event;
 import general.SimulationCommands;
 
 /**
- * This class extends IndividualEvent, when Death is simulated, the associated individual is
- * elimanted from the population (and the simulation)
+ * This class extends IndividualEvent. When Death is simulated, the associated individual is
+ * eliminated from the population (and from the simulation).
  * 
  * @see IndividualEvent
  */
@@ -33,10 +33,10 @@ public class Death extends IndividualEvent{
 	 */
 	/**
 	 * Removes the associated individual from the population and returns an empty events list
-	 * because this individual won't have another event associated, 
-	 * therefore no new event is generated
+	 * because this individual won't have another event associated with him, 
+	 * therefore no new event is generated.
 	 * 
-	 * @return newEventsList - empty events list to be added to the pec
+	 * @return newEventsList - empty event list to be added to the PEC
 	 */
 	public List<Event> simulateEvent() {
 		List<Event> newEventsList = new LinkedList<Event>();

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Creates map, checks validity of a path, has the info about the topology of this specific map
+ * This class creates a map, checks validity of a path and has the info about the topology of this specific map.
  * <p> Class that deals with the creation of a grid, setting obstacles, special zones and, initial and final points. 
  * It's also where you can check the validity of paths and points.
  *
@@ -12,16 +12,16 @@ import java.util.List;
 public class Map {
 
 	/***
-	 *  dimension n of the map, the number of rows
+	 *  dimension n of the map, the number of rows.
 	 */
 	protected int height;
 	
 	/***
-	 *  dimension m of the map, the number of columns
+	 *  dimension m of the map, the number of columns.
 	 */
 	protected int width;
 	/** 
-	 * nº of obstacles in the map
+	 * nº of obstacles in the map.
 	 */
 	protected int n_obst;
 	/**

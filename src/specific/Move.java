@@ -7,7 +7,7 @@ import java.util.List;
 import general.SimulationCommands;
 
 /**
- * This class extend individualEvents, the Move simulation chooses the next point of the map
+ * This class extends individualEvent. The Move simulation chooses the next point of the map
  * to which the individual will go, and moves him by adding that point to his path.
  * <p>
  * Afterwards creates the individual's next move, to be added to the PEC and associates it
@@ -38,14 +38,14 @@ public class Move extends IndividualEvent {
 	 */
 	/**
 	 * Simulating a move, chooses from the individual's 
-	 * possible moves (based on is last possition) his next position 
+	 * possible moves (based on is last position) his next position 
 	 * according to the value retrieved from
 	 * the sNC (set of commands). <p>
 	 * Afterwards creates the individual's next move with a time retrieved 
-	 * from the set of commands and adds, to be added to the pec if that move is to happen
+	 * from the set of commands and adds, to be added to the PEC if that move is to happen
 	 * before the individual's death.
 	 * 
-	 * @return newEventsList - list of events to be added to the pec
+	 * @return newEventsList - list of events to be added to the PEC
 	 * containing only the associated individual's next move
 	 */
 	public List<Event> simulateEvent() {
@@ -87,7 +87,7 @@ public class Move extends IndividualEvent {
 	
 	/**
 	 * From a list of up to 4 positions, chooses the point at the 
-	 * index proportional to the number between 0 and 1.
+	 * index proportional to the generated number between 0 and 1.
 	 * 
 	 * @param pointsList - List of available points for the individual to go
 	 * @param direction - Number between 0 and 1 
@@ -100,7 +100,7 @@ public class Move extends IndividualEvent {
 	
 	
 	/**
-	 * Evaluates if the received individual is current best fit, and updates.
+	 * Evaluates if the received individual is the current best fit, and updates.
 	 * 
 	 * @param currentInd - Individual on whom the move was simulated
 	 * @param pop - Simulation's population 

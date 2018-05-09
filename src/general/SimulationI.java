@@ -18,7 +18,7 @@ public interface SimulationI {
 	/**
 	 * Provides the initialization needed to start the simulation and reseting of variables that change when the simulation is done.
 	 * <p>
-	 * It should be called in the beginning of the method simulate() so that the same simulation object can be simulated multiple times.
+	 * It should be called before or in the beginning of the method simulate() so that the same simulation object can be simulated multiple times.
 	 */
 	void init();
 }

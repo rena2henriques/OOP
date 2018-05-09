@@ -37,8 +37,14 @@ public class MainSimulator {
 		INumberGenerator thresh= new RandomPercentage();
 		
 		SimulationA simulation = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
-		
 		simulation.simulate();
+
+		/*SimulationA simulation2 = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
+
+		SimulationThread test= new SimulationThread(simulation);
+		SimulationThread test2= new SimulationThread(simulation2);
+		test.start();
+		test2.start();*/
 		
 	}
 

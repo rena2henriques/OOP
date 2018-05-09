@@ -7,7 +7,7 @@ import general.Event;
 
 
 /**
- * This class extends event and provides an observation about the state of the population.
+ * This class extends Event and provides an observation with information about the state of the simulation.
  * 
  * @see Event
  * 
@@ -36,9 +36,9 @@ public class ObservationEvent extends Event{
 	 */
 	/**
 	 * Prints the current status of the population and creates the next observation to be
-	 * added to the pec.
+	 * added to the PEC.
 	 * 
-	 * @return newEventsList - list of events to be added to the pec containg only the next observation 
+	 * @return newEventsList - list of events to be added to the PEC containing only the next observation 
 	 */
 	public List<Event> simulateEvent(){
 		List<Event> newEventsList = new LinkedList<Event>();

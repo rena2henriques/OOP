@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * This class has the parameters that rule the individuals' movements and the creation 
- * of new events. Also contains the sensitivity of the individuals' confort.
+ * of new events. Also contains the sensitivity of the individuals' comfort.
  *   
  * <p>Contains the list of alive individuals participating on the simulation and an 
  * association to the best fit individual. Also a flag that is activated upon 

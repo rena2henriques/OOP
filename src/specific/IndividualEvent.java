@@ -5,12 +5,12 @@ import general.SimulationCommands;
 
 /**
  * This abstract class extends Event. Specifies events related to the evolution 
- * of an individual and already provides some common atributes and methods.
+ * of an individual and already provides some common attributes and methods.
  * 
  * All individuals will have their events associated in order to facilitate cleaning
  * the PEC (on epidemics).
  * 
- * All events created will be added to the pec and associated to it's 
+ * All events created will be added to the PEC and associated to it's 
  * individual only if their time is smaller than the individual's associated death time.
  * 
  * @see Event
@@ -29,7 +29,6 @@ public abstract class IndividualEvent extends Event{
 	protected SimulationCommands sNC;
 	
 	
-	
 	/**
 	 * Constructor
 	 * @see Event
@@ -46,7 +45,7 @@ public abstract class IndividualEvent extends Event{
 	
 
 	/**
-	 * Receives the next event generated time and checks if its after the indiviual death
+	 * Receives the next event generated time and checks if its after the individual death
 	 * 
 	 * @param time - newly created event's time
 	 * @return boolean, true if generated time is before death, false otherwise

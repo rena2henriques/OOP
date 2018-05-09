@@ -121,7 +121,6 @@ public class GridSimulation extends SimulationA{
 	private void epidemic() {
 						
 		int epidemic_size=5;
-
 		
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		

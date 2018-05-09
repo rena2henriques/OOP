@@ -3,21 +3,20 @@ package general;
 import java.util.List;
 
 /**
- * Provides the guidelines to implement event classes to be handled by the PECI implementations.
- * Provides a method to simulate any type of events, which has to be implemented.
- * 
- * @author Grupo 6
+ * Provides a method (guidelines) to be implemented in order to simulate events that are handled by the PECI implementations.
+ * @see PECI
  *
  */
 public interface EventI {
 	
 	/**
 	 * 
-	 * Method to simulate the event
-     * The user has to return a list of events that extend from this interface.
-     * If the user doesn't wish to return any event in this method it should return either an empty list or null
+	 * Method to simulate the event.
+	 * <p>
+     * The user has to return a list of next events that extend from this interface.
+     * If the user doesn't wish to return any event in this method it should return either an empty list or null.
 	 * 
-	 * @return list of events to be simulated after this event
+	 * @return list of next events
 	 */
 	List<? extends EventI> simulateEvent();
 

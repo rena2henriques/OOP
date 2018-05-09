@@ -4,32 +4,34 @@ import java.util.List;
 
 /**
  * This class provides an initial implementation of the EventI interface
- * to minimize the effort required to implement this interface in the case where the Event is driven by its time
+ * to minimize the effort required to implement it in the case where the event is driven by its time.
+ *  <p>
+ * The programmer needs only to extend this class and provide a constructor and implementations for the simulateEvent method, which is not yet implemented.
+ * @see EventI
  * 
- * The programmer needs only to extend this class and provide implementations for simulateEvent method and also a constructor.
- * 
- * 
- * @author Grupo 6
- *
  */
 public abstract class Event implements EventI{
 
 	/**
-	 * time of the event
+	 * Time of the event.
 	 */
 	protected double time; 
 	
 	/**
-	 * Constructor
-	 * Creates an Event with the specified time
+	 * Constructor.
+	 * <p>
+	 * Creates an Event with the specified time.
 	 * 
-	 * @param time time of the event
+	 * @param time - time for this event
+	 * 
 	 */
 	public Event(double time) {
 		this.time=time;
 	}
 	
 	/**
+	 * Returns the time of this event.
+	 * 
 	 * @return time of the event passed to the constructor
 	 */
 	public double getTime() {

@@ -62,6 +62,13 @@ public abstract class SimulationA implements SimulationI {
 	public int getNumEvents() {
 		return numEvents;
 	}
+	
+	/**
+	 * @param nevents number of realized events to set
+	 */
+	public void setNumEvents(int nevents) {
+		numEvents=nevents;
+	}
 
 	/**
 	 * Resets the variables that change with the simulation of the system. 

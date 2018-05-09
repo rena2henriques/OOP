@@ -47,13 +47,13 @@ public class MyHandler extends DefaultHandler {
 	         }
 	         
 	         // sets the initial population
-	         simulation.setInitPop(initpop);
+	         simulation.initPop=initpop;
 	         
 	         // constructs the list of individuals
 	         individuals = new LinkedList<Individual>();
 	         
 	         // sets the maximum population
-	         simulation.setMaxInd(maxpop);
+	         simulation.maxInd=maxpop;
 	         
 	         // sets the final instant of the simulation
 	         simulation.setFinalTime(finalinst);
@@ -86,7 +86,7 @@ public class MyHandler extends DefaultHandler {
 		    	  System.exit(-1);
 		      }
 		      
-		      simulation.setInitialPoint(new Point(xinitial, yinitial));
+		      simulation.initialPoint=new Point(xinitial, yinitial);
 		   
 		      map.addInitialPoint(xinitial, yinitial);
 		      
@@ -150,7 +150,7 @@ public class MyHandler extends DefaultHandler {
 		    	  System.exit(-1);
 		      }
 		      
-		      if(simulation.getInitialPoint().getX() == xpos && simulation.getInitialPoint().getY() == ypos) {
+		      if(simulation.initialPoint.getX() == xpos && simulation.initialPoint.getY() == ypos) {
 		    	  System.err.println("Obstacle wasn't inserted because the coordinates requested were equal to the initial point!");
 		      } else {
 		    	// add an obstacle to the graph with the received connections
@@ -211,7 +211,7 @@ public class MyHandler extends DefaultHandler {
 		   // Initializes the population with all the parameters, the map and the list of individuals
 		   Population population = new Population(comfortsens,death, move,reproduction,map,individuals);
 		   
-		   simulation.setPopulation(population);
+		   simulation.population=population;
 	   }
 	   
 	@Override

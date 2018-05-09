@@ -16,7 +16,7 @@ public class Reproduction extends IndividualEvent{
 		List<Event> newEventsList = new LinkedList<Event>();
 		Individual father = this.getIndividual();
 		//current event simulated, cleans association until new one generated
-		father.setNextRep(null);
+		father.nextRep=null;
 		List<Point> childPath;
 		try {
 			childPath = generateChildPath(father);
@@ -24,9 +24,9 @@ public class Reproduction extends IndividualEvent{
 			return newEventsList;	//continues the program without killing the program
 		}
 		//cria filho
-		Individual newDude = new Individual(father.getPopulation(), childPath);
+		Individual newDude = new Individual(father.population, childPath);
 		//adiciona novo filho à lista de individuos na simulação
-		father.getPopulation().getIndividuals().add(newDude);
+		father.population.getIndividuals().add(newDude);
 
 		//criação de 3 novos eventos, death, move, reproduction
 		//garantir que o tempo gerado é >0??
@@ -34,26 +34,26 @@ public class Reproduction extends IndividualEvent{
 		Death death = new Death(eventTime, newDude, getsNC());
 		newEventsList.add(death);
 		//sets new dude's death time
-		newDude.setIndDeath(death);
+		newDude.myDeath=death;
 		//adds next reproduciton and move
 		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.MOVE,newDude); 
 		if(checkDeathTime(eventTime, newDude)) {
 			Move move = new Move(eventTime, newDude, getsNC());
 			newEventsList.add(move);
-			newDude.setNextMove(move);
+			newDude.nextMove=move;
 		}
 		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.REP,newDude); 
 		if(checkDeathTime(eventTime, newDude)) {
 			Reproduction rep = new Reproduction(eventTime, newDude, getsNC());
 			newEventsList.add(rep);
-			newDude.setNextRep(rep);
+			newDude.nextRep=rep;
 		}
 		//adds next reproduction for father
 		eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.REP,father); 
 		if(checkDeathTime(eventTime, father)) {
 			Reproduction faRep = new Reproduction(eventTime, father, getsNC());
 			newEventsList.add(faRep);
-			father.setNextRep(faRep);
+			father.nextRep=faRep;
 		}
 		return newEventsList;
 	}
@@ -69,12 +69,12 @@ public class Reproduction extends IndividualEvent{
 	private List<Point> generateChildPath(Individual ind) throws NullPointerException {
 		List<Point> myPath;
 		try { 
-			myPath = new LinkedList<Point>(ind.getPath());
+			myPath = new LinkedList<Point>(ind.path);
 		} catch (NullPointerException e) { //case father's path is invalid
 			throw new NullPointerException();
 		}
-		double cutPathSize = myPath.size() * 0.90 + ind.getComfort() * (myPath.size() * 0.10);
-		for(int i = (ind.getPath().size()-1); i >= (int)Math.ceil(cutPathSize); i--) {
+		double cutPathSize = myPath.size() * 0.90 + ind.comfort * (myPath.size() * 0.10);
+		for(int i = (ind.path.size()-1); i >= (int)Math.ceil(cutPathSize); i--) {
 			myPath.remove(i);
 		}
 		return myPath;

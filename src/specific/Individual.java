@@ -11,45 +11,42 @@ import java.util.LinkedList;
  * @author Group 6
  */
 
-// TODO
-//QUE VISIBILIDADE POR � CLASSE???
-//MUDAR VISIBILIDADE DOS METODOS, EST� TUDO A PUBLICO :(
 public class Individual {
 	
 	/**
 	 * The cost of the path of the individual
 	 */
-	private int cost;
+	int cost;
 	
 	/**
 	 * The comfort of the individual
 	 */
-	private double comfort;
+	double comfort;
 	
 	/**
 	 * The list of points that make the path of the Individual
 	 */
-	private List<Point> path; //array of points
+	List<Point> path; //array of points
 	
 	/**
 	 * The population (with the simulation info) in which the indiviudal lives
 	 */
-	private Population population; //population
+	Population population; //population
 	
 	/**
 	 * The death event related to this individual
 	 */
-	private Death myDeath; //death event related to this individual
+	Death myDeath; //death event related to this individual
 	
 	/**
 	 * The move event related to this individual
 	 */
-	private Move nextMove;
+	Move nextMove;
 	
 	/**
 	 * The reproduction event related to this individual
 	 */
-	private Reproduction nextRep;
+	Reproduction nextRep;
 	
 	/**
 	 * Constructor.
@@ -90,97 +87,6 @@ public class Individual {
 		newInd.comfort=this.comfort;
 
 		return newInd;
-	}
-	 
-	 /**
-	 * @return death
-	 */
-	public Death getIndDeath() {
-		 return myDeath;
-	 }
-	 
-	 /**
-	 * @param death
-	 */
-	public void setIndDeath(Death death) {
-		 myDeath=death;
-	 }
-	 
-	 /**
-	 * @return population
-	 */
-	public Population getPopulation() {
-		 return population;
-	 }
-	 
-	 /**
-	 * @param population
-	 */
-	public void setPopulation(Population population) {
-		 this.population=population;
-	 }
-	
-	/**
-	 * @return the current path of the individual
-	 */
-	public List<Point> getPath() {
-		return path;
-	}
-	
-	/**
-	 * Sets the path of the individual and recalculates its comfort and cost
-	 * 
-	 * @param path path to set
-	 */
-	public void setPath(List<Point> path) {
-		this.path=path;
-		cost=population.map.calculateCost(this.path);
-		calculateComfort();
-	}
- 	
-	/**
-	 * @return the current cost of the individual
-	 */
-	public int getCost() {
-		return cost;
-	}
-	
-	/**
-	 * @return the current comfort of the individual
-	 */
-	public double getComfort() {
-		return comfort;
-	}
-	
-	/**
-	 * @return the next move event of the individual
-	 */
-	public Move getNextMove() {
-		return nextMove;
-	}
-
-
-	/**
-	 * @param nextMove sets the next move event of the individual
-	 */
-	public void setNextMove(Move nextMove) {
-		this.nextMove = nextMove;
-	}
-
-	
-	/**
-	 * @return the next reproduction event of the individual
-	 */
-	public Reproduction getNextRep() {
-		return nextRep;
-	}
-
-
-	/**
-	 * @param nextRep sets the next reproduction event of the individual
-	 */
-	public void setNextRep(Reproduction nextRep) {
-		this.nextRep = nextRep;
 	}
 	
 	/**
@@ -269,61 +175,6 @@ public class Individual {
 			s+=pt.toString()+",";
 		
 		return s.substring(0,s.length()-1)+"}";
-	}
-	
-	public static void main(String[] args) throws CloneNotSupportedException {
-
-		/*Map mymap = new Map(5,4,4);		
-		mymap.addFinalPoint(5, 4);
-		mymap.addInitialPoint(1, 1);
-		mymap.addObstacle(2, 1);
-		//mymap.addObstacle(2, 3);
-		mymap.addObstacle(2, 4);
-		mymap.addObstacle(4, 2);
-		
-		mymap.addSpecialZone(2, 2, 3, 3, 4);*/
-		/*Point initial = new Point(1,1);
-		Individual i1= new Individual(mymap, initial,1.0);
-		i1.addToPath(new Point(1,2));
-		i1.addToPath(new Point(2,2));
-		i1.addToPath(new Point(2,3));
-		System.out.println(i1);
-		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());*/
-		/*List<Point> p= new LinkedList<Point>();
-		p.add(new Point(3,2));
-		p.add(new Point(3,3));
-		p.add(new Point(4,3));
-		p.add(new Point(4,4));
-		p.add(new Point(3,4));
-		Population pop= new Population(1,1,1,1,mymap);
-		Individual i1= new Individual(pop,p);
-		System.out.println(i1);
-		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());
-		Individual i4= (Individual) i1.clone();
-
-		//testar check cycle
-		i1.addToPath(new Point(3,3));
-		System.out.println(i1);
-		System.out.println("cost:"+i1.getCost());
-		System.out.println("comfort:"+i1.getComfort());
-		
-		//testar clone
-		Individual i2= (Individual) i1.clone();
-		System.out.println("i2:"+i2);
-		System.out.println("cost:"+i2.getCost());
-		System.out.println("comfort:"+i2.getComfort());
-		System.out.println("identity:"+(i2.path==i1.path));
-		
-		//testar sort
-		Individual i3= new Individual(pop,p);
-		List<Individual> inds= new LinkedList<Individual>();
-		inds.add(i4);
-		inds.add(i3);
-		inds.sort(new IndividualComfortComparator());
-		for(int i=0; i<inds.size();i++)
-			System.out.println("comfort:"+inds.get(i).getComfort());*/
 	}
 
 }

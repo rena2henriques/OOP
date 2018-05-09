@@ -18,7 +18,7 @@ public class Death extends IndividualEvent{
 		//removes the individual from the individuals list
 		Individual ind = this.getIndividual();
 		//se o individuo não existir, acho que o prog não crasha
-		ind.getPopulation().getIndividuals().remove(ind); 
+		ind.population.getIndividuals().remove(ind); 
 		return newEventsList; //deve ser melhor do que return null;
 	}
 	

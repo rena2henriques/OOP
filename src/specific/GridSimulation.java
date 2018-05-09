@@ -290,7 +290,7 @@ public class GridSimulation extends SimulationA{
 	/**
 	 * Initialization of the simulation. 
 	 * <p>
-	 * Creates the initial list of individuals in the initial point, and 
+	 * Creates the initial list of individuals in the initial point, and adds the first 3 events of each individual to the PEC (Death,Move,)
 	 * <p>
 	 * Should be called before starting an actual simulation
 	 */

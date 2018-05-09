@@ -6,7 +6,7 @@ import java.util.List;
  * This class provides an initial implementation of the EventI interface
  * to minimize the effort required to implement it in the case where the event is driven by its time.
  *  <p>
- * The programmer needs only to extend this class and provide a constructor and implementations for the simulateEvent method.
+ * The programmer needs only to extend this class and provide a constructor and implementations for the simulateEvent method, which is not yet implemented.
  * @see EventI
  * 
  */

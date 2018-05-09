@@ -20,5 +20,5 @@ public interface SimulationI {
 	 * <p>
 	 * It should be called in the beginning of the method simulate() so that the same simulation object can be simulated multiple times.
 	 */
-	void initialize();
+	void init();
 }

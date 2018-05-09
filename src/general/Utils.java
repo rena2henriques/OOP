@@ -3,9 +3,8 @@ package general;
 import java.util.Random;
 
 /**
- *  Class with static methods in order to facilitate the generation of random numbers
+ *  Class with static methods in order to facilitate the generation of random numbers.
  * 
- * @author Group 6
  *
  */
 public class Utils {

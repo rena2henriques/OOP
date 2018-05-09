@@ -1,36 +1,52 @@
-		/**
- * 
- */
 package specific;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author renato
+ * Creates map, checks validity of a path, has the info about the topology of this specific map
+ * <p> Class that deals with the creation of a grid, setting obstacles, special zones and, initial and final points. 
+ * It's also where you can check the validity of paths and points.
  *
  */
-
-
-// TODO CHECKAR VISIBILIDADES PRIVATE 
 public class Map {
 
-	// dimensions of the map
-	protected int height, width; // n and m, respectively
-	// nº of obstacles in the map
+	/***
+	 *  dimension n of the map, the number of rows
+	 */
+	protected int height;
+	
+	/***
+	 *  dimension m of the map, the number of columns
+	 */
+	protected int width;
+	/** 
+	 * nº of obstacles in the map
+	 */
 	protected int n_obst;
-	// maximum cost of an edge of the map
-	protected int max_cost = 1;
-	
-	protected MapPoint finalpoint;
-
-	protected List<MapPoint> map;
-	
 	/**
-	 * Constructor
-	 * @param height
-	 * @param width
-	 * @param max_cost
+	 *  maximum cost of an edge of the map
+	 */
+	protected int max_cost = 1;
+	/**
+	 *  final point of the map
+	 */
+	protected MapPoint finalpoint;
+	/**
+	 *  list of Points to use to define the grid
+	 */
+	protected List<MapPoint> map;
+
+	/**
+	 * Constructor of the class Map
+	 * <p> Receives the width and height, and creates an ArrayList of MapPoints with initial capacity of height*width 
+	 * because that's the area of the rectangle. This List is used to define the grid of the map as an adjacency list.
+	 * The data structure ArrayList is used because there isn't going to be changes to the capacity, as the number of elements
+	 * in the list is the number of points, no more no less. In the constructor is also called the function to generate the grid
+	 * where each point is connected to others as necessary. 
+	 *  
+	 * @param height of the map
+	 * @param width of the map
 	 */
 	public Map(int width, int height) {
 		this.height = height;
@@ -44,9 +60,15 @@ public class Map {
 
 	/**
 	 * Returns the possible adjacent points of @param to move ordered clockwise and starting north 
+	 * <p> Receives a point whose possible moves are needed. If the point is not valid or it's outside of the limits of the
+	 * map null is returned and a error message is printed. The function tests every point that is possibly adjacent to p1 and 
+	 * calls the function checkMove to check if moving to that position is a possible move. Every direction that the checkMove
+	 * returns true (possible move) the point of that direction is inserted in a List. This List is an ArrayList initialized with
+	 * a capacity of 4 because a point of the map has in the worst case 4 adjacent points. The insertion has an order. The 
+	 * returned list has the possible points to move according to a clockwise direction, starting from the point above itself.
 	 * 
 	 * @param point that we want to the possible moves
-	 * @return list of possible positions to move ordered clockwise starting with north
+	 * @return list of possible positions to move ordered clockwise starting with north or null if p1 is not valid or out of boundaries
 	 * 
 	 */
 	public List<Point> getPossibleMoves(Point p1){
@@ -96,15 +118,16 @@ public class Map {
 	
 
 	/**
-	 * Checks if the individual going from point origin to point destiny is a permited move 
+	 * Checks if the individual going from point origin to point destiny is a permitted move 
+	 * <p> A move is permitted if the point it wants to move to is not an obstacle, if is out of the boundaries of the map or
+	 * if p1 is not adjacent to p2.
+	 * 
 	 * @param origin is the point we are
 	 * @param destiny is the point we want to go to
 	 * @return true if the move is possible, false if the destiny is an obstacle 
 	 * or if there is no connection between origin and destiny
 	 */
 	public boolean checkMove(Point p1, Point p2) {
-		
-		// PREVENIR POINTS ESTAREM FORA DO MAPA
 		
 		MapPoint origin = PointToMapPoint(p1);
 		MapPoint destiny = PointToMapPoint(p2);
@@ -136,9 +159,14 @@ public class Map {
 	}
 	
 	/**
-	 * Converts a point of class Point to a point of class MapPoint
-	 * @param point of class Point
-	 * @return point of class MapPoint, returns null if point not available in the map
+	 * Converts a point of class Point to a point of class MapPoint.
+	 * <p> Uses the method CoordsToIndex to convert the coordinates of the point to the index of the correspondent point in
+	 * the arrayList of the adjacencyList. After getting that point it is returned. In case of the point being out of boundaries 
+	 * of the map, when getting the MapPoint of that index an Exception will be thrown which prints an error message and null is
+	 * returned. 
+	 * 
+	 * @param point - point of class Point
+	 * @return point - point of class MapPoint, returns null if point not available in the map
 	 */
 	private MapPoint PointToMapPoint(Point point) {
 		
@@ -156,10 +184,11 @@ public class Map {
 	}
 	
 	/**
-	 * Checks if the received point corresponds to the finalpoint of the map
-	 * @param point
+	 * Checks if the received point corresponds to the finalpoint of the map.
+	 * 
+	 * @param point - point of the class Point
 	 * @return true if the type of the correspondent MapPoint or false if it doesn't or if the map
-	 * doesn't include that point
+	 * doesn't include the received point
 	 */
 	public boolean isFinal(Point point) {
 		
@@ -172,14 +201,17 @@ public class Map {
 			return false;
 		}
 
-		
 		return false;
 	}
 	
 
 	
 	/**
-	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
+	 * Creates the initial rectangular grid uniting adjacent points in the form of an adjacency list.
+	 * <p> It also includes the case of the grid being only one column or only one row. Looping through which point, 
+	 * it creates the object MapPoint and inserts the points it is connected to in its list of connections. The cost of every
+	 * connection is 1 per default.
+	 * 
 	 */
 	protected void generateGrid() {
 		
@@ -252,10 +284,11 @@ public class Map {
 	}
 	
 	/**
-	 * Converts coordinates (starting in (1,1)) to a index of a point in an array
-	 * @param row or y of the grid
-	 * @param column or x of the grid
-	 * @param width or n of the map
+	 * Converts coordinates (starting in (1,1)) to a index of a point in an array.
+	 * 
+	 * @param row - or y of the grid
+	 * @param column - or x of the grid
+	 * @param width - or n of the map
 	 * @return the respective conversion to an array index
 	 */
 	protected static int CoordsToIndex(int column, int row, int width) {
@@ -264,15 +297,19 @@ public class Map {
 	
 	/**
 	 * Calculate the total cost of a path
-	 * @param path -> an array of points
-	 * @return the total cost
+	 * <p> The calculation of the cost of an entire path consists in checking the connection cost between each two consecutive
+	 * points of the path. To check the connection cost of two points the method getConnectionCost is called. This method returns
+	 * 0 if the path is null or its size if 0 or 1. 
+	 * 
+	 * @param path - a List of points
+	 * @return the total cost or 0 if the the argument is null or has size 0 or 1 
 	 */
 	public int calculateCost(List<Point> path) {
 		
 		int cost = 0;
 		
 		// path is empty
-		if (path == null || path.size() == 0) {
+		if (path == null || path.size() == 0 || path.size() == 1) {
 			return 0;
 		}
 		
@@ -286,6 +323,9 @@ public class Map {
 	
 	/**
 	 * returns the dist value (smallest nº of hops) between the param point and the final point
+	 * <p> The smallest nº of hops to get from point to the final point consists in the sum of the absolute value
+	 * of the difference between each coordinate x and y
+	 * 
 	 * @param point we want to calculate the dist from
 	 * @return dist or 0 if the point received is null or the finalpoint isn't defined 
 	 */
@@ -301,9 +341,12 @@ public class Map {
 	}
 	
 	/**
-	 * sets the point as an obstacle (type = 1)
-	 * @param x
-	 * @param y
+	 * Sets the point as an obstacle (type = 1).
+	 * <p> Sets the point as an obstacle (type = 1). It prints an error message if the received coordinates don't address 
+	 * a valid point of the map and the obstacle is not inserted.
+	 * 
+	 * @param x - coordinate x
+	 * @param y - coordinate y
 	 */
 	public void addObstacle(int x, int y) {
 		
@@ -321,8 +364,11 @@ public class Map {
 	
 	/**
 	 * sets the point as an initial point (type = 2)
-	 * @param x
-	 * @param y
+	 * <p> Sets the point as an initial point (type = 2). It prints an error message if the received coordinates don't address 
+	 * a valid point of the map and the initial point is not inserted.
+	 * 
+	 * @param x - coordinate x
+	 * @param y - coordinate y
 	 */
 	public void addInitialPoint(int x, int y) {
 		try {
@@ -333,12 +379,14 @@ public class Map {
 			return;
 		}
 	}
-	
 
 	/**
 	 * sets the point as an final point (type = 3)
-	 * @param x
-	 * @param y
+	 * <p> Sets the point as an final point (type = 3). It prints an error message if the received coordinates don't address 
+	 * a valid point of the map and the final point is not inserted.
+	 * 
+	 * @param x - coordinate x
+	 * @param y - coordinate y
 	 */
 	public void addFinalPoint(int x, int y) {
 		try {
@@ -353,18 +401,22 @@ public class Map {
 	}
 	
 	/**
-	 * Receives the coordinates of two points and adds an rectangular shape special cost zone of the 
-	 * @param xinitial
-	 * @param yinitial
-	 * @param xfinal
-	 * @param yfinal
-	 * @param cost
+	 * Receives the coordinates of two points and adds an rectangular shape special cost zone
+	 * <p> If the initial coordinates doesn't correspond to a point under and left to the final one then a conversion is done in
+	 * order to them to be. If the cost received in the parameter is higher than the max cost of the map then a new max cost is
+	 * found and the variable updated. In the specific case of the two points given correspond to a line (horizontal or vertical) 
+	 * then the edges between these two points are updated. In the general case of the special zone being a rectangle then the 
+	 * cost of the row of final and initial is updated at the same time, and the same for the columns after that. In case of the
+	 * coordinates received not being valid, then an error message is printed and the special cost zone is not inserted.
+	 * 
+	 * 
+	 * @param xinitial - coordinate with positive value
+	 * @param yinitial - coordinate with positive value
+	 * @param xfinal - coordinate with positive value
+	 * @param yfinal - coordinate with positive value
+	 * @param cost - cost of the special cost zone
 	 */
 	public void addSpecialZone(int xinitial, int yinitial, int xfinal, int yfinal, int cost) {
-		
-		// update max_cost
-		if (cost > max_cost)
-			max_cost = cost;
 		
 		// Converting received points in the case of pinitial not being from the lower left and
 		// the final not the upper right of the rectangle
@@ -450,6 +502,10 @@ public class Map {
 				}
 			}
 			
+			// update max_cost
+			if (cost > max_cost)
+				max_cost = cost;
+			
 			return;
 			
 		// adds a horizontal line as a special zone
@@ -474,6 +530,10 @@ public class Map {
 					return;
 				}
 			}
+			
+			// update max_cost
+			if (cost > max_cost)
+				max_cost = cost;
 			
 			return;
 		}
@@ -563,13 +623,20 @@ public class Map {
 			pauxfinal2 = map.get(CoordsToIndex(pauxfinal2.getX(), pauxfinal2.getY()-1, width));
 		}
 		
+		// update max_cost
+		if (cost > max_cost)
+			max_cost = cost;
+		
 	}
 	
 	/**
-	 * inserts the cost in the connections
-	 * @param p1 point1
-	 * @param p2 point2 
-	 * @param cost value to be inserted
+	 * Associates a cost to a connection between two points.
+	 * <p> Associates a cost to a connection between two points. This association is done bidirectionaly, in other words,
+	 * the it changes the cost in the connection of p1 to p2 and p2 to p1. 
+	 * 
+	 * @param p1 - point1
+	 * @param p2 - point2 
+	 * @param cost - integer value to be inserted
 	 */
 	protected void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
 		
@@ -598,10 +665,12 @@ public class Map {
 
 	
 	/**
-	 * Returns the cost of any edge between 2 connected points of the map
+	 * Returns the cost of any edge between 2 connected points of the map.
+	 * 
 	 * @param p1 first point (vertice) of the edge
 	 * @param p2 first point (vertice) of the edge
-	 * @return the cost of the specified edge
+	 * @return the cost of the specified edge or 0 if one of the points is not available in the map, and -1 if there isn't
+	 * a direct connection between the two points (they aren't adjacent)
 	 */
 	public int getConnectionCost(Point p1, Point p2) {
 		

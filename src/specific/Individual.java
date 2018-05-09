@@ -5,10 +5,15 @@ import java.util.List;
 import java.util.LinkedList;
 
 /**
- * This Class provides an Individual which is associated with a path of points in the map, 
- * and therefore with the correspondent cost and comfort.
+ * The Individual is associated with a path of points in a map, 
+ * and therefore with a correspondent cost and comfort. 
+ * It's also associated to a Population of individuals and to it's lifetime events (Death,Move and Reproduction).
+ * <p>
+ * This class provides methods to add points to the path of the Individual, recalculating it's comfort and cost.
+ * Note that the methods are implemented in such a way that when there is a point added to the path that is already on it,
+ * the corresponding cycle is eliminated.
  * 
- * @author Group 6
+ * @see Map, Population, Death, Move, Reproduction
  */
 
 public class Individual {
@@ -19,7 +24,7 @@ public class Individual {
 	protected int cost;
 	
 	/**
-	 * The comfort of the individual
+	 * The comfort of the path the individual
 	 */
 	protected double comfort;
 	
@@ -29,7 +34,7 @@ public class Individual {
 	protected List<Point> path; //array of points
 	
 	/**
-	 * The population (with the simulation info) in which the indiviudal lives
+	 * The population (with the individual list and other simulation information) in which the individual lives
 	 */
 	protected Population population; //population
 	
@@ -50,10 +55,11 @@ public class Individual {
 	
 	/**
 	 * Constructor.
-	 * Creates an Individual with the specified Population and initial point.
+	 * <p>
+	 * Creates an Individual with the specified Population and initial point, and calculates it's comfort and cost.
 	 * 
-	 * @param population population with the parameters of the simulation
-	 * @param initial initial point, where the path starts
+	 * @param population - population with the parameters of the simulation
+	 * @param initial - initial point, point where the path starts
 	 */
 	public Individual(Population population, Point initial){
 		this.population=population;
@@ -65,10 +71,11 @@ public class Individual {
 
 	/**
 	 * Constructor. To use when the individual already has a path.
-	 * Creates an Individual with the specified Population and list of points.
+	 * <p>
+	 * Creates an Individual with the specified Population and list of points, and calculates it's comfort and cost.
 	 * 
-	 * @param population population with the parameters of the simulation
-	 * @param points initial path of the new individual
+	 * @param population - population with the parameters of the simulation 
+	 * @param points - path of the this individual
 	 */
 	public Individual(Population population, List<Point> points) {
 		this.population=population;
@@ -77,10 +84,27 @@ public class Individual {
 		calculateComfort();
 	}
 	
+	
+	/**
+	 * Constructor. To use when the Individual is only associated to a path.
+	 * <p>
+	 * Creates an Individual with the specified path.
+	 * 
+	 * @param points - path of this individual
+	 */
 	public Individual(List<Point> points) {
 		path= new LinkedList<Point>(points);
 	}
 		
+	/**
+	 * Creates and returns a copy of this Individual, based only on it's path, comfort and cost.
+	 * <p>
+	 * The path is a deep copy of the path, 
+	 * in order to assure that isn’t altered by any changes that might occur in the path of this Individual.
+	 * The rest of the attributes of the individual are set to null.
+	 * 
+	 * @return an Individual with a copy of the comfort, cost and a deep copy of the path of the current Individual.
+	 */
 	protected Individual getPathIndividual() {
 		Individual newInd= new Individual(path);
 		newInd.cost=this.cost;
@@ -95,7 +119,7 @@ public class Individual {
 	 * This method first checks if the new position introduces a cycle in the path. 
 	 * If there is a cycle, the corresponding points are deleted from the path.
 	 * 
-	 * @param new_point new position of the individual
+	 * @param new_point - new position of the map to add to the path
 	 */
 	protected void addToPath(Point new_point) { 
 		
@@ -114,11 +138,13 @@ public class Individual {
 		return;
 	}
 
+	
 	/**
-	 * Adds new point to path and throws exception when there is a cycle in the path
+	 * Adds a new point to path if there is no cycle with its introduction, and recalculates the new cost.
+	 * <p>
+	 * This method should be used only after checking if there is a cycle. 
 	 * 
-	 * @param new_point point to add to path
-	 * @throws Exception if there is a cycle in the path with the new point
+	 * @param new_point - point to add to path
 	 */
 	protected void addNewPoint(Point new_point) {	
 		cost+=population.map.getConnectionCost(path.get(path.size()-1),new_point);
@@ -129,7 +155,7 @@ public class Individual {
 	/**
 	 * Checks if a position already exists in the path (if there is a cycle).
 	 * 
-	 * @param point point we wish to test.
+	 * @param point - point we wish to test.
 	 * @return true if there will be a cycle in the path with the new point. False if not.
 	 */
 	private boolean checkCycle(Point point) {
@@ -139,9 +165,11 @@ public class Individual {
 	
 	/**
 	 * Breaks a cycle in the path by eliminating the corresponding points until the repeated point, 
-	 * and updates cost and comfort accordingly.
+	 * and updates cost accordingly.
+	 * <p>
+	 * This method should be used only if a cycle was detected.
 	 * 
-	 * @param newPoint point repeated in the path
+	 * @param newPoint - repeated point in the path
 	 * 
 	 */
 	private void breakCycle(Point newPoint) {
@@ -150,7 +178,6 @@ public class Individual {
 		path.subList(lastIndex+1, path.size()).clear();
 		
 		cost=population.map.calculateCost(path);
-		//calculateComfort();				
 	}
 	
 	

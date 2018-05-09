@@ -20,7 +20,7 @@ import general.INumberGenerator;
 /**
  * GridSimulation extends SimulationA and implements the simulate method. 
  * <p>
- * GridSimulation provides method to simulate a population of individuals generated at instant zero an placed at an initial
+ * GridSimulation provides method to simulate with discrete time a population of individuals generated at instant zero an placed at an initial
  * point, that evolve until a final instant according to the events Death, Move and Reproduction. 
  * The population evolves in function of the individual evolution of its elements and also by the
  * occurrence of epidemics (method epidemic).
@@ -145,6 +145,23 @@ public class GridSimulation extends SimulationA{
 		simComms= new GridCommands(gens);
 	}
 	
+	
+	/* (non-Javadoc)
+	 * @see general.SimulationI#simulate()
+	 */
+	/**
+	 * The reset and startSimulation method are called, so that the PEC is filled with events to be simulated. 
+	 * After that, a simulation loop starts where in each cycle the current Event is simulated, the list 
+	 * of new Events is added to the PEC and an epidemic occurs if the population exceeds the maximum number.
+	 * The next event is removed from the PEC and the time is set to be the the time of that event.
+	 * During the simulation loop the observations (made from finalTime/20 to finalTime/20) are printed to the terminal 
+	 * as a result of simulating an Observation event.
+	 * The simulation finishes when the evolution final instant is reached, or if there are no more events to simulate,
+	 * which means that there is only one observation in the PEC.
+	 * If the simulation finishes before the final instant, only the observations until that instant are printed to the terminal.
+	 * At the end of the simulation the path of the best fit individual is printed to the terminal.
+	 * 
+	 */
 	
 	public void simulate() {
 		
@@ -273,12 +290,13 @@ public class GridSimulation extends SimulationA{
 	}
 	
 	/**
-	 * Resets the variables that change when the simulation is performed.
+	 * The variables that change when the simulation is performed are reseted.
 	 * <p>
-	 * Calls the init method of the superclass, clears the list of individuals,
-	 * sets the best fit to null and the flag finalPointHit to false
+	 * The init method of the superclass is called, the list of individuals is cleared,
+	 * the best fit is set to null and the flag finalPointHit to false.
 	 * <p>
-	 * Should be called before starting an actual simulation
+	 * Should be called before starting an actual simulation.
+	 * 
 	 */
 	public void reset() {	
 		super.init();		
@@ -290,9 +308,11 @@ public class GridSimulation extends SimulationA{
 	/**
 	 * Initialization of the simulation. 
 	 * <p>
-	 * Creates the initial list of individuals in the initial point, and adds the first 3 events of each individual to the PEC (Death,Move,)
+	 * The initial list of individuals is created in the initial point, and the first 3 events of each individual are added to the PEC (Death, first Move and first Reproduction).
+	 * The first Observation is added to the PEC and the best fit Individual is initialized.
 	 * <p>
 	 * Should be called before starting an actual simulation
+	 * 
 	 */
 	public void startSimulation() {
 		
@@ -342,11 +362,19 @@ public class GridSimulation extends SimulationA{
 			
 	}
 	
+	/**
+	 * Returns the path of the best fit individual.
+	 * 
+	 * @return the path of the best fit individual
+	 */
 	public List<Point> getResult() {
 		return population.bestInd.path;
 	}
 	
-	public void printResult() {	
+	/**
+	 * The path of the best fit individual in the end of the simulation is printed to the terminal.
+	 */
+	protected void printResult() {	
 		try {
 			System.out.println("Path of the best fit individual = "+population.bestInd.pathString());
 		} catch (NullPointerException e) {
@@ -355,16 +383,14 @@ public class GridSimulation extends SimulationA{
 		 
 	}
 
+	/**
+	 * Returns true if the final point has been hit.
+	 * 
+	 * @return true if the final point has been hit and false if not
+	 * 
+	 */
 	public boolean isFinalPointHit() {
 		return population.finalPointHit;	
 	}
 	
-	/*public static void main(String[] args) {
-	
-		GridSimulation simulation = new GridSimulation("projectexample.xml", null);
-		
-		System.out.println(simulation.initialPoint);
-	}*/
-
-
 }

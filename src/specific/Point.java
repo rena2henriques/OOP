@@ -7,9 +7,7 @@ package specific;
  * Point representing a location in the 2D coordinate space, with coordinates (x,y).
  * The coordinates are specified in integer precision.
  * It overrides the method equals, hashCode in order to compare points accordingly to their coordinates. 
- * The method toString is also overridden in order to print the point coordinates: (x,y);
- * 
- * @author Group 6
+ * The method toString is also overridden in order to print the point coordinates: (x,y) 
  *
  */
 public class Point {
@@ -47,6 +45,10 @@ public class Point {
 	/* (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
+	/**
+	 * Redefinition of the equals method. It compares the instance of the objects but also their coordinates x and y
+	 * 
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -64,6 +66,8 @@ public class Point {
 	}
 
 	/**
+	 * Getter of the coordinate x of the point
+	 * 
 	 * @return the x
 	 */
 	public int getX() {
@@ -71,6 +75,8 @@ public class Point {
 	}
 
 	/**
+	 * Getter of the coordinate y of the point
+	 * 
 	 * @return the y
 	 */
 	public int getY() {
@@ -78,9 +84,15 @@ public class Point {
 	}
 
 	
+	/** 
+	 * Redefinition of the toString Method
+	 * <p> The toString method of an object Point returns a string like (x,y) 
+	 * 
+	 * @return string like (x,y)
+	 *  
+	 */
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
-	 *  
 	 */
 	@Override
 	public String toString() {

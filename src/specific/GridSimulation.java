@@ -145,7 +145,6 @@ public class GridSimulation extends SimulationA{
 		simComms= new GridCommands(gens);
 	}
 	
-	
 	/* (non-Javadoc)
 	 * @see general.SimulationI#simulate()
 	 */

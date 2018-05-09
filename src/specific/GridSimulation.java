@@ -151,11 +151,13 @@ public class GridSimulation extends SimulationA{
 	 */
 	/**
 	 * The reset and startSimulation method are called, so that the PEC is filled with events to be simulated. 
+	 * <p>
 	 * After that, a simulation loop starts where in each cycle the current Event is simulated, the list 
 	 * of new Events is added to the PEC and an epidemic occurs if the population exceeds the maximum number.
 	 * The next event is removed from the PEC and the time is set to be the the time of that event.
 	 * During the simulation loop the observations (made from finalTime/20 to finalTime/20) are printed to the terminal 
 	 * as a result of simulating an Observation event.
+	 * <p>
 	 * The simulation finishes when the evolution final instant is reached, or if there are no more events to simulate,
 	 * which means that there is only one observation in the PEC.
 	 * If the simulation finishes before the final instant, only the observations until that instant are printed to the terminal.

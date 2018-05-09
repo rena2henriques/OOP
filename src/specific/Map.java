@@ -94,7 +94,7 @@ public class Map {
 		return list;
 	}
 	
-	
+
 	/**
 	 * Checks if the individual going from point origin to point destiny is a permited move 
 	 * @param origin is the point we are

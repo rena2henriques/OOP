@@ -8,6 +8,15 @@ import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * This class is a handler for the SAX xml parser and retrieves the needed variables from the XML and
+ * uses them to initialize some parameters of the simulation
+ * 
+ * It also prevents some errors in the input values of the XML
+ * 
+ * @author Group 6
+ *
+ */
 public class MyHandler extends DefaultHandler {
 
 	boolean bZone = false;
@@ -30,27 +39,27 @@ public class MyHandler extends DefaultHandler {
 			this.simulation = simulation;
 		}
 
-		@Override
+	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException,NumberFormatException {
 
-		  // simulation variables
-	      if (qName.equalsIgnoreCase("simulation")) {
+		// simulation variables
+		if (qName.equalsIgnoreCase("simulation")) {
 	    	  
-	         int finalinst = Integer.parseInt(attributes.getValue("finalinst"));
-	         int initpop = Integer.parseInt(attributes.getValue("initpop"));
-	         int maxpop = Integer.parseInt(attributes.getValue("maxpop"));
-	         comfortsens = Integer.parseInt(attributes.getValue("comfortsens"));
+			int finalinst = Integer.parseInt(attributes.getValue("finalinst"));
+			int initpop = Integer.parseInt(attributes.getValue("initpop"));
+			int maxpop = Integer.parseInt(attributes.getValue("maxpop"));
+			comfortsens = Integer.parseInt(attributes.getValue("comfortsens"));
 	         
-	         if(finalinst < 0 || initpop < 0 || maxpop < 0 || comfortsens <= 0) {
-	        	 System.err.println("simulation attributes received from XML are negative or zero when they shouldn't.");
-	        	 System.exit(-1);
-	         }
+			if(finalinst < 0 || initpop < 0 || maxpop < 0 || comfortsens <= 0) {
+				System.err.println("simulation attributes received from XML are negative or zero when they shouldn't.");
+				System.exit(-1);
+			}
 	         
-	         // sets the initial population
-	         simulation.setInitPop(initpop);
+			// sets the initial population
+			simulation.setInitPop(initpop);
 	         
-	         // constructs the list of individuals
-	         individuals = new LinkedList<Individual>();
+			// constructs the list of individuals
+			individuals = new LinkedList<Individual>();
 	         
 	         // sets the maximum population
 	         simulation.setMaxInd(maxpop);
@@ -217,6 +226,7 @@ public class MyHandler extends DefaultHandler {
 	@Override
 	public void error(SAXParseException e) throws SAXException {
 		   System.err.println("Error Message: " + e.getMessage());
+		   System.err.println("Error in XML at Line: " + e.getLineNumber());
 		   System.exit(-1);
 	}
 	   	   

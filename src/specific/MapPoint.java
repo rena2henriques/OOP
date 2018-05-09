@@ -26,7 +26,7 @@ public class MapPoint extends Point {
 		super(x, y);
 		connections = new ArrayList<Connection>();
 	}
-	
+
 	/**
 	 * MapPoint Constructor three args
 	 * @param x height

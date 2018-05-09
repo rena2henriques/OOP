@@ -16,9 +16,9 @@ public class Death extends IndividualEvent{
 	public List<Event> simulateEvent() {
 		List<Event> newEventsList = new LinkedList<Event>();
 		//removes the individual from the individuals list
-		Individual ind = this.getIndividual();
+		Individual ind = this.individual;
 		//se o individuo não existir, acho que o prog não crasha
-		ind.getPopulation().getIndividuals().remove(ind); 
+		ind.population.getIndividuals().remove(ind); 
 		return newEventsList; //deve ser melhor do que return null;
 	}
 	

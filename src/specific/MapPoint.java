@@ -8,13 +8,13 @@ public class MapPoint extends Point {
 	// type of point: 0 - normal, 1 - obstacle, 2 - initialpoint, 3 - finalpoint
 	protected int type;
 	
-	static final int NORMAL = 0;
-	static final int OBSTACLE = 1;
-	static final int INITIALPOINT = 2;
-	static final int FINALPOINT = 3;
+	protected static final int NORMAL = 0;
+	protected static final int OBSTACLE = 1;
+	protected static final int INITIALPOINT = 2;
+	protected static final int FINALPOINT = 3;
 	
 	// points connected to this point
-	List<Connection> connections;
+	protected List<Connection> connections;
 	
 	/**
 	 * MapPoint Constructor two args
@@ -39,19 +39,6 @@ public class MapPoint extends Point {
 		connections = new ArrayList<Connection>();
 	}
 
-	/**
-	 * @return the type
-	 */
-	public int getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(int type) {
-		this.type = type;
-	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#hashCode()

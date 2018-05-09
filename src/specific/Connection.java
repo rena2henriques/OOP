@@ -31,35 +31,5 @@ public class Connection {
 		this.cost = cost;
 		this.point = point;
 	}
-
-	/**
-	 * @return the cost
-	 */
-	public int getCost() {
-		return cost;
-	}
-
-	/**
-	 * @param cost the cost to set
-	 */
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
-
-	/**
-	 * @return the point connected to
-	 */
-	public MapPoint getPoint() {
-		return point;
-	}
-
-
-	/**
-	 * @param point to be connected to
-	 */
-	public void setPoint(MapPoint point) {
-		this.point = point;
-	}
 	
 }

@@ -63,10 +63,13 @@ public abstract class SimulationA implements SimulationI {
 		return numEvents;
 	}
 	
+	/**
+	 * @param nevents number of realized events to set
+	 */
+	public void setNumEvents(int nevents) {
+		numEvents=nevents;
+	}
 
-	public abstract void simulate(); 
-	public abstract void initialize();
-		
 	/**
 	 * Resets the variables that change with the simulation of the system. 
 	 * Sets the current time and the number of events to 0, and clears the PEC

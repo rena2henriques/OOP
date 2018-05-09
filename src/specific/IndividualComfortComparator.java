@@ -12,6 +12,6 @@ public class IndividualComfortComparator implements Comparator<Individual>{
 	
 	@Override
 	public int compare(Individual i1,Individual i2) {
-		return i1.getComfort() > i2.getComfort() ? -1 :(i1.getComfort() < i2.getComfort() ? 1 : 0);
+		return i1.comfort > i2.comfort ? -1 :(i1.comfort < i2.comfort ? 1 : 0);
 	}
 }

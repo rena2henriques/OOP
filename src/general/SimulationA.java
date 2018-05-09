@@ -30,6 +30,17 @@ public abstract class SimulationA implements SimulationI {
 	 */
 	protected double finalTime;
 	
+	/**
+	 * current number of events of the simulation
+	 */
+	protected int numEvents;
+	
+	
+	/**
+	 * Pending Event Container with the events to be simulated
+	 */
+	protected PEC pec;
+	
 	
 	/**
 	 * @return the finalTime
@@ -44,17 +55,6 @@ public abstract class SimulationA implements SimulationI {
 	public void setFinalTime(double finalTime) {
 		this.finalTime = finalTime;
 	}
-
-	/**
-	 * current number of events of the simulation
-	 */
-	protected int numEvents;
-	
-	
-	/**
-	 * Pending Event Container with the events to be simulated
-	 */
-	protected PEC pec;
 	
 	/**
 	 * @return number of realized events
@@ -63,20 +63,15 @@ public abstract class SimulationA implements SimulationI {
 		return numEvents;
 	}
 	
-	/**
-	 * @return the simulation current time
-	 */
-	public double getSimulationClock() {
-		return currentTime;
-	}
-	
-	public abstract void simulate();
+
+	public abstract void simulate(); 
+	public abstract void initialize();
 		
 	/**
 	 * Resets the variables that change with the simulation of the system. 
 	 * Sets the current time and the number of events to 0, and clears the PEC
 	 */
-	public void init() {
+	protected void init() {
 		currentTime=0; 
 		numEvents=0;
 		pec.clear();
@@ -88,9 +83,9 @@ public abstract class SimulationA implements SimulationI {
 	 * @param eventList list with the events to be added to the PEC
 	 */
 	protected void addNewEvents(List<Event> eventList) {
-		if(eventList!=null) { //se der merda por os eventos a retornar null
+		if(eventList!=null) { 
 			for(Event e: eventList) {
-				if(e.getTime() <= this.finalTime)
+				if(e.time <= this.finalTime)
 					pec.addEvent(e);
 			}
 		}

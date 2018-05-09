@@ -2,9 +2,6 @@
 package specific;
 
 import java.util.List;
-
-import general.Point;
-
 import java.util.LinkedList;
 
 /**

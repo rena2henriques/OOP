@@ -1,8 +1,6 @@
 package specific;
 
 import general.Event;
-
-import general.Point;
 import general.SimulationCommands;
 
 import java.util.LinkedList;

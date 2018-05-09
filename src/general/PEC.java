@@ -58,7 +58,7 @@ public class PEC implements PECI<Event>{
 	 *  or returns null if there are no events.
 	 */
 	public Event nextEvent() {
-		Event event= events.poll(); //POLL OU REMOVE??? -- ADICIONAR EXCEPTION NO SIMULATOR
+		Event event= events.poll(); 
 		return event;
 	}
 	

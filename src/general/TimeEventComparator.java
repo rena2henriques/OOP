@@ -15,7 +15,7 @@ public class TimeEventComparator implements Comparator<Event>{
 	 */
 	@Override
 	public int compare(Event e1,Event e2) {
-		return e1.getTime() < e2.getTime() ? -1 :(e1.getTime() > e2.getTime() ? 1 : 0);
+		return e1.time < e2.time ? -1 :(e1.time > e2.time ? 1 : 0);
 	}
 
 }

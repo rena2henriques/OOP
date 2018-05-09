@@ -36,16 +36,6 @@ public abstract class Event implements EventI{
 		return time;		
 	}
 	
-	/**
-	 * Set time of the event
-	 * 
-	 * @param time value to set 
-	 */
-	public void setTime(double time) {
-		this.time=time;
-	}
-
-	
 	/* (non-Javadoc)
 	 * @see general.EventI#simulateEvent()
 	 */

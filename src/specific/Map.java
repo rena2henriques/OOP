@@ -6,8 +6,6 @@ package specific;
 import java.util.ArrayList;
 import java.util.List;
 
-import general.Point;
-
 /**
  * @author renato
  *

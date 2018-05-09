@@ -1,7 +1,7 @@
 /**
  * 
  */
-package general;
+package specific;
 
 /**
  * Point representing a location in the 2D coordinate space, with coordinates (x,y).

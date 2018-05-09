@@ -15,7 +15,6 @@ import org.xml.sax.SAXException;
 import general.SimulationA;
 import general.Event;
 import general.PEC;
-import general.Point;
 import general.INumberGenerator;
 
 public class GridSimulation extends SimulationA{

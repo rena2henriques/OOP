@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class extends IndividualEvent, simulating a reproduction involves creating a
+ * This class extends IndividualEvent. Simulating a reproduction involves creating a
  * son (new individual) based on the individual on whom the reproduction is being simulated 
  * and adds the son to the simulation's population, creating and setting 
  * his first three events (death, move, reproduction). It also creates and sets the next
@@ -38,13 +38,13 @@ public class Reproduction extends IndividualEvent{
 	 */
 	/**
 	 * Simulating a reproduction involves creating a son of the individual on whom the 
-	 * reprodution is being simulated (i.e. creating a new individual), which will have 
+	 * reproduction is being simulated (i.e. creating a new individual), which will have 
 	 * a fraction of the father's path.
 	 * <p>
-	 * A new sets of events (death, move, reproducion) will be created and associated to the
+	 * A new sets of events (death, move, reproduction) will be created and associated to the
 	 * son, and a new reproduction will be created and associated to the father.
 	 * 
-	 * @return newEventsList - List of events to be added to the pec contaning at most
+	 * @return newEventsList - List of events to be added to the PEC containing at most
 	 * 3 new events for the new individual and 1 new event to the father 
 	 */
 	public List<Event> simulateEvent(){
@@ -108,7 +108,7 @@ public class Reproduction extends IndividualEvent{
 	
 	/**
 	 * Receives the father of the new individual and calculates a fraction of its path, 
-	 * based on the father's confort and path size.
+	 * based on the father's comfort and path size.
 	 * 
 	 * @param ind - Individual which will be the father of the to be created individual
 	 * @return myPath - prefix of father's path

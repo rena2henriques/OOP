@@ -10,5 +10,4 @@ public abstract class IndividualTimeGenerator implements INumberGenerator{
 		individual =ind;
 	}
 	
-	abstract public double getNumber();
 }

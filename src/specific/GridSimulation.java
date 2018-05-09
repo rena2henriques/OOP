@@ -19,14 +19,13 @@ import general.INumberGenerator;
 
 public class GridSimulation extends SimulationA{
 	
-	Population population;
-	Point initialPoint;
-	int maxInd, initPop;
-	//private SimulationNumberCommands simGenerator; 
-	static final int DEATH=0;
-	static final int MOVE=1;
-	static final int REP=2;
-	static final int THRESH=3;
+	protected Population population;
+	protected Point initialPoint;
+	protected int maxInd, initPop;
+	protected static final int DEATH=0;
+	protected static final int MOVE=1;
+	protected static final int REP=2;
+	protected static final int THRESH=3;
 
 	
 	public GridSimulation(String filename,INumberGenerator deathTime,INumberGenerator moveTime,INumberGenerator repTime ,INumberGenerator thresh) {
@@ -121,10 +120,8 @@ public class GridSimulation extends SimulationA{
 	
 	private void epidemic() {
 						
-		// TODO MUDAR ISTO, ACHO QUE NAO FAZ SENTIDO AFINAL
 		int epidemic_size=5;
-		/*if(maxInd<epidemic_size)
-			epidemic_size=maxInd;*/
+
 		
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
@@ -147,17 +144,9 @@ public class GridSimulation extends SimulationA{
 	
 			//we dont check if k=0 because its verified in the xml parser
 			if(percentage>ind.comfort) {
-				//percorrer a pec e retirar todos os eventos do individual morto
-				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
-				for(Event event: pecCopy) {
-				//for(int j=0; j<pec.getEvents().size();j++) {
-					if(event.peekEvent(ind))
-						pec.removeEvent(event);
-				}*/
+						
 				//clears dead individual events
 				clearDeadEvents(pec, ind);
-				//retirar individual da lista de individuals
-				//population.individuals.remove(ind);
 				
 				//to avoid concurrent modification exception
 				i.remove();
@@ -191,15 +180,6 @@ public class GridSimulation extends SimulationA{
 		if(ind.myDeath != null) 
 			if(ind.myDeath.getTime() < finalTime)
 				pec.removeEvent(ind.myDeath);
-		
-		//percorrer a pec e retirar todos os eventos do individual morto
-		/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
-		for(Event event: pecCopy) {
-		//for(int j=0; j<pec.getEvents().size();j++) {
-			if(event.peekEvent(ind))
-				pec.removeEvent(event);
-		}*/
-		/***^Versão antiga^ ***/
 		
 	}
 	

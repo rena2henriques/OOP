@@ -6,17 +6,17 @@ package specific;
  * @author Group 6
  *
  */
-class Connection {
+public class Connection {
 	
 	/**
 	 * The cost of the connection
 	 */
-	int cost;
+	protected int cost;
 	
 	/**
 	 * The end point of the connection
 	 */
-	MapPoint point;
+	protected MapPoint point;
 
 	/**
 	 * Constructor.
@@ -25,7 +25,7 @@ class Connection {
 	 * @param cost of the link
 	 * @param connection - point which has a connection
 	 */
-	Connection(int cost, MapPoint point) {
+	public Connection(int cost, MapPoint point) {
 		this.cost = cost;
 		this.point = point;
 	}

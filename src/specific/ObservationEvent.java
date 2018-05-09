@@ -5,9 +5,10 @@ import java.util.List;
 
 import general.Event;
 public class ObservationEvent extends Event{
-	GridSimulation grid;
 	
-	ObservationEvent(double time, GridSimulation grid) {
+	protected GridSimulation grid;
+	
+	public ObservationEvent(double time, GridSimulation grid) {
 		super(time);
 		this.grid = grid;
 	}
@@ -40,13 +41,8 @@ public class ObservationEvent extends Event{
 		System.out.println("\t\tFinal point has been hit: " + finalHit);
 		System.out.println("\t\tPath of the best fit individual: " + grid.population.getBestInd().pathString());
 		System.out.println("\t\tCost/Confort: " + bestScore );
-		//POR AS COISAS NO FORMATO QUE ELA QUER - PERGUNTAR SE TEM QUE SER IGUALLZINHO
-		//POR TABS /t?
+
 	}
 	
-	/*public boolean peekEvent(Object o) {
-		//nunca queremos n�o simular o nosso evento
-		return false;
-	}*/
 	
 }

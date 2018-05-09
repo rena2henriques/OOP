@@ -11,18 +11,20 @@ import java.util.List;
  *
  */
 
+
+// TODO CHECKAR VISIBILIDADES PRIVATE 
 public class Map {
 
 	// dimensions of the map
-	int height, width; // n and m, respectively
+	protected int height, width; // n and m, respectively
 	// nº of obstacles in the map
-	int n_obst;
+	protected int n_obst;
 	// maximum cost of an edge of the map
-	int max_cost = 1;
+	protected int max_cost = 1;
 	
-	MapPoint finalpoint;
+	protected MapPoint finalpoint;
 
-	List<MapPoint> map;
+	protected List<MapPoint> map;
 	
 	/**
 	 * Constructor
@@ -179,7 +181,7 @@ public class Map {
 	/**
 	 * creates the initial rectangular grid uniting adjacent points in the form of an adjacency list
 	 */
-	private void generateGrid() {
+	protected void generateGrid() {
 		
 		int column = 0, row = 0;
 		
@@ -256,7 +258,7 @@ public class Map {
 	 * @param width or n of the map
 	 * @return the respective conversion to an array index
 	 */
-	public static int CoordsToIndex(int column, int row, int width) {
+	protected static int CoordsToIndex(int column, int row, int width) {
 		return (row-1)*width+(column-1);
 	}
 	
@@ -569,7 +571,7 @@ public class Map {
 	 * @param p2 point2 
 	 * @param cost value to be inserted
 	 */
-	private void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
+	protected void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
 		
 		// checks every point1 connection
 		for(int i = 0; i < p1.connections.size(); i++) {

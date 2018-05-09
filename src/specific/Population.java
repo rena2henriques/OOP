@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Population{
-	int sensitivity; //fica package? ou damos sets?
+	int sensitivity;
 	int deathParam;
 	int moveParam;
 	int reproductionParam;

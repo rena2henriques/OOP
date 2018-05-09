@@ -16,37 +16,37 @@ public class Individual {
 	/**
 	 * The cost of the path of the individual
 	 */
-	int cost;
+	protected int cost;
 	
 	/**
 	 * The comfort of the individual
 	 */
-	double comfort;
+	protected double comfort;
 	
 	/**
 	 * The list of points that make the path of the Individual
 	 */
-	List<Point> path; //array of points
+	protected List<Point> path; //array of points
 	
 	/**
 	 * The population (with the simulation info) in which the indiviudal lives
 	 */
-	Population population; //population
+	protected Population population; //population
 	
 	/**
 	 * The death event related to this individual
 	 */
-	Death myDeath; //death event related to this individual
+	protected Death myDeath; //death event related to this individual
 	
 	/**
 	 * The move event related to this individual
 	 */
-	Move nextMove;
+	protected Move nextMove;
 	
 	/**
 	 * The reproduction event related to this individual
 	 */
-	Reproduction nextRep;
+	protected Reproduction nextRep;
 	
 	/**
 	 * Constructor.
@@ -81,7 +81,7 @@ public class Individual {
 		path= new LinkedList<Point>(points);
 	}
 		
-	public Individual getPathIndividual() {
+	protected Individual getPathIndividual() {
 		Individual newInd= new Individual(path);
 		newInd.cost=this.cost;
 		newInd.comfort=this.comfort;
@@ -97,7 +97,7 @@ public class Individual {
 	 * 
 	 * @param new_point new position of the individual
 	 */
-	public void addToPath(Point new_point) { 
+	protected void addToPath(Point new_point) { 
 		
 		//checkar se h� cicle
 		if(checkCycle(new_point)) {
@@ -120,7 +120,7 @@ public class Individual {
 	 * @param new_point point to add to path
 	 * @throws Exception if there is a cycle in the path with the new point
 	 */
-	private void addNewPoint(Point new_point) {	
+	protected void addNewPoint(Point new_point) {	
 		cost+=population.map.getConnectionCost(path.get(path.size()-1),new_point);
 		path.add(new_point);
 	}
@@ -157,7 +157,7 @@ public class Individual {
 	/**
 	 * Calculates the comfort of the individual in its current position
 	 */
-	private void calculateComfort() {
+	protected void calculateComfort() {
 		int length=path.size()-1;
 		int dist=population.map.calculateDist(path.get(path.size()-1));
 		comfort=Math.pow(1-(cost-length+2)*1.0/((population.map.max_cost-1)*length+3),population.sensitivity)*Math.pow(1-(dist*1.0)/(population.map.width+population.map.height+1),population.sensitivity);

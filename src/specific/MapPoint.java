@@ -3,18 +3,18 @@ package specific;
 import java.util.ArrayList;
 import java.util.List;
 
-class MapPoint extends Point {
+public class MapPoint extends Point {
 
 	// type of point: 0 - normal, 1 - obstacle, 2 - initialpoint, 3 - finalpoint
-	int type;
+	protected int type;
 	
-	static final int NORMAL = 0;
-	static final int OBSTACLE = 1;
-	static final int INITIALPOINT = 2;
-	static final int FINALPOINT = 3;
+	protected static final int NORMAL = 0;
+	protected static final int OBSTACLE = 1;
+	protected static final int INITIALPOINT = 2;
+	protected static final int FINALPOINT = 3;
 	
 	// points connected to this point
-	List<Connection> connections;
+	protected List<Connection> connections;
 	
 	/**
 	 * MapPoint Constructor two args
@@ -22,7 +22,7 @@ class MapPoint extends Point {
 	 * @param y
 	 * type is 0 by default - normal position
 	 */
-	MapPoint(int x, int y) {
+	public MapPoint(int x, int y) {
 		super(x, y);
 		connections = new ArrayList<Connection>();
 	}
@@ -33,7 +33,7 @@ class MapPoint extends Point {
 	 * @param y width
 	 * @param type - type of point in the map
 	 */ 
-	MapPoint(int x, int y, int type) {
+	public MapPoint(int x, int y, int type) {
 		super(x, y);
 		this.type = type;
 		connections = new ArrayList<Connection>();
@@ -71,7 +71,7 @@ class MapPoint extends Point {
 	/**
 	 * @return the connections
 	 */
-	 List<Connection> getConnections() {
+	public List<Connection> getConnections() {
 		return connections;
 	}
 	

@@ -1,7 +1,9 @@
 package specific;
 
 /**
- * A connection between points represented by the cost of the edge connecting the points, and by one of the points of the connection.
+ * 
+ * <p>A connection between points represented by the cost of the edge connecting the points, 
+ * and by one of the points of the connection.
  * 
  * @author Group 6
  *

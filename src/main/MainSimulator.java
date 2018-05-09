@@ -9,13 +9,17 @@ import specific.*;
 	
 
 /**
- * @author renato
+ * Class just to specify the generators of time between events and run the simulation
+ * 
+ * @author Group 6
  *
  */
 public class MainSimulator {
 
 	/**
-	 * @param args
+	 * The main function to run the project
+	 * 
+	 * @param args where should be specified the xml file to use
 	 */
 	public static void main(String[] args) {
 		
@@ -26,14 +30,16 @@ public class MainSimulator {
 			System.err.println("Number of arguments received isn't correct.");
 			System.exit(-1);
 		}
-		
+	
 		INumberGenerator deathTime=new DeathExpRandomTime();
 		INumberGenerator moveTime=new MoveExpRandomTime();
 		INumberGenerator repTime= new ReproductionExpRandomTime();
 		INumberGenerator thresh= new RandomPercentage();
 		
 		SimulationA simulation = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
-		simulation.simulate();	
+		
+		simulation.simulate();
+		
 	}
 
 }

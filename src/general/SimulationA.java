@@ -70,8 +70,7 @@ public abstract class SimulationA implements SimulationI {
 		return currentTime;
 	}
 	
-	//TODO POR ISTO OU NAO? DUVIDA
-	public abstract void simulate(); // por isto ou n�o????
+	public abstract void simulate();
 		
 	/**
 	 * Resets the variables that change with the simulation of the system. 

@@ -40,7 +40,7 @@ public class GridSimulation extends SimulationA{
 	    	  MyHandler handler = new MyHandler(this);
 	    	  saxParser.parse(file, handler);     
 		  } catch (IOException e) {
-			  System.err.println("IO error"); 
+			  System.err.println("IO error: File doesn't exist"); 
 			  System.exit(-1);
 		  } catch (SAXException e) {
 			  System.err.println("Parser error");
@@ -283,7 +283,7 @@ public class GridSimulation extends SimulationA{
 		numEvents=nevents;
 	}
 	
-	// TODO VER SE NAO É MELHOR POR OS PARAMETROS COMO PACKAGE EM VEZ DE TER ISTO
+	// TODO VER SE NAO ï¿½ MELHOR POR OS PARAMETROS COMO PACKAGE EM VEZ DE TER ISTO
 	
 	public void setInitialPoint(Point initialPoint) {
 		this.initialPoint=initialPoint;

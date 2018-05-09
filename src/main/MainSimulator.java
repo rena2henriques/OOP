@@ -10,8 +10,6 @@ import specific.*;
 
 /**
  * Class just to specify the generators of time between events and run the simulation
- * 
- * @author Group 6
  *
  */
 public class MainSimulator {

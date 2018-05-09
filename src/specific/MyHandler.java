@@ -9,35 +9,70 @@ import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
 /**
- * This class is a handler for the SAX xml parser and retrieves the needed variables from the XML and
- * uses them to initialize some parameters of the simulation
- * 
- * It also prevents some errors in the input values of the XML
- * 
+ * <p>This class is a handler for the SAX xml parser and retrieves the needed variables from the XML and
+ * uses them to initialize some parameters of the simulation. It also prevents some errors in the input values of 
+ * the XML.
  *
  */
 public class MyHandler extends DefaultHandler {
 
+	
+	/**
+	 * This variable is used to check if the parser is in the element of a specialcostzone in order to retrieve the cost value
+	 */
 	boolean bZone = false;
 	
+	/**
+	 * A reference to the simulation in order to pass the initialized list of individuals and map to it 
+	 */
 	private GridSimulation simulation;
 	
-	// Variables needed to save to be able to initialize the population class inside the simulation
+	/**
+	 * Auxiliar map needed to initialize the population class inside the simulation
+	 */
 	private Map map;
+	
+	
+	/**
+	 * Auxiliar list of individuals needed to initialize the population class inside the simulation
+	 */
 	private List<Individual> individuals;
+	
+	
+	/**
+	 * Auxiliar parameter needed to save during the parsing because the initializion is done only in the end of the document
+	 */
 	private int death, reproduction, move, comfortsens;
+	
+	
+	/**
+	 * Auxiliar coordinate needed to save during the parsing because the initiliaztion is done only when the character is read
+	 */
 	private int xiniSCZ, yiniSCZ, xfinSCZ, yfinSCZ;
 
 	/**
-	* Constructor
-	* @param simulation
+	* <p>Constructor. As the Class needs the a simulation to initiliaze the constructor receives a reference to one and it keeps it 
+	* in the field simulation of the class
+	* 
+	* @param simulation - reference to an object of type GridSimulation
 	*/
 	public MyHandler(GridSimulation simulation) {
 			super();
 			// associates simulation reference
 			this.simulation = simulation;
-		}
+	}
 
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+	 */
+	/**
+	 * <p> Used to read the value and the data of an element
+	 * <p> Used to read the value and the data of an element. It prevents the elements to have certain values like coordinates
+	 * being negative or 0 and the values not being integers. In these cases an error message is printed and the program is aborted.
+	 * More cases of error handling can be checked in the project report.
+	 * 
+	 * @throws NumberFormatException - in order to avoid to use try catch statements in every parseInt method calls
+	 */
 	@Override
 	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException,NumberFormatException {
 
@@ -200,6 +235,15 @@ public class MyHandler extends DefaultHandler {
 	      }
 	   }
 
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
+	 */
+	/**
+	 * <p>Reads the characters inside an element. In this case the only character read is the cost 
+	 * value of the special cost zones
+	 * 
+	 * @throws NumberFormatException - in order to avoid to use try catch statements in every parseInt method calls
+	 */
 	@Override
 	public void characters(char ch[], int start, int length) throws SAXException, NumberFormatException {
 	      
@@ -213,6 +257,14 @@ public class MyHandler extends DefaultHandler {
 	      } 
 	   }
 	   
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#endDocument()
+	 */
+	/**
+	 * Called when the parser reaches the end of the document. 
+	 * <p>In this case it's used to initialize the population with the parsed
+	 * parameters and then sent to the simulation
+	 */
 	@Override
 	public void endDocument() throws SAXException {
 		
@@ -222,6 +274,12 @@ public class MyHandler extends DefaultHandler {
 		   simulation.population=population;
 	   }
 	   
+	/* (non-Javadoc)
+	 * @see org.xml.sax.helpers.DefaultHandler#error(org.xml.sax.SAXParseException)
+	 */
+	/**
+	 * Used for printing error messages when the xml doens't correspond to the dtd structure 
+	 */
 	@Override
 	public void error(SAXParseException e) throws SAXException {
 		   System.err.println("Error Message: " + e.getMessage());

@@ -273,7 +273,12 @@ public class GridSimulation extends SimulationA{
 	}
 	
 	/**
-	 * 
+	 * Resets the variables that change when the simulation is performed.
+	 * <p>
+	 * Calls the init method of the superclass, clears the list of individuals,
+	 * sets the best fit to null and the flag finalPointHit to false
+	 * <p>
+	 * Should be called before starting an actual simulation
 	 */
 	public void reset() {	
 		super.init();		
@@ -282,6 +287,13 @@ public class GridSimulation extends SimulationA{
 		population.clearIndividuals();
 	}
 	
+	/**
+	 * Initialization of the simulation. 
+	 * <p>
+	 * Creates the initial list of individuals in the initial point, and 
+	 * <p>
+	 * Should be called before starting an actual simulation
+	 */
 	public void startSimulation() {
 		
 		Individual newInd=null;

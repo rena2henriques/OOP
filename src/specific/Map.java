@@ -121,8 +121,8 @@ public class Map {
 		
 		for(int i = 0; i < origin.connections.size(); i++) {
 			// if the point the origin is connected to is the destiny
-			if(origin.connections.get(i).getPoint().equals(destiny)) {
-				int type = map.get(CoordsToIndex(origin.connections.get(i).getPoint().getX(),origin.connections.get(i).getPoint().getY(), width)).getType();
+			if(origin.connections.get(i).point.equals(destiny)) {
+				int type = map.get(CoordsToIndex(origin.connections.get(i).point.getX(),origin.connections.get(i).point.getY(), width)).type;
 				
 				// checks if it's an obstacle
 				if(type == MapPoint.OBSTACLE) {
@@ -169,7 +169,7 @@ public class Map {
 	public boolean isFinal(Point point) {
 		
 		try {
-			if(map.get((point.getY()-1)*width+(point.getX()-1)).getType() == 3) {
+			if(map.get((point.getY()-1)*width+(point.getX()-1)).type == 3) {
 				return true;
 			} 
 		} catch(IndexOutOfBoundsException e) {
@@ -314,7 +314,7 @@ public class Map {
 		
 		try {
 			// set this point as an obstacle
-			map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
+			map.get((y-1)*width+(x-1)).type=MapPoint.OBSTACLE;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addObstacle, wrong coordinates:" + e.getMessage());
 			return;
@@ -332,7 +332,7 @@ public class Map {
 	public void addInitialPoint(int x, int y) {
 		try {
 			// set this point as an initial point
-			map.get((y-1)*width+(x-1)).setType(MapPoint.INITIALPOINT);
+			map.get((y-1)*width+(x-1)).type=MapPoint.INITIALPOINT;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addInitialPoint:" + e.getMessage());
 			return;
@@ -361,7 +361,7 @@ public class Map {
 	public void addFinalPoint(int x, int y) {
 		try {
 			// set this point as an final point
-			map.get((y-1)*width+(x-1)).setType(MapPoint.FINALPOINT);
+			map.get((y-1)*width+(x-1)).type=MapPoint.FINALPOINT;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addFinalPoint:" + e.getMessage());
 			return;
@@ -597,7 +597,7 @@ public class Map {
 			// if the point 2 is the one that point 1 is connected in the connection 
 			if(p2.equals(p1.connections.get(i).point)) {
 				// sets the cost of the connection
-				p1.connections.get(i).setCost(cost);
+				p1.connections.get(i).cost=cost;
 			}
 		}
 		
@@ -607,7 +607,7 @@ public class Map {
 			// if the point 1 is the one that point 2 is connected in the connection 
 			if(p1.equals(p2.connections.get(i).point)) {
 				// sets the cost of the connection
-				p2.connections.get(i).setCost(cost);
+				p2.connections.get(i).cost=cost;
 			}
 		}
 		
@@ -639,7 +639,7 @@ public class Map {
 			// if the point 2 is the one that point 1 is connected in the connection then return the cost 
 			if(pointB.equals(pointA.connections.get(i).point)) {
 				// returns the cost of the connection
-				return pointA.connections.get(i).getCost();
+				return pointA.connections.get(i).cost;
 			}
 		}
 		

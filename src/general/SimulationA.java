@@ -62,11 +62,6 @@ public abstract class SimulationA implements SimulationI {
 	public int getNumEvents() {
 		return numEvents;
 	}
-	
-	//TODO POR ISTO OU NAO? DUVIDA
-	public abstract void simulate(); 
-	public abstract void initialize();
-	
 		
 	/**
 	 * Resets the variables that change with the simulation of the system. 

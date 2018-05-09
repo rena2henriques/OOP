@@ -2,11 +2,6 @@ package specific;
 
 import general.Event;
 
-import general.INumberGenerator;
-
-import general.Point;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import general.SimulationCommands;
@@ -23,12 +18,12 @@ public class Move extends IndividualEvent {
 		
 		Individual ind = this.getIndividual();
 		//current event simulated, cleans association until new one generated
-		ind.setNextMove(null);
+		ind.nextMove=null;
 		List<Event> newEventsList = new LinkedList<Event>();
 		//gets individual current position, which is the last one of the path
-		Point currPos = ind.getPath().get((ind.getPath().size()) - 1);
+		Point currPos = ind.path.get((ind.path.size()) - 1);
 		//gets possible individual moves
-		List<Point> pointsList = ind.getPopulation().getMap().getPossibleMoves(currPos);
+		List<Point> pointsList = ind.population.getMap().getPossibleMoves(currPos);
 		//chooses next point to move, based on available moves and the generated number
 		if(!pointsList.isEmpty()) {
 			//gets a number between 0 and 1
@@ -38,13 +33,13 @@ public class Move extends IndividualEvent {
 			Point choosenPoint = chooseDirection(pointsList, direction);
 			//adds choosen point to the path
 			ind.addToPath(choosenPoint);//adicionar novo point à pessoa
-			checkBestFitIndividual(ind, ind.getPopulation());
+			checkBestFitIndividual(ind, ind.population);
 			//creates next move
 			double eventTime = this.getTime() + ((GridCommands)this.getsNC()).getCommand(GridSimulation.MOVE,ind); //temp
 			if(checkDeathTime(eventTime, ind)) {
 				Move move = new Move(eventTime, ind, this.getsNC());
 				newEventsList.add(move);
-				ind.setNextMove(move);
+				ind.nextMove=move;
 			}
 		} //else there are no available moves
 		return newEventsList;
@@ -78,13 +73,13 @@ public class Move extends IndividualEvent {
 			
 		//if none of the individuals has reached the final point before and the current individual
 		//reaches it, we change the flag and set the current individual as the best individual
-		if(!pop.finalPointHit && pop.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1))) {
+		if(!pop.finalPointHit && pop.map.isFinal(currentInd.path.get(currentInd.path.size()-1))) {
 			pop.finalPointHit=true; 
 			updateBestFit(currentInd, pop);			
 		}	
 		//we only check if it is the best individual if the final point hasn't been reached 
 		//or if it has, we only check if our individual is also in the final point
-		else if(!pop.finalPointHit || (pop.finalPointHit &&  pop.map.isFinal(currentInd.getPath().get(currentInd.getPath().size()-1)))) {
+		else if(!pop.finalPointHit || (pop.finalPointHit &&  pop.map.isFinal(currentInd.path.get(currentInd.path.size()-1)))) {
 			if(checkIfIsBestFit(currentInd, pop))
 				updateBestFit(currentInd, pop);			
 		}
@@ -103,11 +98,11 @@ public class Move extends IndividualEvent {
 			return true;
 			
 		//if none of the individuals has reached the final point we check the comfort
-		else if(!pop.finalPointHit && currentInd.getComfort()>pop.bestInd.getComfort()) {
+		else if(!pop.finalPointHit && currentInd.comfort>pop.bestInd.comfort) {
 			return true;
 		} 
 		//if an individual has already reached the final point, we check the cost
-		else if(pop.finalPointHit && currentInd.getCost() < pop.bestInd.getCost()) {
+		else if(pop.finalPointHit && currentInd.cost < pop.bestInd.cost) {
 			return true;
 		}
 			

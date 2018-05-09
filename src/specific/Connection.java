@@ -6,12 +6,12 @@ package specific;
  * @author Group 6
  *
  */
-public class Connection {
+class Connection {
 	
 	/**
 	 * The cost of the connection
 	 */
-	private int cost;
+	int cost;
 	
 	/**
 	 * The end point of the connection
@@ -25,38 +25,8 @@ public class Connection {
 	 * @param cost of the link
 	 * @param connection - point which has a connection
 	 */
-	public Connection(int cost, MapPoint point) {
+	Connection(int cost, MapPoint point) {
 		this.cost = cost;
-		this.point = point;
-	}
-
-	/**
-	 * @return the cost
-	 */
-	public int getCost() {
-		return cost;
-	}
-
-	/**
-	 * @param cost the cost to set
-	 */
-	public void setCost(int cost) {
-		this.cost = cost;
-	}
-
-
-	/**
-	 * @return the point connected to
-	 */
-	public MapPoint getPoint() {
-		return point;
-	}
-
-
-	/**
-	 * @param point to be connected to
-	 */
-	public void setPoint(MapPoint point) {
 		this.point = point;
 	}
 	

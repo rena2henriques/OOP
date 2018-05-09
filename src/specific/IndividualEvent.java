@@ -5,8 +5,8 @@ import general.SimulationCommands;
 
 public abstract class IndividualEvent extends Event{
 	
-	private Individual individual;
-	private SimulationCommands sNC;
+	protected Individual individual;
+	protected SimulationCommands sNC;
 	
 	IndividualEvent(double time,Individual individual, SimulationCommands simNumCom){
 		super(time);
@@ -56,7 +56,7 @@ public abstract class IndividualEvent extends Event{
 	static boolean checkDeathTime(double time, Individual ind) {
 		double deathTime = 0;
 		try{
-			deathTime = ind.getIndDeath().getTime();
+			deathTime = ind.myDeath.getTime();
 		} catch (NullPointerException e) { //case has no death event associated
 			return true; //means that death event will not happen before simulation ends
 		}				 

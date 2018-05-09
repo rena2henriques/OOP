@@ -8,7 +8,7 @@ import java.util.Random;
  * @author Group 6
  *
  */
-public final class Utils {
+public class Utils {
 
 	/**
 	 *Returns an uniform random in the chosen interval 

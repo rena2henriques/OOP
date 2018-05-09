@@ -35,7 +35,18 @@ Observação é definida por um tempo espeficifico por isso faz sentido adicion�
 ## Individuos possume referência para a população da Simulação
 População da simulação possui parâmetros informativos da simulação necessários aos individuos, por isso esta foi a melhor alternativa arranjada para poder passar esses parâmetros aos individuos e aos eventos, sem ter que estar a copiar todos os parâmetros necessários. Deste modo, guarda-se apenas uma única referência para a população em cada individuo!
 
+#RESULTADOS DA SIMULACAO
 
+## Mapa muito grande
+Mapa de dimensoes maiores -> dist na formula do comforto maior -> comfort maior -> reproduzem-se e morre menos
+Mas se metermos ponto final mais perto do inicial já é o mesmo que normalmente
+
+K maior -> menor comfort -> tempo para reprodução e move maior -> menos eventos
+                          -> tempo de death menor
+                         -> mas morre mais gente nas epidemias quando existem epidemias - por exemplo quando initpop é maior que maxpop (test10)
+
+Test11 - final inst grande, death grande e final pop pequena para existirem muitas epidemias
+Test12 - maxpop e death grande, reproduction pequena para haver populacao bue grande -> bue eventos 
 
 
 

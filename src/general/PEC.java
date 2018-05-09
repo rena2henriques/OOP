@@ -3,10 +3,6 @@ package general;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-
-//IMPLEMENTACAO DA PECI, só funciona com eventos do tipo event, que têm um time
-//compara eventos obrigatoriamente a partir do tempo
-
 /**
  * This class provides an implementation of the PECI interface.
  * It provides a priority queue of events that have a time (class Event) and orders them accordingly to that attribute.
@@ -36,7 +32,11 @@ public class PEC implements PECI<Event>{
 	 * @param initialCapacity 
 	 */
 	public PEC(int initialCapacity) {
-		events= new PriorityQueue<Event>(initialCapacity,new TimeEventComparator());
+		if(initialCapacity==0) {
+			events= new PriorityQueue<Event>(new TimeEventComparator());
+		} else {
+			events= new PriorityQueue<Event>(initialCapacity,new TimeEventComparator());
+		}
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class PEC implements PECI<Event>{
 	 *  or returns null if there are no events.
 	 */
 	public Event nextEvent() {
-		Event event= events.poll(); //POLL OU REMOVE??? -- ADICIONAR EXCEPTION NO SIMULATOR
+		Event event= events.poll(); 
 		return event;
 	}
 	

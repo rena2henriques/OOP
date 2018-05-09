@@ -15,14 +15,13 @@ import org.xml.sax.SAXException;
 import general.SimulationA;
 import general.Event;
 import general.PEC;
-import general.Point;
 import general.INumberGenerator;
 
 public class GridSimulation extends SimulationA{
 	
-	private Population population;
-	private Point initialPoint;
-	private int maxInd, initPop;
+	Population population;
+	Point initialPoint;
+	int maxInd, initPop;
 	//private SimulationNumberCommands simGenerator; 
 	static final int DEATH=0;
 	static final int MOVE=1;
@@ -30,7 +29,7 @@ public class GridSimulation extends SimulationA{
 	static final int THRESH=3;
 
 	
-	public GridSimulation(String filename) {
+	public GridSimulation(String filename,INumberGenerator deathTime,INumberGenerator moveTime,INumberGenerator repTime ,INumberGenerator thresh) {
 	
 	      try {
 	    	  File file = new File(filename);
@@ -40,7 +39,7 @@ public class GridSimulation extends SimulationA{
 	    	  MyHandler handler = new MyHandler(this);
 	    	  saxParser.parse(file, handler);     
 		  } catch (IOException e) {
-			  System.err.println("IO error"); 
+			  System.err.println("IO error: File doesn't exist"); 
 			  System.exit(-1);
 		  } catch (SAXException e) {
 			  System.err.println("Parser error");
@@ -53,19 +52,30 @@ public class GridSimulation extends SimulationA{
 			  System.exit(-1);
 		  }
 		
+	    // If initPop is zero means that no event will be simulated, cause there's no individual to have events
+	    if (initPop == 0) {
+	    	System.out.println("The initial population is zero, so there are no individuals to associate events to.");
+	    	System.exit(0);
+	    }
+	      
 		//call XML Parser
-		pec = new PEC(6*initPop); //6*initPop is the initial capacity of the priority queue;
+		pec = new PEC(3*maxInd); //3*maxInd is the initial capacity of the priority queue;
 		
 		INumberGenerator gens[] = new INumberGenerator[4];
-		gens[DEATH]=new DeathExpRandomTime();
-		gens[MOVE]=new MoveExpRandomTime();
-		gens[REP]= new ReproductionExpRandomTime();
-		gens[THRESH]= new RandomPercentage();
+		gens[DEATH]=deathTime;
+		gens[MOVE]=moveTime;
+		gens[REP]= repTime;
+		gens[THRESH]= thresh;
 		
 		simComms= new GridCommands(gens);
 	}
 	
 	public void simulate() {
+		
+		if(this.finalTime==0) {
+			System.out.println("The final instant is 0, so there is no simulation");
+			System.exit(0);
+		}
 		
 		//reseting the dynamic variables and initializing the population of individuals
 		reset();
@@ -110,10 +120,11 @@ public class GridSimulation extends SimulationA{
 	
 	
 	private void epidemic() {
-				
+						
+		// TODO MUDAR ISTO, ACHO QUE NAO FAZ SENTIDO AFINAL
 		int epidemic_size=5;
-		if(maxInd<epidemic_size)
-			epidemic_size=maxInd;
+		/*if(maxInd<epidemic_size)
+			epidemic_size=maxInd;*/
 		
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
@@ -123,7 +134,7 @@ public class GridSimulation extends SimulationA{
 		
 		Iterator<Individual> i=population.individuals.iterator();
 		
-		for (int x=0; x < epidemic_size; x++) {
+		for (int x=0; x < epidemic_size && i.hasNext(); x++) {
 	        i.next(); // ignore the first x values
 	    }
 		
@@ -134,7 +145,8 @@ public class GridSimulation extends SimulationA{
 			//double percentage= simGenerator.getThreshold(ind);
 			double percentage=simComms.getCommand(THRESH);
 	
-			if(percentage>ind.getComfort()) {
+			//we dont check if k=0 because its verified in the xml parser
+			if(percentage>ind.comfort) {
 				//percorrer a pec e retirar todos os eventos do individual morto
 				/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
 				for(Event event: pecCopy) {
@@ -168,17 +180,17 @@ public class GridSimulation extends SimulationA{
 		 * otherwise it's deleted from the pec 
 		 */
 		
-		if(ind.getNextMove() != null)
-			if(ind.getNextMove().getTime() < finalTime) 
-				pec.removeEvent(ind.getNextMove());
+		if(ind.nextMove != null)
+			if(ind.nextMove.getTime() < finalTime) 
+				pec.removeEvent(ind.nextMove);
 		
-		if(ind.getNextRep() != null)
-			if(ind.getNextRep().getTime() < finalTime)	
-				pec.removeEvent(ind.getNextRep());
+		if(ind.nextRep != null)
+			if(ind.nextRep.getTime() < finalTime)	
+				pec.removeEvent(ind.nextRep);
 	
-		if(ind.getIndDeath() != null) 
-			if(ind.getIndDeath().getTime() < finalTime)
-				pec.removeEvent(ind.getIndDeath());
+		if(ind.myDeath != null) 
+			if(ind.myDeath.getTime() < finalTime)
+				pec.removeEvent(ind.myDeath);
 		
 		//percorrer a pec e retirar todos os eventos do individual morto
 		/*PriorityQueue<Event> pecCopy= new PriorityQueue<Event>(pec.getEvents());
@@ -211,7 +223,7 @@ public class GridSimulation extends SimulationA{
 			double eventTime = ((GridCommands) simComms).getCommand(DEATH,newInd);
 			if(eventTime < finalTime) {
 				Death death = new Death(eventTime,newInd, simComms);
-				newInd.setIndDeath(death);
+				newInd.myDeath=death;
 				pec.addEvent(death);
 			}
 			//So MANDAR EVENTOS PARA A PEC SE O SEU TEMPO FOR INFERIOR AO DAMORTE e de simTime
@@ -219,13 +231,13 @@ public class GridSimulation extends SimulationA{
 			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
 				Move move = new Move(eventTime,newInd, simComms);
 				pec.addEvent(move);
-				newInd.setNextMove(move);
+				newInd.nextMove=move;
 			}
 			eventTime=((GridCommands) simComms).getCommand(REP,newInd);
 			if(IndividualEvent.checkDeathTime(eventTime, newInd) && eventTime <= finalTime) {
 				Reproduction rep = new Reproduction(eventTime,newInd, simComms);
 				pec.addEvent(rep);
-				newInd.setNextRep(rep);
+				newInd.nextRep=rep;
 			}
 	
 			//adding individual to the population
@@ -233,56 +245,30 @@ public class GridSimulation extends SimulationA{
 			
 		}
 		
+		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
+		
 		//in case of having initPop bigger than maxInd
 		if(checkEpidemic()) {
 			//checking epidemics
 			epidemic();
 		}
 		
-		population.bestInd=population.getIndividuals().get(0).getPathIndividual();
 		//add first observation
 		pec.addEvent(new ObservationEvent(finalTime/20,this));
 			
 	}
 	
 	public List<Point> getResult() {
-		return population.bestInd.getPath();
+		return population.bestInd.path;
 	}
 	
-	public void printResult() {
-		System.out.println("Path of the best fit individual = "+population.bestInd.pathString()); 
-	}
-
-	public Point getInitialPoint() {
-		return initialPoint;
-	}
-	
-	public void setInitialPoint(Point initialPoint) {
-		this.initialPoint=initialPoint;
-	}
-	
-	public Population getPopulation() {
-		return population;
-	}
-	
-	public void setPopulation(Population population) {
-		this.population=population;
-	}
-	
-	public int getMaxInd() {
-		return maxInd;
-	}
-
-	public void setMaxInd(int max_ind) {
-		this.maxInd = max_ind;	
-	}
-
-	public int getInitPop() {
-		return initPop;
-	}
-
-	public void setInitPop(int init_pop) {
-		this.initPop = init_pop;
+	public void printResult() {	
+		try {
+			System.out.println("Path of the best fit individual = "+population.bestInd.pathString());
+		} catch (NullPointerException e) {
+			System.out.println("There is no individual to simulate events.");
+		}
+		 
 	}
 
 	public boolean isFinalPointHit() {

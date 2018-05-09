@@ -1,12 +1,10 @@
-/**
+		/**
  * 
  */
 package specific;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import general.Point;
 
 /**
  * @author renato
@@ -16,13 +14,13 @@ import general.Point;
 public class Map {
 
 	// dimensions of the map
-	private int height, width; // n and m, respectively
+	int height, width; // n and m, respectively
 	// nº of obstacles in the map
-	private int n_obst;
+	int n_obst;
 	// maximum cost of an edge of the map
-	private int max_cost = 1;
+	int max_cost = 1;
 	
-	private MapPoint finalpoint;
+	MapPoint finalpoint;
 
 	List<MapPoint> map;
 	
@@ -41,13 +39,6 @@ public class Map {
 		generateGrid();
 	}
 	
-	/**
-	 * Get the final point
-	 * @return the finalpoint
-	 */
-	public MapPoint getFinalpoint() {
-		return finalpoint;
-	}
 
 	/**
 	 * Returns the possible adjacent points of @param to move ordered clockwise and starting north 
@@ -123,8 +114,8 @@ public class Map {
 		
 		for(int i = 0; i < origin.connections.size(); i++) {
 			// if the point the origin is connected to is the destiny
-			if(origin.connections.get(i).getPoint().equals(destiny)) {
-				int type = map.get(CoordsToIndex(origin.connections.get(i).getPoint().getX(),origin.connections.get(i).getPoint().getY(), width)).getType();
+			if(origin.connections.get(i).point.equals(destiny)) {
+				int type = map.get(CoordsToIndex(origin.connections.get(i).point.getX(),origin.connections.get(i).point.getY(), width)).type;
 				
 				// checks if it's an obstacle
 				if(type == MapPoint.OBSTACLE) {
@@ -147,7 +138,7 @@ public class Map {
 	 * @param point of class Point
 	 * @return point of class MapPoint, returns null if point not available in the map
 	 */
-	public MapPoint PointToMapPoint(Point point) {
+	private MapPoint PointToMapPoint(Point point) {
 		
 		MapPoint mappoint;
 		
@@ -171,7 +162,7 @@ public class Map {
 	public boolean isFinal(Point point) {
 		
 		try {
-			if(map.get((point.getY()-1)*width+(point.getX()-1)).getType() == 3) {
+			if(map.get((point.getY()-1)*width+(point.getX()-1)).type == 3) {
 				return true;
 			} 
 		} catch(IndexOutOfBoundsException e) {
@@ -316,7 +307,7 @@ public class Map {
 		
 		try {
 			// set this point as an obstacle
-			map.get((y-1)*width+(x-1)).setType(MapPoint.OBSTACLE);
+			map.get((y-1)*width+(x-1)).type=MapPoint.OBSTACLE;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addObstacle, wrong coordinates:" + e.getMessage());
 			return;
@@ -334,26 +325,13 @@ public class Map {
 	public void addInitialPoint(int x, int y) {
 		try {
 			// set this point as an initial point
-			map.get((y-1)*width+(x-1)).setType(MapPoint.INITIALPOINT);
+			map.get((y-1)*width+(x-1)).type=MapPoint.INITIALPOINT;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addInitialPoint:" + e.getMessage());
 			return;
 		}
 	}
 	
-	/**
-	 * @return the n_obst
-	 */
-	public int getN_obst() {
-		return n_obst;
-	}
-
-	/**
-	 * @param n_obst the n_obst to set
-	 */
-	public void setN_obst(int n_obst) {
-		this.n_obst = n_obst;
-	}
 
 	/**
 	 * sets the point as an final point (type = 3)
@@ -363,7 +341,7 @@ public class Map {
 	public void addFinalPoint(int x, int y) {
 		try {
 			// set this point as an final point
-			map.get((y-1)*width+(x-1)).setType(MapPoint.FINALPOINT);
+			map.get((y-1)*width+(x-1)).type=MapPoint.FINALPOINT;
 		} catch(IndexOutOfBoundsException e) {
 			System.err.println("Error in addFinalPoint:" + e.getMessage());
 			return;
@@ -591,7 +569,7 @@ public class Map {
 	 * @param p2 point2 
 	 * @param cost value to be inserted
 	 */
-	public void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
+	private void setConnectionCost(MapPoint p1, MapPoint p2, int cost) {
 		
 		// checks every point1 connection
 		for(int i = 0; i < p1.connections.size(); i++) {
@@ -599,7 +577,7 @@ public class Map {
 			// if the point 2 is the one that point 1 is connected in the connection 
 			if(p2.equals(p1.connections.get(i).point)) {
 				// sets the cost of the connection
-				p1.connections.get(i).setCost(cost);
+				p1.connections.get(i).cost=cost;
 			}
 		}
 		
@@ -609,7 +587,7 @@ public class Map {
 			// if the point 1 is the one that point 2 is connected in the connection 
 			if(p1.equals(p2.connections.get(i).point)) {
 				// sets the cost of the connection
-				p2.connections.get(i).setCost(cost);
+				p2.connections.get(i).cost=cost;
 			}
 		}
 		
@@ -641,89 +619,12 @@ public class Map {
 			// if the point 2 is the one that point 1 is connected in the connection then return the cost 
 			if(pointB.equals(pointA.connections.get(i).point)) {
 				// returns the cost of the connection
-				return pointA.connections.get(i).getCost();
+				return pointA.connections.get(i).cost;
 			}
 		}
 		
 		// no connection between the points
 		return -1;
-	}
-	
-	
-	/**
-	 * @return the maximum cost of an edge
-	 */
-	public int getMaxCost() {
-		return max_cost;
-	}
-	
-	
-	/**	
-	 * @return the width (n) of the map
-	 */
-	public int getWidth() {
-		return width;
-	}
-	
-	
-	/**
-	 * @return the height (m) of the map
-	 */
-	public int getHeight() {
-		return height;
-	}
-	
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-		Map mymap = new Map(5,4);
-		
-		System.out.println("Area of the map is: " + mymap.map.size());
-		
-		mymap.setN_obst(4);
-		
-		mymap.addFinalPoint(5, 4);
-		mymap.addInitialPoint(1, 1);
-		mymap.addObstacle(2, 1);
-		mymap.addObstacle(2, 3);
-		mymap.addObstacle(2, 4);
-		mymap.addObstacle(4, 2);
-		
-		mymap.addSpecialZone(2, 2, 3, 3, 4);
-		mymap.addSpecialZone(2, 3, 3, 4, 5);
-		
-		System.out.println("Cost of connection is: " + mymap.getConnectionCost(new Point(2,3), new Point(3,3)));
-		System.out.println("Cost of connection is: " + mymap.getConnectionCost(new Point(2,2), new Point(3,2)));
-		
-		System.out.println("Max cost of the map is: " + mymap.getMaxCost());
-		 
-		System.out.println("Point " + mymap.getFinalpoint() + " is the final point? " + mymap.isFinal(new Point(5,4)));
-		
-		// test of CalculateDist
-		System.out.println("Dist from init to final is: " + mymap.calculateDist(new Point(1,1)));
-
-		List<Point> lista = new ArrayList<Point>();
-		
-		// best path
-		lista.add(new Point(1,1));
-		lista.add(new Point(1,2));
-		lista.add(new Point(2,2));
-		lista.add(new Point(3,2));
-		lista.add(new Point(3,3));
-		lista.add(new Point(4,3));
-		lista.add(new Point(4,4));
-		lista.add(new Point(5,4));
-
-		
-		System.out.println("Cost of path is: " + mymap.calculateCost(lista));
-		
-		// test of getPossibleMoves function
-		List<Point> possmoves = mymap.getPossibleMoves(new Point(3,2));
-		
-		System.out.println("The possible moves are: " + possmoves);
-		
 	}
 	
 }

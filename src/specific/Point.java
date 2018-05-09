@@ -1,7 +1,7 @@
 /**
  * 
  */
-package general;
+package specific;
 
 /**
  * Point representing a location in the 2D coordinate space, with coordinates (x,y).
@@ -17,11 +17,11 @@ public class Point {
 	/**
 	 * The x coordinate of this Point.
 	 */
-	private int x;
+	protected int x;
 	/**
 	 * The y coordinate of this Point.
 	 */
-	private int y;
+	protected int y;
 
 	/**
 	 * @param x coordinate along x axis
@@ -71,26 +71,13 @@ public class Point {
 	}
 
 	/**
-	 * @param x the x to set
-	 */
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	/**
 	 * @return the y
 	 */
 	public int getY() {
 		return y;
 	}
 
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(int y) {
-		this.y = y;
-	}
-
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 *  

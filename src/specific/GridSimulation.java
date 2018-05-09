@@ -17,17 +17,92 @@ import general.Event;
 import general.PEC;
 import general.INumberGenerator;
 
+/**
+ * GridSimulation extends SimulationA and implements the simulate method. 
+ * <p>
+ * GridSimulation provides method to simulate a population of individuals generated at instant zero an placed at an initial
+ * point, that evolve until a final instant according to the events Death, Move and Reproduction. 
+ * The population evolves in function of the individual evolution of its elements and also by the
+ * occurrence of epidemics (method epidemic).
+ * <p>
+ * The simulation can only be created from parameters given in a XML file provided in the constructor.
+ * It is also dependent on the number generators provided in the constructor, that decide whether it will 
+ * follow random or deterministic mechanisms.
+ * <p>
+ * Since there are no static methods and an initialization is made in the beginning of the simulate method,
+ * the object of the created Simulation can be run multiple times.
+ * 
+ */
 public class GridSimulation extends SimulationA{
 	
+	/**
+	 * Population associated to this simulation.
+	 */
 	protected Population population;
+	
+	/**
+	 * Initial point where the individuals start the simulation.
+	 */
 	protected Point initialPoint;
-	protected int maxInd, initPop;
+	
+	/**
+	 * Maximum number of individuals used in the epidemic.
+	 */
+	protected int maxInd;
+	
+	/**
+	 * Initial number of individuals.
+	 */
+	protected int initPop;
+	
+	/**
+	 * Index of the generator between Death events in the SimulationCommand.
+	 * <p>
+	 * Defined to increase the readability in the code.
+	 * @see SimulationCommands
+	 */
 	protected static final int DEATH=0;
+	
+	/**
+	 * Index of the generator between Move events in the SimulationCommand.
+	 * <p>
+	 * Defined to increase the readability in the code.
+	 * @see SimulationCommands
+	 */
 	protected static final int MOVE=1;
+	
+	/**
+	 * Index of the generator between Reproduction events in the SimulationCommand.
+	 * <p>
+	 * Defined to increase the readability in the code.
+	 * @see SimulationCommands
+	 */
 	protected static final int REP=2;
+	
+	/**
+	 * Index of the double (between 0 and 1) generator in the SimulationCommand.
+	 * <p>
+	 * Defined to increase the readability in the code.
+	 * @see SimulationCommands
+	 */
 	protected static final int THRESH=3;
 
 	
+	/**
+	 * Constructor.
+	 * Creates a GridSimulation from the specified file and number generators.
+	 * <p>
+	 * TODO FALAR SOBRE O PARSER
+	 * <p>
+	 * Initializes the PEC with an initial capacity of 3*maxInd and creates a GridCommands with the provided INumberGenerators.
+	 * 
+	 * 
+	 * @param filename - XML file that contains the parameters of this simulation
+	 * @param deathTime - generator of the time between Death events
+	 * @param moveTime - generator of the time between Move events
+	 * @param repTime - generator of the time between Reproduction events
+	 * @param thresh - generator of doubles between 0 and 1
+	 */
 	public GridSimulation(String filename,INumberGenerator deathTime,INumberGenerator moveTime,INumberGenerator repTime ,INumberGenerator thresh) {
 	
 	      try {
@@ -60,6 +135,7 @@ public class GridSimulation extends SimulationA{
 		//call XML Parser
 		pec = new PEC(3*maxInd); //3*maxInd is the initial capacity of the priority queue;
 		
+		//creates a GridCommands object from the provided number generators.
 		INumberGenerator gens[] = new INumberGenerator[4];
 		gens[DEATH]=deathTime;
 		gens[MOVE]=moveTime;
@@ -68,6 +144,7 @@ public class GridSimulation extends SimulationA{
 		
 		simComms= new GridCommands(gens);
 	}
+	
 	
 	public void simulate() {
 		
@@ -78,7 +155,7 @@ public class GridSimulation extends SimulationA{
 		
 		//reseting the dynamic variables and initializing the population of individuals
 		reset();
-		initialize();	
+		startSimulation();	
 		
 		//local variables
 		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
@@ -113,11 +190,27 @@ public class GridSimulation extends SimulationA{
 		printResult(); 
 	}
 	
+	/**
+	 * Checks if an epidemic should occur. Returns true if the size of the current population is bigger than the maximum population
+	 * 
+	 * @return true if the size of the current population is bigger than the maximum population
+	 */
 	private boolean checkEpidemic() {
 		return population.individuals.size()> maxInd;
 	}
 	
 	
+	/**
+	 * 	In this method the five individuals with greater comfort are untouched.
+	 * 	The 5 best individuals are determined by sorting the list of Individuals using the IndividualComfortComparator, 
+	 *  so they are sorted in descendant order according to their comfort.
+	 *  <p>
+	 *  For each of the remaining individuals in the sorted list, a number between 0 and 1 is generated and if it's higher than the comfort of the individual,
+	 *  he is removed from the population and his events are removed from the PEC with the clearDeadEvents method.
+	 *  <p>
+	 * 	This method is only used when checkEpidemic returns true.
+	 * 
+	 */
 	private void epidemic() {
 						
 		int epidemic_size=5;
@@ -125,27 +218,25 @@ public class GridSimulation extends SimulationA{
 		population.individuals.sort(new IndividualComfortComparator()); //escolher os melhores 5
 		
 		Individual ind=null;
-		//para os restantes fazer um for em que percorro e calculo se morrem ou n�o
-		//for(int i=5; i<population.individuals.size(); i++) {
 		
 		Iterator<Individual> i=population.individuals.iterator();
 		
+		// ignore the first 5 values
 		for (int x=0; x < epidemic_size && i.hasNext(); x++) {
-	        i.next(); // ignore the first x values
+	        i.next(); 
 	    }
 		
 		for(;i.hasNext();) {
 
-			//ind=population.individuals.get(i);
 			ind=i.next();
-			//double percentage= simGenerator.getThreshold(ind);
 			double percentage=simComms.getCommand(THRESH);
 	
 			//we dont check if k=0 because its verified in the xml parser
+			//if the percentage is higher than the comfort, the individuals dies
 			if(percentage>ind.comfort) {
 						
 				//clears dead individual events
-				clearDeadEvents(pec, ind);
+				clearDeadEvents(ind);
 				
 				//to avoid concurrent modification exception
 				i.remove();
@@ -154,13 +245,12 @@ public class GridSimulation extends SimulationA{
 	}
 	
 	/**
-	 * Checks if individual that will be killed by epidemy, has events on the pec
-	 * and erases them
+	 * Checks if the individual that will be killed by epidemic, has events on the PEC
+	 * and erases them if it has
 	 * 
-	 * @param pec
-	 * @param ind
+	 * 	@param ind - individual that passes away and whose events are going to be removed from the PEC
 	 */
-	private void clearDeadEvents(PEC pec, Individual ind) {
+	private void clearDeadEvents(Individual ind) {
 		
 		/*if the individual has an event associated to him, with time
 		 * higher than the simulation time, that event is not in the pec
@@ -182,6 +272,9 @@ public class GridSimulation extends SimulationA{
 		
 	}
 	
+	/**
+	 * 
+	 */
 	public void reset() {	
 		super.init();		
 		population.finalPointHit=false;
@@ -189,7 +282,7 @@ public class GridSimulation extends SimulationA{
 		population.clearIndividuals();
 	}
 	
-	public void initialize() {
+	public void startSimulation() {
 		
 		Individual newInd=null;
 		

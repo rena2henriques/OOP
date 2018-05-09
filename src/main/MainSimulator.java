@@ -19,8 +19,9 @@ public class MainSimulator {
 		
 		//SimulationNumberCommands generator= new SimulationNumberCommands(death,move,reproduction,threshold);
 
-		GridSimulation simulation = new GridSimulation("test_1_gridgrande.xml");//DECLARAR COMO SIMULATIONA??
-		simulation.simulate();		
+		GridSimulation simulation = new GridSimulation("projectexample.xml");//DECLARAR COMO SIMULATIONA??
+		simulation.simulate();	
+		
 	}
 
 }

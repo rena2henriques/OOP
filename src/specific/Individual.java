@@ -116,8 +116,9 @@ public class Individual {
 	/**
 	 * Add a new point to the path and updates the cost and comfort accordingly.	
 	 * 
-	 * This method first checks if the new position introduces a cycle in the path. 
-	 * If there is a cycle, the corresponding points are deleted from the path.
+	 * This method first checks if the new position introduces a cycle in the path (with the checkCycle method). 
+	 * If there is a cycle, the corresponding points are deleted from the path (method breakCycle). 
+	 * If a cycle isn't detected, it adds the new point (method addNewPoint).
 	 * 
 	 * @param new_point - new position of the map to add to the path
 	 */
@@ -132,6 +133,7 @@ public class Individual {
 			addNewPoint(new_point);
 		}
 		
+		//calculo comfort de qualquer forma
 		calculateComfort();			
 
 		
@@ -174,7 +176,9 @@ public class Individual {
 	 */
 	private void breakCycle(Point newPoint) {
 		
+		//indice do ponto repetido 
 		int lastIndex= path.indexOf(newPoint);
+		//limpar a lista desde o ponto repetido até ao fim
 		path.subList(lastIndex+1, path.size()).clear();
 		
 		cost=population.map.calculateCost(path);

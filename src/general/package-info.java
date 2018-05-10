@@ -4,7 +4,7 @@
  * simulation of a toll or a simulation of individuals moving around a map.
  * 
  * @author Group 6 - 81588, 81607 and 81669
- * Course of Objects Oriented Language
+ * Course of Object Oriented Programming
  * 
  */
 package general;

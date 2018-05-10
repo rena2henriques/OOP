@@ -7,7 +7,7 @@ import java.util.List;
 import general.SimulationCommands;
 
 /**
- * This class extends individualEvent. The Move simulation chooses the next point of the map
+ * This class extends individualEvent and its simulation chooses the next point of the map
  * to which the individual will go, and moves him by adding that point to his path.
  * <p>
  * Afterwards creates the individual's next move, to be added to the PEC and associates it

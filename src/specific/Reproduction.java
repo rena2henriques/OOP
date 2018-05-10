@@ -7,7 +7,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * This class extends IndividualEvent. Simulating a reproduction involves creating a
+ * This class extends IndividualEvent and its simulation involves creating a
  * son (new individual) based on the individual on whom the reproduction is being simulated 
  * and adds the son to the simulation's population, creating and setting 
  * his first three events (death, move, reproduction). It also creates and sets the next

@@ -22,7 +22,7 @@ public class PEC implements PECI<Event>{
 	/**
 	 * Queue of events to be simulated.
 	 */
-	private Queue<Event> events;
+	protected Queue<Event> events;
 	
 	/**
 	 * No argument constructor.

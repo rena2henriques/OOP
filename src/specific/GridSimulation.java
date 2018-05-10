@@ -16,6 +16,7 @@ import general.SimulationA;
 import general.Event;
 import general.PEC;
 import general.INumberGenerator;
+import general.SimulationCommands;
 
 /**
  * GridSimulation extends SimulationA and implements the simulate method. 

@@ -78,7 +78,6 @@ public class Population{
 	 * @param moveParam - To calculate event move time
 	 * @param reproductionParam - To calculate event reproduction
 	 * @param map - Simulation's map
-	 * @param individuals - Already created individuals list
 	 */
 	public Population(int sensitivity, int deathParam, int moveParam, int reproductionParam, Map map) {
 		super();

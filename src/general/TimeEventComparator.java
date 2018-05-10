@@ -3,7 +3,8 @@ package general;
 import java.util.Comparator;
 
 /**
- * TimeEventComparator implements Comparator<Event> and compares events of type Event according to their time, in ascendant order.
+ * <p>TimeEventComparator implements Comparator of type Event and compares 
+ * events of type Event according to their time, in ascendant order.
  *
  * @see Event
  */

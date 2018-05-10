@@ -3,7 +3,8 @@ package specific;
 import java.util.Comparator;
 
 /**
- * IndividualComfortComparator implements Comparator<Individual> and compares Individuals according to their comfort, in descendant order.
+ * <p>IndividualComfortComparator implements Comparator of objects of type Individual and compares Individuals according 
+ * to their comfort, in descendant order.
  * 
  *	@see Individual
  */

@@ -1,6 +1,4 @@
-package specific;
-
-import general.SimulationA;
+package general;
 
 /**
  * This class provides a run method to launch threads and run a simulation.
@@ -11,7 +9,7 @@ public class SimulationThread extends Thread{
 	/**
 	 * Simulation to run
 	 */
-	SimulationA gridSimulation;
+	SimulationA simulation;
 	
 	/**
 	 * Constructor that creates a SimulationThread with the given simulation
@@ -19,7 +17,7 @@ public class SimulationThread extends Thread{
 	 * @param sim - simulation to associate to this SimulationThread
 	 */
 	public SimulationThread(SimulationA sim){
-		gridSimulation=sim;
+		simulation=sim;
 	}
 	
 	/* (non-Javadoc)
@@ -29,6 +27,6 @@ public class SimulationThread extends Thread{
 	 * Method to run the simulation. It calls the simulate method of the simulation.
 	 */
 	public void run() {
-		gridSimulation.simulate();
+		simulation.simulate();
 	}
 }

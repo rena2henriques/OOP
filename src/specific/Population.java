@@ -15,35 +15,35 @@ public class Population{
 	/**
 	 * Sensitivity to calculate the individuals' comfort
 	 */
-	int sensitivity;
+	protected int sensitivity;
 	/**
 	 * Parameter used in the time calculation of death events
 	 */
-	int deathParam;
+	protected int deathParam;
 	/**
 	 * Parameter used in the time calculation of move events 
 	 */
-	int moveParam;
+	protected int moveParam;
 	/**
 	 * Parameter used in the time calculation of reproduction events 
 	 */
-	int reproductionParam;
+	protected int reproductionParam;
 	/**
 	 * Flag activated when an individual reaches the map's final point
 	 */
-	boolean finalPointHit;
+	protected boolean finalPointHit;
 	/**
 	 * Map of the simulation
 	 */
-	Map map;
+	protected Map map;
 	/**
 	 * List of the alive individuals present in the simulation
 	 */
-	List<Individual> individuals;
+	protected List<Individual> individuals;
 	/**
 	 * Current best fit of the simulation
 	 */
-	Individual bestInd;
+	protected Individual bestInd;
 	
 	
 

@@ -67,8 +67,9 @@ public class Map {
 	 * a capacity of 4 because a point of the map has in the worst case 4 adjacent points. The insertion has an order. The 
 	 * returned list has the possible points to move according to a clockwise direction, starting from the point above itself.
 	 * 
-	 * @param point that we want to the possible moves
-	 * @return list of possible positions to move ordered clockwise starting with north or null if p1 is not valid or out of boundaries
+	 * @param p1 - that we want to the possible moves
+	 * @return list of possible positions to move ordered clockwise starting with north or null if p1 is not valid or out 
+	 * of boundaries
 	 * 
 	 */
 	public List<Point> getPossibleMoves(Point p1){
@@ -122,8 +123,8 @@ public class Map {
 	 * <p> A move is permitted if the point it wants to move to is not an obstacle, if is out of the boundaries of the map or
 	 * if p1 is not adjacent to p2.
 	 * 
-	 * @param origin is the point we are
-	 * @param destiny is the point we want to go to
+	 * @param p1 is the point we are
+	 * @param p2 is the point we want to go to
 	 * @return true if the move is possible, false if the destiny is an obstacle 
 	 * or if there is no connection between origin and destiny
 	 */

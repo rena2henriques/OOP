@@ -24,7 +24,7 @@ public class Reproduction extends IndividualEvent{
 	 * @see IndividualEvent
 	 * 
 	 * @param time - time of the event
-	 * @param ind - associated individual
+	 * @param individual - associated individual
 	 * @param sNC - set of commands to rule movements and event creations
 	 */
 	public Reproduction(double time, Individual individual, SimulationCommands sNC) {

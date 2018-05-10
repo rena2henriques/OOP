@@ -13,7 +13,9 @@ import java.util.Queue;
  * The operations made to the PEC, such as adding, removing and clearing events are implemented with methods from java.util.PriorityQueue.
  * The methods nextEvent and getEvent are implemented with the poll and peek methods, respectively, so they return a null reference when there are no more events.
  * 
- * @see PECI, TimeEventComparator, Event
+ * @see PECI
+ * @see TimeEventComparator
+ * @see Event
  */
 public class PEC implements PECI<Event>{  
 	

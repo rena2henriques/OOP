@@ -8,14 +8,16 @@ import java.util.LinkedList;
  * The Individual is associated with a path of points in a map, 
  * and therefore with a correspondent cost and comfort. 
  * It's also associated to a Population of individuals and to it's lifetime events (Death,Move and Reproduction).
- * <p>
- * This class provides methods to add points to the path of the Individual, recalculating it's comfort and cost.
+ * <p>This class provides methods to add points to the path of the Individual, recalculating it's comfort and cost.
  * Note that the methods are implemented in such a way that when there is a point added to the path that is already on it,
  * the corresponding cycle is eliminated.
  * 
- * @see Map, Population, Death, Move, Reproduction
+ * @see Map
+ * @see Population
+ * @see Death
+ * @see Move
+ * @see Reproduction
  */
-
 public class Individual {
 	
 	/**
@@ -100,7 +102,7 @@ public class Individual {
 	 * Creates and returns a copy of this Individual, based only on it's path, comfort and cost.
 	 * <p>
 	 * The path is a deep copy of the path, 
-	 * in order to assure that isn’t altered by any changes that might occur in the path of this Individual.
+	 * in order to assure that isnï¿½t altered by any changes that might occur in the path of this Individual.
 	 * The rest of the attributes of the individual are set to null.
 	 * 
 	 * @return an Individual with a copy of the comfort, cost and a deep copy of the path of the current Individual.
@@ -124,7 +126,7 @@ public class Individual {
 	 */
 	public void addToPath(Point new_point) { 
 		
-		//checkar se hï¿½ cicle
+		//checkar se hÃ¡ cicle
 		if(checkCycle(new_point)) {
 		//se houve redefinir o path
 			breakCycle(new_point);
@@ -178,7 +180,7 @@ public class Individual {
 		
 		//indice do ponto repetido 
 		int lastIndex= path.indexOf(newPoint);
-		//limpar a lista desde o ponto repetido até ao fim
+		//limpar a lista desde o ponto repetido atÃ© ao fim
 		path.subList(lastIndex+1, path.size()).clear();
 		
 		cost=population.map.calculateCost(path);

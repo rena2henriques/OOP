@@ -11,6 +11,9 @@ import java.util.List;
  * just for the code be more readable. A MapPoint also has a List of Objects of Connection that corresponds to the points it is
  * adjacent to and also the cost associated to that connection.
  *
+ * @see Point
+ * @see Connection
+ * 
  */
 public class MapPoint extends Point {
 
@@ -54,8 +57,8 @@ public class MapPoint extends Point {
 	 * the object of the class ArrayList is created and initialized with a capacity of 4 because in the worst case a point 
 	 * only has 4 connections.
 	 * 
-	 * @param x
-	 * @param y
+	 * @param x - coordinate x
+	 * @param y - coordinate y
 	 * 
 	 */
 	public MapPoint(int x, int y) {

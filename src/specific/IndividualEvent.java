@@ -48,6 +48,7 @@ public abstract class IndividualEvent extends Event{
 	 * Receives the next event generated time and checks if its after the individual death
 	 * 
 	 * @param time - newly created event's time
+	 * @param ind - the individual we want to check the time of death
 	 * @return boolean, true if generated time is before death, false otherwise
 	 */
 	public static boolean checkDeathTime(double time, Individual ind) {

@@ -216,7 +216,7 @@ public class GridSimulation extends SimulationA{
 	 * 
 	 * @return true if the size of the current population is bigger than the maximum population
 	 */
-	private boolean checkEpidemic() {
+	protected boolean checkEpidemic() {
 		return population.individuals.size()> maxInd;
 	}
 	
@@ -232,7 +232,7 @@ public class GridSimulation extends SimulationA{
 	 * 	This method is only used when checkEpidemic returns true.
 	 * 
 	 */
-	private void epidemic() {
+	protected void epidemic() {
 						
 		int epidemic_size=5;
 		

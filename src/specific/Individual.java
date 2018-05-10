@@ -105,7 +105,7 @@ public class Individual {
 	 * 
 	 * @return an Individual with a copy of the comfort, cost and a deep copy of the path of the current Individual.
 	 */
-	protected Individual getPathIndividual() {
+	public Individual getPathIndividual() {
 		Individual newInd= new Individual(path);
 		newInd.cost=this.cost;
 		newInd.comfort=this.comfort;
@@ -122,7 +122,7 @@ public class Individual {
 	 * 
 	 * @param new_point - new position of the map to add to the path
 	 */
-	protected void addToPath(Point new_point) { 
+	public void addToPath(Point new_point) { 
 		
 		//checkar se h� cicle
 		if(checkCycle(new_point)) {

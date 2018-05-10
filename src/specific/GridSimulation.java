@@ -272,7 +272,7 @@ public class GridSimulation extends SimulationA{
 	 * 
 	 * 	@param ind - individual that passes away and whose events are going to be removed from the PEC
 	 */
-	private void clearDeadEvents(Individual ind) {
+	protected void clearDeadEvents(Individual ind) {
 		
 		/*if the individual has an event associated to him, with time
 		 * higher than the simulation time, that event is not in the pec

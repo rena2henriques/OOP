@@ -7,7 +7,7 @@ package specific;
  * 
  *
  */
-class Connection {
+public class Connection {
 	
 	/**
 	 * The cost of the connection

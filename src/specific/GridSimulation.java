@@ -262,6 +262,7 @@ public class GridSimulation extends SimulationA{
 				i.remove();
 			}
 		}
+		
 	}
 	
 	/**
@@ -317,7 +318,7 @@ public class GridSimulation extends SimulationA{
 	 * Should be called before starting an actual simulation
 	 * 
 	 */
-	public void startSimulation() {
+	protected void startSimulation() {
 		
 		Individual newInd=null;
 		

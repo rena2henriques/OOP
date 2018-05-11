@@ -28,7 +28,7 @@ public class MainSimulator {
 			System.err.println("Number of arguments received isn't correct.");
 			System.exit(-1);
 		}
-	
+	 
 		INumberGenerator deathTime=new DeathExpRandomTime();
 		INumberGenerator moveTime=new MoveExpRandomTime();
 		INumberGenerator repTime= new ReproductionExpRandomTime();
@@ -36,7 +36,7 @@ public class MainSimulator {
 		
 		SimulationA simulation = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 		simulation.simulate();
-
+		
 		/*SimulationA simulation2 = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 
 		SimulationThread test= new SimulationThread(simulation);

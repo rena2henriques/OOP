@@ -22,7 +22,7 @@ public class MainSimulator {
 	public static void main(String[] args) {
 		
 		if(args.length == 0) {
-			System.err.println("No XML File received in the argumens.");
+			System.err.println("No XML File received in the arguments.");
 			System.exit(-1);
 		} else if(args.length != 1) {
 			System.err.println("Number of arguments received isn't correct.");
@@ -36,7 +36,8 @@ public class MainSimulator {
 		
 		SimulationA simulation = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 		simulation.simulate();
-		
+
+		//to use when running multiple threads
 		/*SimulationA simulation2 = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 
 		SimulationThread test= new SimulationThread(simulation);

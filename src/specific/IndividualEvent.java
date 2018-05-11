@@ -4,7 +4,7 @@ import general.Event;
 import general.SimulationCommands;
 
 /**
- * This abstract class extends Event. Specifies events related to the evolution 
+ * This abstract class extends Event and specifies events related to the evolution 
  * of an individual and already provides some common attributes and methods.
  * 
  * All individuals will have their events associated in order to facilitate cleaning

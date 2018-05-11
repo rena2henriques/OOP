@@ -216,7 +216,7 @@ public class GridSimulation extends SimulationA{
 	 * 
 	 * @return true if the size of the current population is bigger than the maximum population
 	 */
-	private boolean checkEpidemic() {
+	protected boolean checkEpidemic() {
 		return population.individuals.size()> maxInd;
 	}
 	
@@ -232,7 +232,7 @@ public class GridSimulation extends SimulationA{
 	 * 	This method is only used when checkEpidemic returns true.
 	 * 
 	 */
-	private void epidemic() {
+	protected void epidemic() {
 						
 		int epidemic_size=5;
 		
@@ -263,6 +263,7 @@ public class GridSimulation extends SimulationA{
 				i.remove();
 			}
 		}
+		
 	}
 	
 	/**
@@ -271,7 +272,7 @@ public class GridSimulation extends SimulationA{
 	 * 
 	 * 	@param ind - individual that passes away and whose events are going to be removed from the PEC
 	 */
-	private void clearDeadEvents(Individual ind) {
+	protected void clearDeadEvents(Individual ind) {
 		
 		/*if the individual has an event associated to him, with time
 		 * higher than the simulation time, that event is not in the pec
@@ -318,7 +319,7 @@ public class GridSimulation extends SimulationA{
 	 * Should be called before starting an actual simulation
 	 * 
 	 */
-	public void startSimulation() {
+	protected void startSimulation() {
 		
 		Individual newInd=null;
 		

@@ -8,7 +8,7 @@ import general.Event;
 import general.SimulationCommands;
 
 /**
- * This class extends IndividualEvent. When Death is simulated, the associated individual is
+ * This class extends IndividualEvent and represents the death of an Individual. When Death is simulated, the associated individual is
  * eliminated from the population (and from the simulation).
  * 
  * @see IndividualEvent

@@ -37,6 +37,7 @@ public class MainSimulator {
 		SimulationA simulation = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 		simulation.simulate();
 
+		//to use when running multiple threads
 		/*SimulationA simulation2 = new GridSimulation(args[0],deathTime,moveTime,repTime,thresh);
 
 		SimulationThread test= new SimulationThread(simulation);

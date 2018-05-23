@@ -44,7 +44,5 @@ public class MainSimulator {
 		SimulationThread test2= new SimulationThread(simulation2);
 		test.start();
 		test2.start();*/
-		
 	}
-
 }

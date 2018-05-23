@@ -180,7 +180,7 @@ public class GridSimulation extends SimulationA{
 		
 		//local variables
 		List<Event> eventList = new LinkedList<Event>(); //list of events returned in the simulateEvent
-		Event currentEvent= null; // current event 
+		Event currentEvent = null; // current event 
 		
 		//initializing the simulation with the 1st event in pec
 		currentEvent=pec.nextEvent();			
@@ -201,12 +201,12 @@ public class GridSimulation extends SimulationA{
 			//next event
 			currentEvent=pec.nextEvent();			
 			currentTime=currentEvent.getTime();	
-			
 		}
 		
 		//simulate final observation
 		if(population.individuals.size()!=0)
 			eventList=currentEvent.simulateEvent(); 
+		
 		//printing final results of the simulation
 		printResult(); 
 	}
@@ -363,8 +363,7 @@ public class GridSimulation extends SimulationA{
 		}
 		
 		//add first observation
-		pec.addEvent(new ObservationEvent(finalTime/20,this));
-			
+		pec.addEvent(new ObservationEvent(finalTime/20,this));	
 	}
 	
 	/**

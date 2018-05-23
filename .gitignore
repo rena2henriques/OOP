@@ -5,3 +5,4 @@ UML/
 /bin/
 *.jar
 /doc/
+*.xml~

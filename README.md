@@ -8,3 +8,5 @@ cost of each edge is 1, but there may be special areas where the cost is higher.
 obstacles at some points on the grid through which one can not proceed.
 
 This project is a Java solution to the problem presented above using evolutive programming modeled and implemented with objects. The idea is to generate at instant zero a population of ν individuals, all placed at the initial point, and make it evolve until the final instant τ .The evolution of the population is ruled by discrete stochastic simulation, that is, based on a pending event container.
+
+**Final Grade: 6.9/7**
